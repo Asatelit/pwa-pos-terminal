@@ -1,0 +1,316 @@
+[
+  {
+    "group": "Горячие Напитки",
+    "items": [
+      {
+        "id": "espresso",
+        "name": "Эспрессо",
+        "description": "",
+        "price": "15",
+        "picture": "espresso.png"
+      },
+      {
+        "id": "doppio",
+        "name": "Доппио",
+        "description": "Двойной эспрессо",
+        "price": "25",
+        "picture": "doppio.png"
+      },
+      {
+        "id": "macchiato",
+        "name": "Маккиато",
+        "description": "Эспрессо и немного молочной пены",
+        "price": "18",
+        "picture": "cafe-macchiato.png"
+      },
+      {
+        "id": "americano",
+        "name": "Американо",
+        "description": "",
+        "price": "15",
+        "picture": "cafe-americano.png"
+      },
+      {
+        "id": "latte ",
+        "name": "Латте",
+        "description": "",
+        "price": "25",
+        "picture": "cafe-latte.png"
+      },
+      {
+        "id": "cappuccino",
+        "name": "Капучино",
+        "description": "",
+        "price": "25",
+        "picture": "cappuccino.png"
+      },
+      {
+        "id": "flat-white",
+        "name": "Флэт уайт",
+        "description": "",
+        "price": "30",
+        "picture": "flat-white.png"
+      },
+      {
+        "id": "cafe-special",
+        "name": "Фирменное кофе",
+        "description": "",
+        "price": "20",
+        "picture": "cafe-special.png"
+      },
+      {
+        "id": "milk-foam",
+        "name": "Молочная пена",
+        "description": "",
+        "price": "10",
+        "picture": "milk-foam.png"
+      },
+      {
+        "id": "cacao",
+        "name": "Какао",
+        "description": "",
+        "price": "20",
+        "picture": "cacao.png"
+      },
+      {
+        "id": "hot-chocolate",
+        "name": "Горячий шоколад",
+        "description": "",
+        "price": "25",
+        "picture": "hot-chocolate.png"
+      },
+      {
+        "id": "tea-bag",
+        "name": "Чай пакетированный",
+        "description": "",
+        "price": "10",
+        "picture": "tea-bag.png"
+      },
+      {
+        "id": "tea",
+        "name": "Чай заварной",
+        "description": "",
+        "price": "35",
+        "picture": "tea.png"
+      }
+    ]
+  },
+  {
+    "group": "Холодные напитки",
+    "items": [
+      {
+        "id": "ice-latte",
+        "name": "Айс латте",
+        "description": "",
+        "price": "25",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "frappe",
+        "name": "Кофе-фраппе",
+        "description": "",
+        "price": "25",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "mojito",
+        "name": "Мохито",
+        "description": "",
+        "price": "30",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "lemonade",
+        "name": "Лемонад",
+        "description": "",
+        "price": "20",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "bamble",
+        "name": "Бамбл",
+        "description": "",
+        "price": "30",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "morsh",
+        "name": "Вода Моршинская",
+        "description": "",
+        "price": "15",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "sandora",
+        "name": "Сок Сандора",
+        "description": "",
+        "price": "15",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "borj330",
+        "name": "Вода Боржоми 330",
+        "description": "",
+        "price": "25",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "borj500",
+        "name": "Вода Боржоми 500",
+        "description": "",
+        "price": "30",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "cola",
+        "name": "Coca Cola",
+        "description": "",
+        "price": "17",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "fanta",
+        "name": "Fanta",
+        "description": "",
+        "price": "17",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "description": "",
+        "price": "17",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "7up",
+        "name": "7up",
+        "description": "",
+        "price": "17",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "fresh",
+        "name": "Фреш",
+        "description": "",
+        "price": "50",
+        "picture": "no-image.png"
+      }
+    ]
+  },
+  {
+    "group": "Топпинги",
+    "items": [
+      {
+        "id": "marshmallow",
+        "name": "Маршмеллоу",
+        "description": "",
+        "price": "5",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "lemon",
+        "name": "Лемон",
+        "description": "",
+        "price": "3",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "ginger",
+        "name": "Имбирь",
+        "description": "",
+        "price": "3",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "decaf",
+        "name": "Кофе без кофеина",
+        "description": "",
+        "price": "3",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "milk",
+        "name": "Молоко",
+        "description": "",
+        "price": "3",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "syrup",
+        "name": "Сироп",
+        "description": "",
+        "price": "3",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "honey",
+        "name": "Мед",
+        "description": "",
+        "price": "5",
+        "picture": "no-image.png"
+      }
+    ]
+  },
+  {
+    "group": "Снеки",
+    "items": [
+      {
+        "id": "burger-chicken",
+        "name": "Бургер куриный",
+        "description": "",
+        "price": "75",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "burger-beef",
+        "name": "Бургер говяжий",
+        "description": "",
+        "price": "80",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "hot-dog",
+        "name": "Хот-дог",
+        "description": "",
+        "price": "30",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "panini",
+        "name": "Панини",
+        "description": "",
+        "price": "40",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "baguette-sandwich",
+        "name": "Сандвич багет",
+        "description": "",
+        "price": "45",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "muffin",
+        "name": "Маффин",
+        "description": "",
+        "price": "20",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "croissant",
+        "name": "Круассан",
+        "description": "",
+        "price": "15",
+        "picture": "no-image.png"
+      },
+      {
+        "id": "kitkat",
+        "name": "Кит-кат",
+        "description": "",
+        "price": "20",
+        "picture": "no-image.png"
+      }
+    ]
+  }
+]

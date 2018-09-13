@@ -27,6 +27,9 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
+    "tslint": "tslint",
+    "lint": "npm run tslint -- --project tsconfig.json",
+    "ci": "yarn run lint && yarn run build",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import moment from 'moment';
+
+import { CartItem, StockItem } from '../../store/app';
 
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -15,8 +16,21 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-class ConfirmationDialog extends React.Component {
-  state = { quantity: 1 };
+import './ConfirmationDialog.css';
+
+interface ConfirmationDialogProps {
+  onSubmit: ((cartItem: CartItem) => void);
+  item: StockItem;
+  isOpen: boolean;
+}
+
+// Component-specific state.
+interface State {
+  readonly quantity: number;
+}
+
+class ConfirmationDialog extends React.Component<ConfirmationDialogProps, State> {
+  readonly state: State = { quantity: 1 };
 
   handleCancel = () => this.closeDialog();
   handleOk = () => this.closeDialog(true);
@@ -24,23 +38,20 @@ class ConfirmationDialog extends React.Component {
   closeDialog = (submitData = false) => {
     const { item } = this.props;
     const { quantity } = this.state;
-    this.props.onSubmit(
-      submitData
-        ? {
-            ...item,
-            quantity: parseFloat(quantity, 10),
-            sum: parseFloat(item.price * quantity, 10),
-            time: moment(),
-          }
-        : null,
-    );
-
+    if (submitData) {
+      this.props.onSubmit({
+        ...item,
+        quantity,
+        sum: item.price * quantity,
+        time: moment(),
+      });
+    }
     this.setState({ quantity: 1 }); // reset state
   };
 
   renderDialog = () => {
     const { quantity } = this.state;
-    const { item, isOpen } = this.props;
+    const { item } = this.props;
 
     return (
       <React.Fragment>
@@ -69,10 +80,8 @@ class ConfirmationDialog extends React.Component {
                   classes={{ root: 'QtyInput' }}
                   margin="dense"
                   type="number"
-                  min="1"
-                  max="100"
                   value={quantity}
-                  onChange={event => this.setState({ quantity: event.target.value || 0 })}
+                  onChange={event => this.setState({ quantity: parseInt(event.target.value, 10) || 0 })}
                 />
               </FormControl>
               <IconButton
@@ -103,7 +112,7 @@ class ConfirmationDialog extends React.Component {
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { item, isOpen } = this.props;
     return (
       <Dialog
         disableBackdropClick
@@ -112,16 +121,10 @@ class ConfirmationDialog extends React.Component {
         open={isOpen}
         aria-labelledby="confirmation-dialog-title"
       >
-        {isOpen && this.renderDialog()}
+        {item && isOpen && this.renderDialog()}
       </Dialog>
     );
   }
 }
-
-ConfirmationDialog.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-};
 
 export default ConfirmationDialog;

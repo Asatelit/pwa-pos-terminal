@@ -1,0 +1,21 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react", "tslint-config-prettier"],
+  "defaultSeverity": "warning",
+  "rules": {
+    "jsx-no-lambda": false,
+    "jsx-boolean-value": false,
+    "curly": [true, "ignore-same-line"],
+    "function-name": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"],
+    "import-name": false,
+    "interface-name": [true, "never-prefix"],
+    "semicolon": [true, "always", "strict-bound-class-methods"],
+    "quotemark": [true, "single", "jsx-double"]
+  },
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  }
+}

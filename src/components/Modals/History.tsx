@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import moment from 'moment';
-import { withStyles } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,38 +14,37 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
-const styles = {
-  appBar: {
-    position: 'relative',
-  },
-  flex: {
-    flex: 1,
-  },
-  subheader: {
-    margin: '1rem',
-  },
-};
+import { OrderHistoryItem, SummaryHistoryItem } from '../../store/app';
+import './History.css';
 
-function Transition(props) {
+interface HistoryProps {
+  isOpen: boolean;
+  operations: OrderHistoryItem[];
+  summary: SummaryHistoryItem[];
+  onClear: () => void;
+  onClose: () => void;
+}
+
+function Transition(props: HistoryProps) {
   return <Slide direction="left" {...props} />;
 }
 
-class History extends React.Component {
+class History extends React.Component<HistoryProps> {
   handleClear = () => this.props.onClear();
   handleClose = () => this.props.onClose();
 
   render() {
-    const { isOpen, classes, operations, summary } = this.props;
+    const { isOpen, operations, summary } = this.props;
     return (
       <Dialog fullScreen TransitionComponent={Transition} open={isOpen}>
-        <AppBar className={classes.appBar}>
+        <AppBar className="History-appBar">
           <Toolbar>
             <IconButton color="inherit" aria-label="Close" onClick={this.handleClose}>
-              <ArrowBackIcon />
+              <ArrowBack />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography className="History-typography" variant="title" color="inherit">
               Информация о заказах
             </Typography>
             <Button color="inherit" onClick={this.handleClear}>
@@ -56,7 +53,7 @@ class History extends React.Component {
           </Toolbar>
         </AppBar>
 
-        <Typography className={classes.subheader} variant="subheading" align="center">
+        <Typography className="History-subheader" variant="subheading" align="center">
           Операционный отчет
         </Typography>
         <div className="TableWrapper">
@@ -75,11 +72,11 @@ class History extends React.Component {
             <TableBody>
               {!operations.length && (
                 <TableRow>
-                  <TableCell colSpan="7">Нет данных о проведенных операциях</TableCell>
+                  <TableCell colSpan={7}>Нет данных о проведенных операциях</TableCell>
                 </TableRow>
               )}
               {operations.map(item => (
-                <TableRow key={item.closeTime} hover>
+                <TableRow key={Number(item.closeTime)} hover>
                   <TableCell>{moment(item.startTime).format('L LT')}</TableCell>
                   <TableCell>{moment(item.closeTime).format('L LT')}</TableCell>
                   <TableCell>{moment(item.turnaroundTime).format('mm:ss')}</TableCell>
@@ -93,7 +90,7 @@ class History extends React.Component {
           </Table>
         </div>
 
-        <Typography className={classes.subheader} variant="subheading" align="center">
+        <Typography className="History-subheader" variant="subheading" align="center">
           Сводка по товарным позициям
         </Typography>
         <div className="TableWrapper">
@@ -109,7 +106,7 @@ class History extends React.Component {
             <TableBody>
               {!operations.length && (
                 <TableRow>
-                  <TableCell colSpan="7">Нет данных по товарным позициям</TableCell>
+                  <TableCell colSpan={7}>Нет данных по товарным позициям</TableCell>
                 </TableRow>
               )}
               {summary.map(item => (
@@ -128,13 +125,4 @@ class History extends React.Component {
   }
 }
 
-History.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  operations: PropTypes.array.isRequired,
-  summary: PropTypes.array.isRequired,
-  classes: PropTypes.object.isRequired,
-  onClear: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
-
-export default withStyles(styles)(History);
+export default History;

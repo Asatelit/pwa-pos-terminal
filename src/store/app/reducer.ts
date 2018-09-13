@@ -1,9 +1,8 @@
-import moment from 'moment';
-import Action from '../constants/ActionTypes';
-import createReducer from '../utils/createReducer';
-import { updateMarketData } from '../actions/appActions';
+import * as moment from 'moment';
+import { createReducer } from '../../utils/createReducer';
+import { AppActionTypes as Action, AppState, OrderHistoryItem, SummaryHistoryItem } from './types';
 
-const initialState = {
+const initialState: AppState = {
   actualProductData: {},
   actualTabIdx: 0,
   cart: [],
@@ -12,13 +11,13 @@ const initialState = {
   summaryHistory: [],
   isProductDialogOpened: false,
   isHistoryDialogOpened: false,
+  images: {},
   columnsCount: 3,
 };
 
-/**
- * ## App Reducers
- */
-export default createReducer(initialState, {
+const reducer = createReducer(initialState, {
+  [Action.RECEIVE_IMAGE]: (state, data) => ({ ...state, images: { ...state.images, ...data } }),
+
   [Action.RECEIVE_MARKET_DATA]: (state, stock) => ({ ...state, stock }),
 
   [Action.UPDATE_COLUMN_GRID]: (state, columnsCount) => ({ ...state, columnsCount }),
@@ -27,7 +26,7 @@ export default createReducer(initialState, {
 
   [Action.REMOVE_FROM_CART]: (state, index) => ({
     ...state,
-    cart: state.cart.filter((item, itemIdx) => index !== itemIdx),
+    cart: state.cart.filter((item, itemIdx: number) => index !== itemIdx),
   }),
 
   [Action.CLEAR_CART]: state => ({
@@ -47,8 +46,8 @@ export default createReducer(initialState, {
 
   [Action.OPEN_PRODUCT_DIALOG]: (state, actualProductData) => ({
     ...state,
-    isProductDialogOpened: true,
     actualProductData,
+    isProductDialogOpened: true,
   }),
 
   [Action.CLOSE_PRODUCT_DIALOG]: (state, productData) => ({
@@ -65,21 +64,21 @@ export default createReducer(initialState, {
   }),
 
   [Action.UPDATE_ORDER_HISTORY]: (state, isCompleted) => {
-    const orderData = {
-      startTime: state.cart[0].time,
+    const startTime = state.cart[0].time;
+    const orderData: OrderHistoryItem = {
+      startTime,
       closeTime: moment(),
-      turnaroundTime: moment().diff(state.cart[0].time),
+      turnaroundTime: `${moment().diff(startTime, 'minutes')} m.`,
       numberOfSKU: state.cart.length,
-      numberOfItems: parseFloat(
-        state.cart.map(el => el.quantity).reduce((acc, qty) => acc + qty),
-        10,
-      ),
-      summary: state.cart.reduce((acc, obj) => acc + obj.sum, 0),
+      numberOfItems: state.cart.map(el => (el.quantity || 0)).reduce((acc, qty) => acc + qty),
+      summary: state.cart.reduce((acc, obj) => acc + (obj.sum || 0), 0),
       status: isCompleted,
       items: state.cart,
     };
+
     const orderHistory = [...state.orderHistory, orderData];
-    const summaryHistory = [];
+
+    const summaryHistory: SummaryHistoryItem[] = [];
 
     // collect all the sku from order history
     const sku = orderHistory.reduce((acc, item) => [...acc, ...item.items], []);
@@ -100,5 +99,8 @@ export default createReducer(initialState, {
       orderHistory,
       cart: initialState.cart, // reset basket
     };
+
   },
 });
+
+export { reducer as appReducer };

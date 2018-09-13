@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import registerServiceWorker from './registerServiceWorker';
-import configureStore from './store/configureStore';
+import configureStore from './configureStore';
 /* Routes */
 import App from './App';
 /* Global CSS */
@@ -21,7 +21,7 @@ ReactDOM.render(
       </Router>
     </PersistGate>
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById('root') as HTMLElement,
 );
 
 // This lets the app load faster on subsequent visits in production, and gives it offline capabilities

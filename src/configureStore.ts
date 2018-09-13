@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { persistStore, persistReducer } from 'redux-persist';
-import localforage from 'localforage';
-import thunk from 'redux-thunk';
-import reducer from '../reducers';
+import * as localforage from 'localforage';
+import reduxSaga from 'redux-saga';
+import { rootReducer, rootSaga } from './store';
 
 /**
  * Creates a redux store with middleware and reducers using an initial state
@@ -15,21 +15,22 @@ export default function configureStore() {
   // https://github.com/zalmoxisus/redux-devtools-extension
   const composeEnhancers = composeWithDevTools({});
 
+  // Create the redux-saga middleware
+  const sagaMiddleware = reduxSaga();
+
   const persistConfig = { key: 'root', storage: localforage };
 
-  const persistedReducer = persistReducer(persistConfig, reducer);
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
   const enhancer = composeEnhancers(
     // Middleware is the suggested way to extend Redux with custom functionality.
     // Middleware lets you wrap the store's dispatch method for fun and profit.
     // https://redux.js.org/api-reference/applymiddleware
     applyMiddleware(
-      // Redux Thunk middleware allows you to write action creators that return a function instead of an action.
-      // The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met.
-      // The inner function receives the store methods dispatch and getState as parameters.
-      // https://github.com/gaearon/redux-thunk
-      thunk,
-      // other middleware if any
+      // Creates a Redux middleware and connects the Sagas to the Redux Store.
+      // Note: passing middleware as the last argument to createStore requires redux@>=3.1.0
+      // https://github.com/redux-saga/redux-saga/tree/master/docs/api#createsagamiddlewareoptions
+      sagaMiddleware,
     ),
 
     // other store enhancers if any
@@ -41,10 +42,12 @@ export default function configureStore() {
   if (module.hot) {
     module.hot.accept(() => {
       // This fetch the new state of the above reducers.
-      const nextRootReducer = require('../reducers/index');
+      const nextRootReducer = require('./store/index');
       store.replaceReducer(persistReducer(persistConfig, nextRootReducer));
     });
   }
+
+  sagaMiddleware.run(rootSaga);
 
   return { store, persistor };
 }

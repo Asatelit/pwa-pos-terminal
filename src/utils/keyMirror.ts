@@ -5,7 +5,7 @@
  * @param {Object} obj
  * @returns {Object}
  */
-export default function keyMirror(obj) {
+export default function keyMirror(obj: Object) {
   Object.keys(obj).forEach(key => Object.assign(obj, { [key]: key }));
   return obj;
 }

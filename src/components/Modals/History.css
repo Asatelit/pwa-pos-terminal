@@ -1,0 +1,11 @@
+.History-appBar {
+    position: relative;
+}
+
+.History-typography {
+    flex: 1;
+}
+
+.History-subheader {
+    margin: 1rem;
+}

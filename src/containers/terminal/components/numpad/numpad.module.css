@@ -1,0 +1,43 @@
+.root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+
+.col {
+  font-size: 2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  flex: 1 1 2rem;
+  justify-content: center;
+  background-color: white;
+  border-radius: .25rem;
+  box-shadow: 0 0 3px -1px rgba(0,0,0,.3);
+  margin: 0.25rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.col:focus {
+  color: #212529;
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+  box-shadow: 0 0 0 0.2rem rgba(216,217,219,.5);
+}
+
+.col:hover {
+  color: #212529;
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+  text-decoration: none;
+}

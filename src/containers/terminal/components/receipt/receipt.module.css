@@ -1,0 +1,78 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-size: .875rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.head {
+  display: none;
+}
+
+.body {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.listing {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.row {
+  cursor: pointer;
+}
+
+.cell {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  vertical-align: middle;
+}
+
+.name {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.qty {
+  text-align: right;
+}
+
+.price {
+  text-align: right;
+}
+
+.total {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.charge {
+  composes: buttonPrimary from '../../../../styles/button.module.css';
+  width: 100%;
+}
+
+.receiptsBtn {
+  composes: buttonLink from '../../../../styles/button.module.css';
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+

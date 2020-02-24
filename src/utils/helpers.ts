@@ -21,6 +21,6 @@ export function capitalizeFirstLetter(str: string): string {
 }
 
 // formats a number using fixed-point notation.
-export function financial(num: number): string {
+export function financial(num: number = 0): string {
   return `${num.toFixed(2)} $`;
 }

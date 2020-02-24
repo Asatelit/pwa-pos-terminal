@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Menu, Receipt, Items, ItemEditor, ChargeDialog, ReceiptsDialog, Drawer } from './components';
-import { TerminalContext } from 'hooks';
+import { AppContext } from 'hooks';
 import styles from './terminal.module.css';
 
 type TerminalState = {
@@ -9,7 +9,7 @@ type TerminalState = {
 };
 
 const Terminal: React.FC = () => {
-  const [context, updateContext, services] = useContext(TerminalContext);
+  const [context, updateContext, services] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({ isOpenReceiptsDialog: false, isOpenDrawer: false });
   const { categories, currentCategoryId, currentOrderId, currentItemId, orders, products, chargingOrderId } = context;
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { SvgIcon, SvgIconProps } from 'components';
+import { SvgIcon, SvgIconProps } from 'common/components';
 
-export default function AccountDetailsTwoTone(props: SvgIconProps) {
+export default function CardOutlineTwoTone(props: SvgIconProps) {
   return (
     <SvgIcon {...props}>
       <Fragment>

@@ -1,6 +1,26 @@
-import { Order, OrderItem, TerminalState } from 'types';
+import {Category, Order, OrderItem, Product, TerminalState} from 'types';
 import { isExist } from 'utils';
-import { newOrder } from 'hooks/terminal-assets';
+import { newOrder } from 'hooks/app-assets';
+
+// CATEGORY
+
+export function getCategoryById(categories: Category[], categoryId: number): Category {
+  const category = categories.find(entity => categoryId === entity.id);
+  if (!category) throw new Error('The specified category does not exist');
+  return category;
+}
+
+
+// ITEM
+
+export function getItemById(items: Product[], itemId: number): Product {
+  const item = items.find(entity => itemId === entity.id);
+  if (!item) throw new Error('The specified item does not exist');
+  return item;
+}
+
+
+// ORDER
 
 export function createOrder(state: TerminalState): [Order[], Order, number] {
   const updOrders: Order[] = [...state.orders];

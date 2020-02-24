@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Product, Category, TerminalServices } from 'types';
-import { Breadcrumbs, Card, Search } from './components';
+import { Breadcrumbs } from 'common/components';
+import { Card, Search } from './components';
 import styles from './items.module.css';
 
 type GoodsProps = {
@@ -68,7 +69,11 @@ const Items: React.FC<GoodsProps> = ({ categories, products, currentCategoryId, 
   return (
     <div className={styles.root}>
       <div className={styles.head}>
-        <Breadcrumbs />
+        <Breadcrumbs
+          categories={categories}
+          currentCategoryId={currentCategoryId}
+          onChange={changeCurrentCategory}
+        />
         <Search onChange={setSearchTerm} />
       </div>
       <div className={styles.body}>{hasSearchTerm ? renderFilteredItems() : renderContent()}</div>

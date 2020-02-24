@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 import { TerminalState, TerminalServices, Order } from 'types';
 import { isExist, getTimestamp } from 'utils';
-import { newOrderItem } from './terminal-assets';
-import { createOrder, getOrderData, getOrderItemIndexById } from './terminal-helpers';
+import { newOrderItem } from './app-assets';
+import { createOrder, getOrderData, getOrderItemIndexById } from './app-helpers';
 
 type Context<S> = [S, (value: Partial<S>) => void, TerminalServices];
 
@@ -36,12 +36,10 @@ const readContextFromLocalStorage = (initState: TerminalState): TerminalState =>
 
 const restoredState = readContextFromLocalStorage(TerminalInitialState[0]);
 
-export const TerminalContext = createContext<Context<TerminalState>>(TerminalInitialState);
+export const AppContext = createContext<Context<TerminalState>>(TerminalInitialState);
 
-export const TerminalContextProvider: React.FC = ({ children }) => {
+export const AppContextProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<TerminalState>(restoredState);
-
-
 
   const setContext = (value: Partial<TerminalState>) => {
     try {
@@ -53,8 +51,6 @@ export const TerminalContextProvider: React.FC = ({ children }) => {
       console.log(error);
     }
   };
-
-
 
   const services: TerminalServices = {
     // Adds the selected item to the current order
@@ -105,13 +101,42 @@ export const TerminalContextProvider: React.FC = ({ children }) => {
       setContext({ orders: updOrders, currentOrderId: updOrder.id });
     },
 
+    removeCategory: categoryId => {
+      const updCategories = [...state.categories];
+      const targetEntity = state.categories.findIndex(entity => categoryId === entity.id);
+      if (!isExist(targetEntity)) throw new Error('The specified category does not exist');
+      updCategories[targetEntity].isDeleted = true;
+      setContext({ categories: updCategories });
+    },
+
+    updateCategory: category => {
+      const updCategories = [...state.categories.filter(entity => entity.id !== category.id)];
+      setContext({ categories: [...updCategories, { ...category, lastModifiedTime: getTimestamp() }] });
+    },
+
     setCurrentCategory: (categoryId: number) => setContext({ currentCategoryId: categoryId }),
     setCurrentItem: (itemId: number) => setContext({ currentItemId: itemId }),
     setCurrentTable: (tableId: number) => setContext({ currentTableId: tableId }),
     setCurrentOrder: (orderId: number) => setContext({ currentOrderId: orderId }),
     setCurrentUser: (userId: number) => setContext({ currentUserId: userId }),
     setChargingOrder: (orderId: number) => setContext({ chargingOrderId: orderId }),
+    addCategory: category => setContext({ categories: [...state.categories, category] }),
+
+    addItem: product => setContext({ products: [...state.products, product] }),
+
+    updateItem: item => {
+      const updItems = [...state.products.filter(entity => entity.id !== item.id)];
+      setContext({ products: [...updItems, { ...item, lastModifiedTime: getTimestamp() }] });
+    },
+
+    removeItem: itemId => {
+      const updItems = [...state.products];
+      const targetEntity = state.products.findIndex(entity => itemId === entity.id);
+      if (!isExist(targetEntity)) throw new Error('The specified item does not exist');
+      updItems[targetEntity].isDeleted = true;
+      setContext({ products: updItems });
+    }
   };
 
-  return <TerminalContext.Provider value={[state, setContext, services]}>{children}</TerminalContext.Provider>;
+  return <AppContext.Provider value={[state, setContext, services]}>{children}</AppContext.Provider>;
 };

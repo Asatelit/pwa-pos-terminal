@@ -1,0 +1,40 @@
+.root {}
+
+.item {
+  user-select: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.infoActive {
+  color: #fff;
+  background-color: #007bff;
+}
+
+.infoDisabled {
+  cursor: default;
+}
+
+.toggle {
+  cursor: default;
+  min-width: 24px;
+}
+
+.icon {
+  opacity: .75;
+}
+
+.icon,
+.toggle {
+  margin-right: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.name {}

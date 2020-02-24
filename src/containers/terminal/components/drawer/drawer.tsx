@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { AccountDetailsTwoTone, ChevronRightTwoTone } from 'icons';
 import styles from './drawer.module.css';
 
@@ -7,8 +8,13 @@ type DrawerProps = {
 }
 
 const Drawer: React.FC<DrawerProps> = ({ onClose }) => {
+  const [redirect, setRedirect] = useState(false);
+
   const handleOnClickOnClose = () => onClose();
   const handleOnClickOnBackdrop = () => onClose();
+  const handleOnClickOnAdmin = () => setRedirect(true);
+
+  if (redirect) return <Redirect to={'/admin'} />;
 
   return (
     <Fragment>
@@ -19,7 +25,7 @@ const Drawer: React.FC<DrawerProps> = ({ onClose }) => {
           </button>
         </div>
         <div className={styles.body}>
-          <div className={styles.menuItem}>
+          <div className={styles.menuItem} onClick={handleOnClickOnAdmin}>
             <div className={styles.menuIcon}>
               <AccountDetailsTwoTone />
             </div>

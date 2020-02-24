@@ -7,6 +7,5 @@ export type Category = {
   isHidden: boolean;
   isDeleted: boolean;
   sortOrder: number;
-  subCategories: number[];
   lastModifiedTime: number;
 };

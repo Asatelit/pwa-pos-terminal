@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { SvgIcon, SvgIconProps } from 'components';
+import { SvgIcon, SvgIconProps } from 'common/components';
 
 export default function MenuTwoTone(props: SvgIconProps) {
   return (

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { SvgIcon, SvgIconProps } from 'common/components';
 
-export default function ChevronRightTwoTone(props: SvgIconProps) {
+export default function ChevronLeftTwoTone(props: SvgIconProps) {
   return (
     <SvgIcon {...props}>
       <Fragment>
-        <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+        <path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
       </Fragment>
     </SvgIcon>
   );

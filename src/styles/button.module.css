@@ -143,7 +143,8 @@
   overflow: visible;
 }
 
-.input:focus {
+.input:focus,
+.input:global(.focus) {
   color: #495057;
   background-color: #fff;
   border-color: #80bdff;

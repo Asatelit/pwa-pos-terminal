@@ -1,0 +1,91 @@
+@value moduleHeight: 4rem;
+
+.root {
+
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: moduleHeight;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.itemInfo {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0 2rem;
+  user-select: none;
+}
+
+.primaryBtn {
+  composes: buttonPrimary from '../../../../styles/button.module.css';
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: .875rem;
+  margin-right: 2rem;
+}
+
+.iconBtn {
+  composes: buttonTransparent from '../../../../styles/button.module.css';
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.breadcrumbs {
+  background-color: #e2e6ea;
+  padding: 0.5rem 1.5rem;
+}
+
+.body {
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e6ea;
+  padding: 0 2rem;
+  user-select: none;
+}
+
+.item:hover {
+  background-color: #f8f9fa;
+}
+
+.name {
+  margin-left: 1rem;
+  flex: 1 1 auto;
+}
+
+.presenter {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: .015em;
+  user-select: none;
+  margin: .5rem 0;
+  border-radius: .25rem;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 10rem;
+  width: 100%;
+  user-select: none;
+}

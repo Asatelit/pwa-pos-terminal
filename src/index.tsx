@@ -1,14 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Terminal } from 'containers';
-import { TerminalContextProvider } from 'hooks';
+import { createHashHistory } from 'history';
+import { Terminal, Admin } from 'containers';
+import { AppContextProvider } from 'hooks';
+import { Router, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 
+const hashHistory = createHashHistory();
+
+const NoMatch = () => (
+  <div>
+    <h1>404</h1>
+    Page Not Found
+  </div>
+);
+
 ReactDOM.render(
-  <TerminalContextProvider>
-    <Terminal />
-  </TerminalContextProvider>,
+    <AppContextProvider>
+      <Router history={hashHistory}>
+        <Switch>
+          <Route exact path="/">
+            <Terminal />
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route render={NoMatch} />
+        </Switch>
+      </Router>
+    </AppContextProvider>,
   document.getElementById('root'),
 );
 

@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useRef } from 'react';
-import { Order, ClosedOrder, Product, TerminalServices, OrderClosingReasons } from 'types';
+import React, { Fragment, useState } from 'react';
+import { Order, Product, TerminalServices, OrderClosingReasons } from 'types';
 import { ArrowLeftTwoTone } from 'icons';
 import { financial } from 'utils';
 import { Numpad } from '../index';

@@ -14,6 +14,8 @@ export type TerminalState = {
 };
 
 export type TerminalServices = {
+  addCategory: (category: Category) => void;
+  addItem: (item: Product) => void;
   addItemToCurrentOrder: (product: Product) => void;
   createOrder: () => void;
   chargeOrder: (closedOrder: ClosedOrder, orderId: number) => void;
@@ -24,4 +26,8 @@ export type TerminalServices = {
   setCurrentOrder: (orderId: number) => void;
   setCurrentUser: (userId: number) => void;
   setChargingOrder: (userId: number) => void;
+  removeCategory: (categoryId: number) => void;
+  updateCategory: (category: Category) => void;
+  updateItem: (item: Product) => void;
+  removeItem: (itemId: number) => void;
 };

@@ -2,13 +2,14 @@ export type Product = {
   id: number;
   name: string;
   barcode: string;
-  color: string;
+  color: string | null;
   extras: string[];
   hasModificationsPrices: boolean;
   modifications: ProductModification[];
-  parentId: number | null;
+  parentId: number;
   picture: string | null;
   price: number;
+  costPrice: number;
   sortOrder: number;
   unit: string;
   isHidden: boolean;

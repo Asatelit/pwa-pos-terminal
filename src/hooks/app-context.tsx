@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import localForage from 'localforage';
 import { TerminalState, TerminalServices, Order } from 'types';
 import { isExist, getTimestamp } from 'utils';
 import { newOrderItem } from './app-assets';
@@ -18,7 +19,6 @@ export const TerminalInitialState: Context<TerminalState> = [
     currentUserId: 0,
     currentTableId: 0,
     currentItemId: 0,
-    chargingOrderId: 0,
   },
   () => {},
   null as any,
@@ -46,9 +46,9 @@ export const AppContextProvider: React.FC = ({ children }) => {
       const newState = { ...state, ...value };
       setState(newState); // update state
       console.info('State updated:', newState);
-      window.localStorage.setItem('state', JSON.stringify(newState)); // save state to local storage
+      localForage.setItem('state', JSON.stringify(newState)); // save state to local storage
     } catch (error) {
-      console.log(error);
+      throw new Error('Error writing data to offline storage.');
     }
   };
 
@@ -119,7 +119,6 @@ export const AppContextProvider: React.FC = ({ children }) => {
     setCurrentTable: (tableId: number) => setContext({ currentTableId: tableId }),
     setCurrentOrder: (orderId: number) => setContext({ currentOrderId: orderId }),
     setCurrentUser: (userId: number) => setContext({ currentUserId: userId }),
-    setChargingOrder: (orderId: number) => setContext({ chargingOrderId: orderId }),
     addCategory: category => setContext({ categories: [...state.categories, category] }),
 
     addItem: product => setContext({ products: [...state.products, product] }),
@@ -135,7 +134,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
       if (!isExist(targetEntity)) throw new Error('The specified item does not exist');
       updItems[targetEntity].isDeleted = true;
       setContext({ products: updItems });
-    }
+    },
   };
 
   return <AppContext.Provider value={[state, setContext, services]}>{children}</AppContext.Provider>;

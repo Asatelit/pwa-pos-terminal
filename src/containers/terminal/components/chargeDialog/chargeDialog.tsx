@@ -1,30 +1,36 @@
 import React, { Fragment, useState } from 'react';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import { Order, Product, TerminalServices, OrderClosingReasons } from 'types';
 import { ArrowLeftTwoTone } from 'icons';
 import { financial } from 'utils';
+import { getOrderById } from 'hooks';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
+import {Routes} from "../../../../common/const";
 
 type ChargeDialogProps = {
-  orderId: number;
-  order: Order | null;
-  products: Product[];
+  orders: Order[],
   services: TerminalServices;
 };
 
-const ChargeDialog: React.FC<ChargeDialogProps> = ({ orderId, order, products, services }) => {
+const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
+  const { id } = useParams();
   const [ref, setRef] = useState();
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
+  const [redirect, setRedirect] = useState('');
 
-  if (!order) return null;
+  // redirect processing
+  if (redirect) return <Redirect to={redirect} />;
 
-  // state helpers
-  const setCashPaymentAmount = (cashPaymentAmount: string) => setState({ ...state, cashPaymentAmount });
-  const setCardPaymentAmount = (cardPaymentAmount: string) => setState({ ...state, cardPaymentAmount });
-
-  const setActiveInput = (event: React.FocusEvent<HTMLInputElement>) => setRef(event.target.id);
+  // order reference check
+  if (!id) return <div>Incorrect URL</div>;
+  const order = getOrderById(orders, Number(id));
 
   // helpers
+  const setCashPaymentAmount = (cashPaymentAmount: string) => setState({ ...state, cashPaymentAmount });
+  const setCardPaymentAmount = (cardPaymentAmount: string) => setState({ ...state, cardPaymentAmount });
+  const setActiveInput = (event: React.FocusEvent<HTMLInputElement>) => setRef(event.target.id);
+
   const closedOrder = {
     ...order,
     cardPaymentAmount: parseFloat(state.cardPaymentAmount),
@@ -38,12 +44,17 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orderId, order, products, s
   const changeAmount = totalAmount - closedOrder.totalAmount;
   const hasChange = changeAmount > 0;
 
-  // handlers
-  const handleCloseDialog = () => services.setChargingOrder(0);
-  const handleChargeOrder = () =>
-    services.chargeOrder({ ...closedOrder, cashChange: hasChange ? changeAmount : 0 }, orderId);
-  const handleCloseWithoutPayment = (closingReason: OrderClosingReasons) =>
-    services.chargeOrder({ ...closedOrder, closingReason }, orderId);
+  const closeDialog = () => setRedirect(Routes.Terminal);
+
+  const handleChargeOrder = () => {
+    services.chargeOrder({ ...closedOrder, cashChange: hasChange ? changeAmount : 0 }, order.id);
+    closeDialog();
+  };
+
+  const handleCloseWithoutPayment = (closingReason: OrderClosingReasons) => {
+    services.chargeOrder({ ...closedOrder, closingReason }, order.id);
+    closeDialog();
+  };
 
   return (
     <Fragment>
@@ -51,12 +62,12 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orderId, order, products, s
         <div className={styles.dialog}>
           <div className={styles.content}>
             <div className={styles.head}>
-              <button className={styles.closeBtn} onClick={handleCloseDialog}>
+              <Link className={styles.closeBtn} to={Routes.Terminal}>
                 <ArrowLeftTwoTone />
                 <span>Back</span>
-              </button>
+              </Link>
               <div className={styles.itemInfo}>
-                <span className={styles.itemName}>Receipt {order.orderName}</span>
+                <span className={styles.itemName}>Receipt #{order.orderName}</span>
               </div>
             </div>
             <div className={styles.body}>

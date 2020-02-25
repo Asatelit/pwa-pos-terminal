@@ -1,7 +1,6 @@
 import { Category, Product, Order, ClosedOrder } from 'types';
 
 export type TerminalState = {
-  chargingOrderId: number;
   currentCategoryId: number; // Current category identifier
   currentOrderId: number; // Current order identifier
   currentUserId: number; // Current user identifier
@@ -25,7 +24,6 @@ export type TerminalServices = {
   setCurrentTable: (tableId: number) => void;
   setCurrentOrder: (orderId: number) => void;
   setCurrentUser: (userId: number) => void;
-  setChargingOrder: (userId: number) => void;
   removeCategory: (categoryId: number) => void;
   updateCategory: (category: Category) => void;
   updateItem: (item: Product) => void;

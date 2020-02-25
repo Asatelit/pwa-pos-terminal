@@ -16,11 +16,14 @@
 
 .receiptWrapper {
   width: 30%;
-  min-width: 360px;
+  min-width: 220px;
   height: 100%;
 }
 
-.goodsWrapper {
+.itemsWrapper {
   width: 70%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Order, Product, TerminalServices } from 'types';
-import { isExist } from 'utils';
+import { isExist, financial } from 'utils';
 import { CloseTwoTone, PlusTwoTone, MinusTwoTone } from 'icons';
 import styles from './itemEditor.module.css';
 
@@ -66,7 +66,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
               </button>
               <div className={styles.itemInfo}>
                 <span className={styles.itemName}>{instance.name}</span>
-                <span className={styles.itemAmount}>{item.quantity * item.price} $</span>
+                <span className={styles.itemAmount}>{financial(item.quantity * item.price)}</span>
               </div>
               <button className={styles.saveBtn} onClick={handleApply}>
                 Save

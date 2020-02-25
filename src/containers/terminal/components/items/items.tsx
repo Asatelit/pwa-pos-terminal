@@ -26,6 +26,7 @@ const Items: React.FC<GoodsProps> = ({ categories, products, currentCategoryId, 
   const filteredItems = hasSearchTerm
     ? products.filter(
         product =>
+          !product.isDeleted && !product.isHidden &&
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           product.barcode.toLowerCase().includes(searchTerm.toLowerCase()),
       )

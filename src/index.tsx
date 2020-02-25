@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createHashHistory } from 'history';
 import { Terminal, Admin } from 'containers';
 import { AppContextProvider } from 'hooks';
+import { Routes } from 'common/const';
 import { Router, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
@@ -20,10 +21,10 @@ ReactDOM.render(
     <AppContextProvider>
       <Router history={hashHistory}>
         <Switch>
-          <Route exact path="/">
+          <Route path={Routes.Terminal}>
             <Terminal />
           </Route>
-          <Route path="/admin">
+          <Route path={Routes.AdminDashboard}>
             <Admin />
           </Route>
           <Route render={NoMatch} />

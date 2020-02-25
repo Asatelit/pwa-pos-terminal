@@ -30,7 +30,7 @@ export const newOrder = (state: TerminalState): Order => ({
   tipsCash: 0,
   tipsCard: 0,
   notes: '',
-  orderName: Math.max(...state.closedOrders.map(order => order.id), 0) + state.orders.length + 1,
+  orderName: Math.max(...state.closedOrders.map(order => order.orderName), 0) + state.orders.length + 1,
 });
 
 export const newOrderItem = (product: Product): OrderItem => ({

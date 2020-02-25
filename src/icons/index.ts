@@ -11,6 +11,7 @@ export { default as EditSquareOutlineTwoTone } from './editSquareOutlineTwoTone'
 export { default as FolderTwoTone } from './folderTwoTone';
 export { default as MenuDownTwoTone } from './menuDownTwoTone';
 export { default as MenuRightTwoTone } from './menuRightTwoTone';
+export { default as MenuSwapTwoTone } from './menuSwapTwoTone';
 export { default as MenuTwoTone } from './menuTwoTone';
 export { default as MinusTwoTone } from './minusTwoTone';
 export { default as PlusTwoTone } from './plusTwoTone';

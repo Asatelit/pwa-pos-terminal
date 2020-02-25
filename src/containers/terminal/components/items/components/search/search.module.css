@@ -13,7 +13,7 @@
 }
 
 .cancel {
-  composes: buttonLink from '../../../../../../styles/button.module.css';
+  composes: buttonTransparent from '../../../../../../styles/button.module.css';
   position: absolute;
   right: 4px;
   z-index: 1;
@@ -21,6 +21,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: .7;
+}
+.cancel:hover {
+  opacity: 1;
 }
 
 .button {

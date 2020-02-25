@@ -63,7 +63,7 @@
 }
 
 .closeBtn {
-  composes: buttonLink from '../../../../styles/button.module.css';
+  composes: buttonTransparent from '../../../../styles/button.module.css';
   color: inherit;
   height: moduleHeight;
   width: moduleHeight;
@@ -71,6 +71,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  opacity: .85;
+}
+.closeBtn:hover {
+  opacity: 1;
 }
 
 .saveBtn {

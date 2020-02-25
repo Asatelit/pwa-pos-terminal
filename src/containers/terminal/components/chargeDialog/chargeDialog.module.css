@@ -62,13 +62,17 @@
 }
 
 .closeBtn {
-  composes: buttonLink from '../../../../styles/button.module.css';
+  composes: buttonTransparent from '../../../../styles/button.module.css';
   color: inherit;
   height: moduleHeight;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  opacity: .85;
+}
+.closeBtn:hover {
+  opacity: 1;
 }
 
 .closeBtn span {
@@ -89,13 +93,13 @@
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
-  margin: 2rem;
 }
 
 .order {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  padding: 2rem;
 }
 
 .orderHead {
@@ -182,11 +186,13 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  margin-right: 2rem;
   background-color: #dae0e5;
+  min-width: 350px;
+  max-width: 500px;
 }
 
 .numpad {
   flex: 1 1 auto;
   max-height: 400px;
+  padding: 2rem;
 }

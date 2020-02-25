@@ -6,14 +6,53 @@
 }
 
 .actions {
+  position: relative;
+  height: 54px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px 0;
+  justify-content: space-between;
+  background: #545454;
+  color: white;
+  font-size: .875rem;
+}
+.actions:after {
+  content: none;
+  position: absolute;
+  top: 12px;
+  right: 0;
+  height: 30px;
+  width: 1px;
+  background-color: gray;
 }
 
 .head {
   display: none;
+}
+@media print {
+  .head {
+    display: block;
+    width: 375px;
+    font-size: 14px;
+  }
+}
+.head dl {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow: visible;
+}
+.head dl dt {
+  flex: 0 0 30%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.head dl dd {
+  flex:0 0 70%;
+  margin-left: auto;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .body {
@@ -22,12 +61,23 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+@media print {
+  .body {
+    width: 375px;
+    font-size: 14px;
+  }
+}
 
 .foot {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+}
+@media print {
+  .foot {
+    display: none;
+  }
 }
 
 .listing {
@@ -44,6 +94,7 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid rgba(0,0,0,.08);
   vertical-align: middle;
+  user-select: none;
 }
 
 .name {
@@ -51,28 +102,32 @@
   padding-left: 1rem;
 }
 
-.qty {
-  text-align: right;
-}
-
 .price {
   text-align: right;
-}
-
-.total {
-  text-align: right;
-  padding-right: 1rem;
+  padding: 0 1rem;
+  width: 20%;
+  white-space: nowrap;
 }
 
 .charge {
   composes: buttonPrimary from '../../../../styles/button.module.css';
+  text-decoration: none;
   width: 100%;
 }
 
 .receiptsBtn {
-  composes: buttonLink from '../../../../styles/button.module.css';
-  font-size: 1.125rem;
+  composes: buttonTransparent from '../../../../styles/button.module.css';
+  font-size: 1rem;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  opacity: .85;
+}
+.receiptsBtn:hover {
+  opacity: 1;
 }
 
+.receiptsIcon {
+  opacity: .5;
+}
 

@@ -51,6 +51,8 @@
   border-radius: 0.25rem;
   outline: 0;
   overflow: hidden;
+  max-height: 600px;
+  max-width: 800px;
 }
 
 .head {
@@ -62,7 +64,7 @@
 }
 
 .closeBtn {
-  composes: buttonLink from '../../../../styles/button.module.css';
+  composes: buttonTransparent from '../../../../styles/button.module.css';
   color: inherit;
   height: moduleHeight;
   display: flex;
@@ -70,6 +72,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 0;
+  opacity: .85;
+}
+.closeBtn:hover {
+  opacity: 1;
 }
 
 .closeBtn span {
@@ -90,7 +96,6 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  margin: 2rem;
   overflow: auto;
 }
 
@@ -118,10 +123,11 @@
 
 .orderName {
   flex: 1 1 auto;
-  font-size: 1.3125rem;
+  font-size: 1rem;
 }
 
 .orderDate {
+  font-size: .875rem;
   margin-left: 2rem;
   opacity: .85;
 }
@@ -132,7 +138,7 @@
 
 .createBtn {
   composes: buttonLink from '../../../../styles/button.module.css';
-  font-size: 1.3125rem;
+  font-size: inherit;
   text-align: left;
   padding: 0.5rem 1rem;
   border-radius: 2px;

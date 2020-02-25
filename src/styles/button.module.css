@@ -16,6 +16,7 @@
   font-family: inherit;
   overflow: visible;
   text-transform: none;
+  text-decoration: none;
   -webkit-appearance: button;
   box-sizing: border-box;
 }
@@ -34,12 +35,18 @@
   text-decoration: none;
 }
 
-.button:not(:disabled) {
+.button:not(:disabled),
+.button:not:global(.disabled) {
   cursor: pointer;
 }
 
-.button:disabled {
+.button:disabled,
+.button:global(.disabled) {
   opacity: .65;
+}
+
+.button:global(.disabled) {
+  pointer-events: none;
 }
 
 
@@ -61,6 +68,7 @@
   font-family: inherit;
   overflow: visible;
   text-transform: none;
+  text-decoration: none;
   -webkit-appearance: button;
   box-sizing: border-box;
   outline: none;
@@ -99,7 +107,8 @@
   border-color: #0062cc;
 }
 
-.buttonPrimary:disabled {
+.buttonPrimary:disabled,
+.buttonPrimary:global(.disabled) {
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;

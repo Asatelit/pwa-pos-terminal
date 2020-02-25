@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createHashHistory } from 'history';
 import { Terminal, Admin } from 'containers';
 import { AppContextProvider } from 'hooks';
 import { Routes } from 'common/const';
-import { Router, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 
@@ -20,6 +20,7 @@ const NoMatch = () => (
 ReactDOM.render(
     <AppContextProvider>
       <Router history={hashHistory}>
+        <Redirect from='/' to={Routes.Terminal} />
         <Switch>
           <Route path={Routes.Terminal}>
             <Terminal />

@@ -1,6 +1,6 @@
 export enum Routes {
-  Terminal = '/',
-  TerminalOrderCharge = '/order/:id/charge',
+  Terminal = '/pos',
+  TerminalOrderCharge = '/pos/order/:id/charge',
   AdminDashboard = '/admin',
   AdminCategoryList = '/admin/categories',
   AdminItemList = '/admin/items',

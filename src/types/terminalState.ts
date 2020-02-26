@@ -1,6 +1,7 @@
 import { Category, Product, Order, ClosedOrder } from 'types';
 
 export type TerminalState = {
+  isLoading: boolean;
   currentCategoryId: number; // Current category identifier
   currentOrderId: number; // Current order identifier
   currentUserId: number; // Current user identifier

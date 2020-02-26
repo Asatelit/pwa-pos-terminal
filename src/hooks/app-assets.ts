@@ -48,6 +48,18 @@ export type NewCategory = {
   sortOrder?: number;
 };
 
+export const homeCategory: Category = {
+  id: 0,
+  name: 'Home Screen',
+  parentId: 0,
+  color: null,
+  picture: null,
+  isHidden: false,
+  isDeleted: false,
+  sortOrder: 0,
+  lastModifiedTime: 0,
+};
+
 export const newCategory = (data: NewCategory): Category => ({
   id: getTimestamp(),
   name: data.name,

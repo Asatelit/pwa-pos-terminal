@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
-import { Order, Product, TerminalServices, OrderClosingReasons } from 'types';
+import { Order, TerminalServices, OrderClosingReasons } from 'types';
 import { ArrowLeftTwoTone } from 'icons';
 import { financial } from 'utils';
 import { getOrderById } from 'hooks';
+import { Routes } from 'common/const';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
-import {Routes} from "../../../../common/const";
 
 type ChargeDialogProps = {
-  orders: Order[],
+  orders: Order[];
   services: TerminalServices;
 };
 
@@ -19,11 +19,11 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
 
-  // redirect processing
+  // handle redirect
   if (redirect) return <Redirect to={redirect} />;
 
   // order reference check
-  if (!id) return <div>Incorrect URL</div>;
+  if (!id) setRedirect(Routes.PageBadRequest);
   const order = getOrderById(orders, Number(id));
 
   // helpers

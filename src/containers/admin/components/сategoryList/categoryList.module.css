@@ -55,6 +55,8 @@
   border-bottom: 1px solid #e2e6ea;
   padding: 0 2rem;
   user-select: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .item:hover {

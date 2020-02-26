@@ -28,13 +28,7 @@
 .head {
   display: none;
 }
-@media print {
-  .head {
-    display: block;
-    width: 375px;
-    font-size: 14px;
-  }
-}
+
 .head dl {
   display: flex;
   flex-flow: row;
@@ -61,23 +55,12 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-@media print {
-  .body {
-    width: 375px;
-    font-size: 14px;
-  }
-}
 
 .foot {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-}
-@media print {
-  .foot {
-    display: none;
-  }
 }
 
 .listing {
@@ -97,12 +80,13 @@
   user-select: none;
 }
 
-.name {
+.cellName {
   text-align: left;
   padding-left: 1rem;
+  font-weight: 600;
 }
 
-.price {
+.cellPrice {
   text-align: right;
   padding: 0 1rem;
   width: 20%;
@@ -131,3 +115,7 @@
   opacity: .5;
 }
 
+.ghostly {
+  opacity: .8;
+  font-weight: 400;
+}

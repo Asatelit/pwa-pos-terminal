@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Order, Product, TerminalServices } from 'types';
@@ -29,12 +29,14 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
     return (
       <Fragment>
         <tbody>
-        {order.items.map(item => (
-          <tr key={`item-${item.id}`} className={styles.row} onClick={() => handleEditOrderItem(item.id)}>
-            <td className={`${styles.cell} ${styles.name}`}>{`${getItemName(item.id)} x ${item.quantity}`}</td>
-            <td className={`${styles.cell} ${styles.price}`}>{financial(item.quantity * item.price)}</td>
-          </tr>
-        ))}
+          {order.items.map(item => (
+            <tr key={`item-${item.id}`} className={styles.row} onClick={() => handleEditOrderItem(item.id)}>
+              <td className={`${styles.cell} ${styles.cellName}`}>
+                {getItemName(item.id)} <span className={styles.ghostly}> x {item.quantity}</span>
+              </td>
+              <td className={`${styles.cell} ${styles.cellPrice}`}>{financial(item.quantity * item.price)}</td>
+            </tr>
+          ))}
         </tbody>
       </Fragment>
     );
@@ -49,17 +51,19 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
         </button>
       </div>
       <div className={styles.head}>
-        <img style={{ display: "none" }} src="" alt="" />
-        <h1 style={{ display: "none" }} className="place-name">{/*TODO: Add Place Name*/}</h1>
+        <img style={{ display: 'none' }} src="" alt="" />
+        <h1 style={{ display: 'none' }} className="place-name">
+          {/*TODO: Add Place Name*/}
+        </h1>
         <dl>
-          <dt>Receipt #</dt><dd>{order?.orderName}</dd>
-          <dt>Printed at</dt><dd className="print-time">{moment().format('lll')}</dd>
+          <dt>Receipt #</dt>
+          <dd>{order?.orderName}</dd>
+          <dt>Printed at</dt>
+          <dd className="print-time">{moment().format('lll')}</dd>
         </dl>
       </div>
       <div className={styles.body}>
-        <table className={styles.listing}>
-          {renderOrderItems()}
-        </table>
+        <table className={styles.listing}>{renderOrderItems()}</table>
       </div>
       <div className={styles.foot}>
         <Link

@@ -5,11 +5,6 @@
   background: url('./wood_texture.jpg') beige center center;
   background-size: cover;
 }
-@media print {
-  .root {
-    display: none;
-  }
-}
 
 .head {
   position: relative;

@@ -1,15 +1,14 @@
-import {Category, Order, OrderItem, Product, TerminalState} from 'types';
+import { Category, Order, OrderItem, Product, TerminalState } from 'types';
 import { isExist } from 'utils';
-import { newOrder } from 'hooks/app-assets';
+import { newOrder, homeCategory } from 'hooks/app-assets';
 
 // CATEGORY
 
 export function getCategoryById(categories: Category[], categoryId: number): Category {
-  const category = categories.find(entity => categoryId === entity.id);
+  const category = categoryId === 0 ? homeCategory : categories.find(entity => categoryId === entity.id);
   if (!category) throw new Error('The specified category does not exist');
   return category;
 }
-
 
 // ITEM
 
@@ -18,7 +17,6 @@ export function getItemById(items: Product[], itemId: number): Product {
   if (!item) throw new Error('The specified item does not exist');
   return item;
 }
-
 
 // ORDER
 

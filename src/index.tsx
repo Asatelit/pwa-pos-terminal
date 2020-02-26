@@ -20,7 +20,6 @@ const NoMatch = () => (
 ReactDOM.render(
     <AppContextProvider>
       <Router history={hashHistory}>
-        <Redirect from='/' to={Routes.Terminal} />
         <Switch>
           <Route path={Routes.Terminal}>
             <Terminal />
@@ -28,6 +27,7 @@ ReactDOM.render(
           <Route path={Routes.AdminDashboard}>
             <Admin />
           </Route>
+          <Redirect strict from='/' to={Routes.Terminal} />
           <Route render={NoMatch} />
         </Switch>
       </Router>

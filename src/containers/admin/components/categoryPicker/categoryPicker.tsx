@@ -59,7 +59,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
   const renderItem = (id: number, name: string, level: number = 0) => {
     const child = getCategories(id, level + 1);
     const isExpanded = expandedNodes.includes(id);
-    const isDisabled = id === parentNode || id === selected;
+    const isDisabled = id === selected;
     const toggleIcon = isExpanded ? <MenuDownTwoTone /> : <MenuRightTwoTone />;
     const activeClass = id === parentNode ? styles.infoActive : '';
     if (removeMode && isDisabled) return null;

@@ -2,26 +2,34 @@ import React, { Fragment, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
-import { CategoryList, ItemList, ItemEditor, Drawer } from './components';
+import { CategoryEditor, CategoryList, ItemList, ItemEditor, Drawer } from './components';
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
-  const { categories, products } = context;
+  const { isLoading, categories, products } = context;
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className={styles.root}>
       <Switch>
         <Fragment>
           <div className={styles.nav}>
-            <Drawer onClose={() => null} />
+            <Drawer />
           </div>
           <div className={styles.content}>
-            <Route path={Routes.AdminCategoryList}>
+            <Route exact path={Routes.AdminCategoryList}>
               <CategoryList categories={categories} services={services} />
             </Route>
+            <Route exact path={Routes.AdminCategoryEdit}>
+              <CategoryEditor categories={categories} services={services} />
+            </Route>
+            <Route exact path={Routes.AdminCategoryCreate}>
+              <CategoryEditor createMode categories={categories} services={services} />
+            </Route>
             <Route path={Routes.AdminItemList}>
-              <ItemList items={products} services={services} />
+              <ItemList categories={categories} items={products} services={services} />
             </Route>
             <Route exact path={Routes.AdminItemEdit}>
               <ItemEditor items={products} categories={categories} service={services} />

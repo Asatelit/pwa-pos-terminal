@@ -13,7 +13,7 @@ type TerminalState = {
 const Terminal: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({ isOpenReceiptsDialog: false, isOpenDrawer: false });
-  const { categories, currentCategoryId, currentOrderId, currentItemId, orders, products } = context;
+  const { isLoading, categories, currentCategoryId, currentOrderId, currentItemId, orders, products } = context;
 
   const updateState = (data: Partial<TerminalState>) => setState({ ...state, ...data });
   const currentOrder = orders.find(order => currentOrderId === order.id) || null;
@@ -36,6 +36,8 @@ const Terminal: React.FC = () => {
       onClose={() => updateState({ isOpenReceiptsDialog: false })}
     />
   );
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <Switch>

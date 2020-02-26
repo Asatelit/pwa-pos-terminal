@@ -1,24 +1,20 @@
 import React, { Fragment, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { CardOutlineTwoTone, FolderTwoTone, ChevronRightTwoTone, TabletTwoTone } from 'icons';
+import { CardOutlineTwoTone, FolderTwoTone, TabletTwoTone } from 'icons';
 import { Routes } from 'common/const';
 import styles from './drawer.module.css';
 
-type DrawerProps = {
-  onClose: () => void;
-};
-
-const Drawer: React.FC<DrawerProps> = ({ onClose }) => {
-  const handleOnClickOnClose = () => onClose();
-
+const Drawer: React.FC = () => {
   return (
     <Fragment>
       <div className={styles.root}>
-        <div className={styles.head}>
-
-        </div>
+        <div className={styles.head} />
         <div className={styles.body}>
-          <NavLink className={styles.menuItem} activeClassName={styles.menuItemActive} to={Routes.AdminCategoryList}>
+          <NavLink
+            className={styles.menuItem}
+            activeClassName={styles.menuItemActive}
+            to={Routes.AdminCategoryList.replace(':id', 'root')}
+          >
             <div className={styles.menuIcon}>
               <FolderTwoTone />
             </div>

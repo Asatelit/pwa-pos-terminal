@@ -1,3 +1,5 @@
+![](https://raw.githubusercontent.com/asatelit/pwa-pos-terminal/master/doc/images/preview.jpg)
+
 # Online Client Side POS Terminal
 
 Asatelit Point of Sale Terminal is a simple browser-based progressive web application built using common web technologies including HTML, CSS and TypeScript on top of Facebook's [React][react] library.

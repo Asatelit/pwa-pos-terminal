@@ -1,53 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { ArrowLeftTwoTone } from 'icons';
 import { Category, TerminalServices } from 'types';
+import { Routes } from 'common/const';
 import { newCategory, NewCategory, getCategoryById } from 'hooks';
 import CategoryPicker from '../categoryPicker/categoryPicker';
 import styles from './categoryEditor.module.css';
 
-type CreateItemFormProps = {
+type CategoryEditorProps = {
+  createMode?: boolean;
   categories: Category[];
   services: TerminalServices;
-  onClose: () => void;
-  itemId?: number;
 };
 
-const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, onClose, itemId }) => {
-  const initialState: NewCategory = {
-    name: '',
-    parentId: 0,
-    color: null,
-    picture: null,
-  };
+const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, services, createMode = false }) => {
+  const initialState: NewCategory = { name: '', parentId: 0, color: null, picture: null };
+  const { id: contextCategoryId } = useParams();
 
-  const [state, setState] = useState<NewCategory>(initialState);
   const [isPickerShown, togglePicker] = useState(false);
-  const updateState = (data: Partial<NewCategory>) => setState({ ...state, ...data });
+  const [redirect, setRedirect] = useState('');
+  const updateData = (upd: Partial<NewCategory>) => setData({ ...data, ...upd });
+
+  const { id, name, parentId, color, picture } = contextCategoryId
+    ? getCategoryById(categories, Number(contextCategoryId))
+    : { ...initialState, id: 0 };
+  const updData: NewCategory = createMode ? { ...initialState, parentId: id } : { name, parentId, color, picture };
+  const [data, setData] = useState<NewCategory>(updData);
+
+  if (!contextCategoryId) setRedirect(Routes.PageBadRequest);
+
+  // handle redirect
+  if (redirect) return <Redirect to={redirect} />;
 
   // helpers
-  const isEditor = !!itemId;
-  const hasInvalidData = !state.name;
-  const selectedCategoryName = categories.find(item => item.id === state.parentId)?.name || 'Home Screen';
-  const createCategory = () => services.addCategory(newCategory(state));
+  const hasInvalidData = !data.name;
+  const getParentCategory = (id: number) => getCategoryById(categories, id);
+  const createCategory = () => services.addCategory(newCategory(data));
   const editCategory = (category: Category) => services.updateCategory(category);
-
-  useEffect(() => {
-    if (!itemId) return;
-    const { name, parentId, color, picture } = getCategoryById(categories, itemId);
-    setState({ name, parentId, color, picture });
-  }, [itemId]);
+  const closeEditor = () =>
+    setRedirect(Routes.AdminCategoryList.replace(':id', contextCategoryId ? contextCategoryId.toString() : 'root'));
 
   // handlers
-  const handleOnChangeCategoryPicker = (categoryId: number) => updateState({ parentId: categoryId });
-  const handleOnClickOnClose = () => onClose();
+  const handleOnChangeCategoryPicker = (categoryId: number) => updateData({ parentId: categoryId });
+  const handleOnClickOnClose = () => closeEditor();
   const handleOnClickOnPrimaryAction = () => {
-    if (isEditor && itemId) {
-      const category = getCategoryById(categories, itemId);
-      editCategory({ ...category, ...state });
+    if (!createMode && contextCategoryId) {
+      const category = getCategoryById(categories, Number(contextCategoryId));
+      editCategory({ ...category, ...data });
     } else {
       createCategory();
     }
-    onClose();
+    closeEditor();
   };
 
   return (
@@ -58,7 +61,7 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
           <span>Back</span>
         </button>
         <div className={styles.itemInfo}>
-          <span className={styles.itemName}>{isEditor ? 'Edit Category' : 'New Category'}</span>
+          <span className={styles.itemName}>{!createMode ? 'Edit Category' : 'New Category'}</span>
         </div>
       </div>
       <div className={styles.form}>
@@ -70,8 +73,8 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
             id="ItemFormName"
             type="text"
             className={styles.controlInput}
-            value={state.name}
-            onChange={evt => updateState({ name: evt.target.value })}
+            value={data.name}
+            onChange={evt => updateData({ name: evt.target.value })}
           />
         </div>
         <div className={styles.control}>
@@ -84,7 +87,7 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
               type="text"
               id="CreateCategoryFormCategoryNameField"
               className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
-              value={selectedCategoryName}
+              value={getParentCategory(data?.parentId || 0).name}
               onClick={() => togglePicker(!isPickerShown)}
             />
             {isPickerShown && (
@@ -92,7 +95,7 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
                 removeMode
                 className={styles.picker}
                 categories={categories}
-                selected={itemId}
+                selected={Number(contextCategoryId)}
                 onChange={handleOnChangeCategoryPicker}
                 onClose={() => togglePicker(false)}
               />
@@ -105,8 +108,8 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
           </label>
           <select
             className={styles.controlInput}
-            value={state.color || 'transparent'}
-            onChange={evt => updateState({ color: evt.target.value })}
+            value={data.color || 'transparent'}
+            onChange={evt => updateData({ color: evt.target.value })}
           >
             <optgroup label="Please specify the color">
               <option value="transparent">Default</option>
@@ -122,7 +125,7 @@ const CategoryEditor: React.FC<CreateItemFormProps> = ({ categories, services, o
         <div className={styles.control}>
           <div className={styles.controlLabel} />
           <button className={styles.primaryAction} disabled={hasInvalidData} onClick={handleOnClickOnPrimaryAction}>
-            { isEditor ? 'Update' : 'Add' }
+            {!createMode ? 'Update' : 'Add'}
           </button>
         </div>
       </div>

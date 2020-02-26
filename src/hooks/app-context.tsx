@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import localForage from 'localforage';
 import { TerminalState, TerminalServices, Order } from 'types';
 import { isExist, getTimestamp } from 'utils';
@@ -10,6 +10,7 @@ type Context<S> = [S, (value: Partial<S>) => void, TerminalServices];
 // initial state
 export const TerminalInitialState: Context<TerminalState> = [
   {
+    isLoading: true,
     products: [],
     categories: [],
     orders: [],
@@ -24,28 +25,31 @@ export const TerminalInitialState: Context<TerminalState> = [
   null as any,
 ];
 
-const readContextFromLocalStorage = (initState: TerminalState): TerminalState => {
-  try {
-    const storage = window.localStorage.getItem('state'); // get state from local storage
-    return storage ? { ...initState, ...JSON.parse(storage) } : initState; // parse stored json or return initial state
-  } catch (error) {
-    console.error(error);
-    return initState; // if error also return initial state
-  }
+const readContextFromLocalStorage = (initState: TerminalState): Promise<TerminalState> => {
+  // get parsed state from local storage
+  return localForage.getItem('state')
+    .then((state => state ? { ...initState, ...JSON.parse(state as string) } : initState))
+    .catch(err => {
+      throw new Error(`Cannot read storage data. Error: ${err}`);
+    });
 };
-
-const restoredState = readContextFromLocalStorage(TerminalInitialState[0]);
 
 export const AppContext = createContext<Context<TerminalState>>(TerminalInitialState);
 
 export const AppContextProvider: React.FC = ({ children }) => {
-  const [state, setState] = useState<TerminalState>(restoredState);
+  const [state, setState] = useState<TerminalState>(TerminalInitialState[0]);
+
+  useEffect(() => {
+    (async function updateState() {
+      const state = await readContextFromLocalStorage(TerminalInitialState[0]);
+      setState({ ...state, isLoading: false });
+    })();
+  }, []);
 
   const setContext = (value: Partial<TerminalState>) => {
     try {
       const newState = { ...state, ...value };
       setState(newState); // update state
-      console.info('State updated:', newState);
       localForage.setItem('state', JSON.stringify(newState)); // save state to local storage
     } catch (error) {
       throw new Error('Error writing data to offline storage.');

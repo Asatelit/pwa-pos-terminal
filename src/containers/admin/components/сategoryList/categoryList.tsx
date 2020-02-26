@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect, useParams, useRouteMatch } from 'react-router-dom';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'icons';
 import { Category, TerminalServices } from 'types';
 import { getTextIdentifier } from 'utils';
+import { Routes } from 'common/const';
 import { Breadcrumbs } from 'common/components';
-import { CreateCategoryForm } from '../index';
 import styles from './categoryList.module.css';
 
 type CreateItemFormProps = {
@@ -12,18 +13,36 @@ type CreateItemFormProps = {
 };
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, services }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
-  const [openEditDialog, toggleEditDialog] = useState(false);
-  const [editCategoryId, setEditCategoryId] = useState(0);
+  const [redirect, setRedirect] = useState('');
 
-  const handleOnClickOnDeleteBtn = (event: React.MouseEvent, categoryId: number) => {
+  // handle route params
+  const { id } = useParams();
+  const selectedCategoryId = Number(id) || 0;
+
+  useEffect(() => {
+    setRedirect('');
+  }, [selectedCategoryId]);
+
+  // handle redirect
+  if (redirect) return <Redirect to={redirect} />;
+
+  // redirect helper
+  const updateRedirect = (categoryId: number) => {
+    if (categoryId === selectedCategoryId) return;
+    setRedirect(Routes.AdminCategoryList.replace(':id', categoryId ? categoryId.toString() : 'root'))
+  };
+
+  const handleOnChangeBreadCrumbs = (categoryId: number) => updateRedirect(categoryId);
+  const handleOnClickOnCategoryListItem = (categoryId: number) => updateRedirect(categoryId);
+
+  const handleOnClickOnCategoryListItemDelete = (event: React.MouseEvent, categoryId: number) => {
     event.stopPropagation();
     services.removeCategory(categoryId);
   };
 
-  const handleOnClickOnEditBtn = (event: React.MouseEvent, categoryId: number) => {
+  const handleOnClickOnCategoryListItemEdit = (event: React.MouseEvent, categoryId: number) => {
     event.stopPropagation();
-    setEditCategoryId(categoryId);
+    setRedirect(Routes.AdminCategoryEdit.replace(':id', categoryId.toString()));
   };
 
   const visibleCategories = categories.filter(
@@ -41,55 +60,42 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, services }) =
   };
 
   const renderCategory = (item: Category) => (
-    <div key={item.id} className={styles.item} onClick={() => setSelectedCategoryId(item.id)}>
+    <div key={item.id} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
       {renderPresenter(item)}
       <div className={styles.name}>{item.name}</div>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnEditBtn(evt, item.id)}>
+      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
         <EditSquareOutlineTwoTone />
       </button>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnDeleteBtn(evt, item.id)}>
+      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
         <TrashCanOutlineTwoTone />
       </button>
     </div>
   );
 
-  // create a new category
-  if (openEditDialog)
-    return <CreateCategoryForm categories={categories} services={services} onClose={() => toggleEditDialog(false)} />;
-
-  // edit an existing category
-  if (editCategoryId)
-    return (
-      <CreateCategoryForm
-        itemId={editCategoryId}
-        categories={categories}
-        services={services}
-        onClose={() => setEditCategoryId(0)}
-      />
-    );
-
+  // render component
   return (
     <div className={styles.root}>
       <div className={styles.head}>
         <div className={styles.itemInfo}>
           <span className={styles.itemName}>Category</span>
         </div>
-        <button className={styles.primaryBtn} onClick={() => toggleEditDialog(true)}>
+        <Link className={styles.primaryBtn} to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId.toString())}>
           <PlusTwoTone />
           <span>New Category</span>
-        </button>
+        </Link>
       </div>
       <div className={styles.body}>
         <Breadcrumbs
           className={styles.breadcrumbs}
           categories={categories}
-          currentCategoryId={selectedCategoryId}
-          onChange={setSelectedCategoryId}
+          currentCategoryId={Number(selectedCategoryId)}
+          onChange={handleOnChangeBreadCrumbs}
         />
-        {visibleCategories.length
-          ? visibleCategories.map(item => renderCategory(item))
-          : <div className={styles.empty}>There are no items here.</div>
-        }
+        {visibleCategories.length ? (
+          visibleCategories.map(item => renderCategory(item))
+        ) : (
+          <div className={styles.empty}>There are no items here.</div>
+        )}
       </div>
     </div>
   );

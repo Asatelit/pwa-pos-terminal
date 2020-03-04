@@ -43,7 +43,7 @@ const Terminal: React.FC = () => {
     <Switch>
       <Fragment>
         <Route path={Routes.TerminalOrderCharge}>
-          <ChargeDialog orders={orders} services={services} />
+          <ChargeDialog items={products} orders={orders} services={services} />
         </Route>
         {renderReceiptsDialog}
         {renderItemEditor}

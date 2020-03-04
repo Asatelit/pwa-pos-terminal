@@ -2,12 +2,15 @@ import React, { Fragment, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
-import { CategoryEditor, CategoryList, ItemList, ItemEditor, Drawer } from './components';
+import { CategoryEditor, CategoryList, ItemList, ItemEditor, Dashboard } from './layouts';
+import { Drawer } from './components';
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
-  const { isLoading, categories, products } = context;
+  const { isLoading, categories, products, closedOrders } = context;
+
+  console.info(context.closedOrders);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -19,6 +22,9 @@ const Admin: React.FC = () => {
             <Drawer />
           </div>
           <div className={styles.content}>
+            <Route exact path={Routes.AdminDashboard}>
+              <Dashboard closedOrders={closedOrders} />
+            </Route>
             <Route exact path={Routes.AdminCategoryList}>
               <CategoryList categories={categories} services={services} />
             </Route>

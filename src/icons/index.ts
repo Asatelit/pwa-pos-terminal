@@ -7,6 +7,7 @@ export { default as ChevronLeftTwoTone } from './chevronLeftTwoTone';
 export { default as ChevronRightTwoTone } from './chevronRightTwoTone';
 export { default as ChevronUpTwoTone } from './chevronUpTwoTone';
 export { default as CloseTwoTone } from './closeTwoTone';
+export { default as DashboardTwoTone } from './dashboardTwoTone';
 export { default as EditSquareOutlineTwoTone } from './editSquareOutlineTwoTone';
 export { default as FolderTwoTone } from './folderTwoTone';
 export { default as MenuDownTwoTone } from './menuDownTwoTone';

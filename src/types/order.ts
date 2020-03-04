@@ -46,12 +46,14 @@ export type Order = {
   orderName: number;
 };
 
-export type ClosedOrder = Order & {
+export interface ClosedOrder extends Order {
   usedPromotions?: number[];
   childOrders?: number[];
   closingReason: OrderClosingReasons;
   cashChange: number;
-};
+  profit: number;
+  items: ClosedOrderItem[];
+}
 
 export type OrderItem = {
   id: number;
@@ -60,12 +62,14 @@ export type OrderItem = {
   price: number;
 };
 
-export type ClosedOrderItem = OrderItem & {
+export interface ClosedOrderItem extends OrderItem {
+  costPrice: number;
   amount: number;
+  profit: number;
   roundedAmount: number;
   taxId: number;
   taxValue: number;
   taxType: number;
   isWeighing: boolean;
   isNonDiscounted: boolean;
-};
+}

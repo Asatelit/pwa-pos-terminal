@@ -93,7 +93,7 @@ export const newItem = (data: NewItem): Product => ({
   parentId: data.parentId || 0,
   picture: data.picture || null,
   price: data.price,
-  costPrice: data.price || 0,
+  costPrice: data.costPrice || 0,
   sortOrder: data.sortOrder || 0,
   unit: '',
   isHidden: false,

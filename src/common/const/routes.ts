@@ -2,7 +2,7 @@ export enum Routes {
   // Terminal
   Terminal = '/pos',
   TerminalOrderCharge = '/pos/order/:id/charge',
-  // Admin
+  // Dashboard
   AdminDashboard = '/admin',
   AdminCategoryList = '/admin/category/:id/list',
   AdminCategoryEdit = '/admin/category/:id/edit',

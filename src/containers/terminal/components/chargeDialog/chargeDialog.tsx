@@ -1,21 +1,30 @@
 import React, { Fragment, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
-import { Order, TerminalServices, OrderClosingReasons } from 'types';
+import {
+  Order,
+  TerminalServices,
+  OrderClosingReasons,
+  OrderStatuses,
+  ClosedOrder,
+  ClosedOrderItem,
+  Product,
+} from 'types';
 import { ArrowLeftTwoTone } from 'icons';
-import { financial } from 'utils';
+import { financial, round, calcSum } from 'utils';
 import { getOrderById } from 'hooks';
 import { Routes } from 'common/const';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
 
 type ChargeDialogProps = {
+  items: Product[];
   orders: Order[];
   services: TerminalServices;
 };
 
-const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
+const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services }) => {
   const { id } = useParams();
-  const [ref, setRef] = useState();
+  const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
 
@@ -31,18 +40,46 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
   const setCardPaymentAmount = (cardPaymentAmount: string) => setState({ ...state, cardPaymentAmount });
   const setActiveInput = (event: React.FocusEvent<HTMLInputElement>) => setRef(event.target.id);
 
-  const closedOrder = {
+  const cardPaymentAmount = parseFloat(state.cardPaymentAmount);
+  const cashPaymentAmount = parseFloat(state.cashPaymentAmount);
+  const totalPaymentAmount = cardPaymentAmount + cashPaymentAmount;
+  const changeAmount = totalPaymentAmount - order.totalAmount;
+  const hasChange = changeAmount > 0;
+
+  const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
+    const costPrice = items.find(item => item.id === entity.id)?.costPrice || 0;
+    const amount = entity.quantity * entity.price;
+    const item: ClosedOrderItem = {
+      ...entity,
+      costPrice,
+      amount,
+      profit: amount - entity.quantity * costPrice,
+      roundedAmount: round(entity.quantity * entity.price),
+      taxId: 0,
+      taxValue: 0,
+      taxType: 0,
+      isWeighing: false,
+      isNonDiscounted: false,
+    };
+    return item;
+  });
+
+  const closedOrder: ClosedOrder = {
     ...order,
-    cardPaymentAmount: parseFloat(state.cardPaymentAmount),
-    cashPaymentAmount: parseFloat(state.cashPaymentAmount),
+    cardPaymentAmount,
+    cashPaymentAmount,
+    totalPaymentAmount,
+    isDiscounted: false,
+    customerId: 0,
+    status: OrderStatuses.Closed,
     closingReason: OrderClosingReasons.Default,
-    changeAmount: 0,
-    cashChange: 0,
+    cashChange: changeAmount,
+    roundedAmount: calcSum(closedOrderItems, 'roundedAmount'),
+    profit: calcSum(closedOrderItems, 'profit'),
+    items: closedOrderItems,
   };
 
-  const totalAmount = closedOrder.cardPaymentAmount + closedOrder.cashPaymentAmount;
-  const changeAmount = totalAmount - closedOrder.totalAmount;
-  const hasChange = changeAmount > 0;
+  // handlers
 
   const closeDialog = () => setRedirect(Routes.Terminal);
 
@@ -80,7 +117,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
                 <div className={styles.orderHead}>
                   <div>Total {financial(order.totalAmount)}</div>
                   <div className={styles.changeInfo}>
-                    {hasChange ? `${financial(changeAmount)} change out of ${financial(totalAmount)}` : ''}
+                    {hasChange ? `${financial(changeAmount)} change out of ${financial(order.totalAmount)}` : ''}
                   </div>
                 </div>
                 <div className={styles.orderBody}>
@@ -127,7 +164,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, services }) => {
                   </select>
                   <button
                     className={styles.btnPrimary}
-                    disabled={totalAmount < order.totalAmount}
+                    disabled={totalPaymentAmount < order.totalAmount}
                     onClick={handleChargeOrder}
                   >
                     Confirm

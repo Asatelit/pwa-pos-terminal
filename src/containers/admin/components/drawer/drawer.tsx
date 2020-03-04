@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { CardOutlineTwoTone, FolderTwoTone, TabletTwoTone } from 'icons';
+import { DashboardTwoTone, CardOutlineTwoTone, FolderTwoTone, TabletTwoTone } from 'icons';
 import { Routes } from 'common/const';
 import styles from './drawer.module.css';
 
@@ -10,6 +10,10 @@ const Drawer: React.FC = () => {
       <div className={styles.root}>
         <div className={styles.head} />
         <div className={styles.body}>
+          <NavLink exact className={styles.menuItem} activeClassName={styles.menuItemActive} to={Routes.AdminDashboard}>
+            <DashboardTwoTone className={styles.menuIcon} />
+            <div className={styles.menuLabel}>Dashboard</div>
+          </NavLink>
           <NavLink
             className={styles.menuItem}
             activeClassName={styles.menuItemActive}

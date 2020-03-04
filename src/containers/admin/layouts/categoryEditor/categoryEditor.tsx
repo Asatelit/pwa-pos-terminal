@@ -4,7 +4,7 @@ import { ArrowLeftTwoTone } from 'icons';
 import { Category, TerminalServices } from 'types';
 import { Routes } from 'common/const';
 import { newCategory, NewCategory, getCategoryById } from 'hooks';
-import CategoryPicker from '../categoryPicker/categoryPicker';
+import CategoryPicker from '../../components/categoryPicker/categoryPicker';
 import styles from './categoryEditor.module.css';
 
 type CategoryEditorProps = {

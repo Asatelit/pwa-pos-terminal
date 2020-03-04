@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import localForage from 'localforage';
-import { TerminalState, TerminalServices, Order } from 'types';
+import {TerminalState, TerminalServices, Order, ClosedOrder} from 'types';
 import { isExist, getTimestamp } from 'utils';
 import { newOrderItem } from './app-assets';
 import { createOrder, getOrderData, getOrderItemIndexById } from './app-helpers';
@@ -78,9 +78,9 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
     // Order Closing
     chargeOrder: (order, orderId) => {
-      const updOrder = { ...order, dateUpdated: getTimestamp(), dateClose: getTimestamp() };
+      const closedOrder: ClosedOrder = { ...order, dateUpdated: getTimestamp(), dateClose: getTimestamp() };
       const updOrders = [...state.orders.filter(order => order.id !== orderId)];
-      const updClosedOrders = [updOrder, ...state.closedOrders];
+      const updClosedOrders: ClosedOrder[] = [closedOrder, ...state.closedOrders];
       setContext({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: 0 });
     },
 

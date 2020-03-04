@@ -10,7 +10,7 @@ export type TerminalState = {
   products: Product[]; // Products list
   categories: Category[]; // Categories list
   orders: Order[]; // Orders list
-  closedOrders: Order[]; // Closed orders list
+  closedOrders: ClosedOrder[]; // Closed orders list
 };
 
 export type TerminalServices = {

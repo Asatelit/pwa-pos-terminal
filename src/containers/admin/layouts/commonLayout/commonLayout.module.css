@@ -1,0 +1,14 @@
+@value moduleHeight: 4rem;
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: moduleHeight;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.form {
+  padding: 0 2rem;
+}

@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #4c4c4c;
+  width: 100%;
+  height: 54px;
+  padding: 0 1rem;
+  color: white;
+  font-size: .875rem;
+}
+
+.left {
+  flex: 1 1 auto;
+}
+
+.right {
+
+}
+
+.menuBtn {
+  composes: buttonTransparent from '../../../../styles/button.module.css';
+  display: flex;
+  align-items: center;
+  opacity: .85;
+}
+
+.menuBtn:hover {
+  opacity: 1;
+}

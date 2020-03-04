@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  align-items: center;
+  font-size: .875rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 0 .25rem;
+}
+
+.segment {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  padding: .5rem;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+
+.segment:last-child {
+  cursor: default;
+}

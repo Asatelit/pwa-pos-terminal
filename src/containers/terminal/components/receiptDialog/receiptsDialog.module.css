@@ -1,0 +1,160 @@
+@value moduleHeight: 4rem;
+
+.root {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  outline: 0;
+  transition: opacity 0.15s linear;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9;
+  opacity: 0.5;
+}
+
+.dialog {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+  transition: transform 0.3s ease-out;
+  transform: none;
+  margin: auto;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  outline: 0;
+  overflow: hidden;
+  max-height: 600px;
+  max-width: 800px;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: moduleHeight;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.closeBtn {
+  composes: buttonTransparent from '../../../../styles/button.module.css';
+  color: inherit;
+  height: moduleHeight;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  opacity: .85;
+}
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.closeBtn span {
+  margin-left: 6px;
+}
+
+.itemInfo {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.order {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+  flex-basis: auto;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1px;
+  cursor: pointer;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out;
+}
+
+.order:hover {
+  background-color: #e8ecee;
+  border-radius: 2px;
+}
+
+.order.active,
+.order.active:hover {
+  background-color: #edf8ff;
+}
+
+.orderName {
+  flex: 1 1 auto;
+  font-size: 1rem;
+}
+
+.orderDate {
+  font-size: .875rem;
+  margin-left: 2rem;
+  opacity: .85;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+.createBtn {
+  composes: buttonLink from '../../../../styles/button.module.css';
+  font-size: inherit;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  outline: none;
+}
+
+.createPrimaryBtn {
+  composes: buttonPrimary from '../../../../styles/button.module.css';
+  border-radius: 0;
+  align-items: center;
+  display: flex;
+}
+
+.createPrimaryBtn span {
+  margin-left: 6px;
+}

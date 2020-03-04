@@ -1,0 +1,33 @@
+.title {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0 2rem;
+  user-select: none;
+}
+
+.widget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  min-height: 5rem;
+  background-color: #edf8ff;
+  border-radius: .25rem;
+  padding: 0 2rem;
+  font-size: 0.8125rem;
+}
+
+.widgetSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.widgetAccent {
+  font-size: 1.25rem;
+  font-weight: 600;
+}

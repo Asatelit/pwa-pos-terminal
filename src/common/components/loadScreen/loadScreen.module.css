@@ -1,0 +1,67 @@
+@value primaryBg: #545454;
+@value primaryShadedBg: #4c4c4c;
+@value borderColor: #ffffff;
+
+.root {
+  width: 100%;
+  height: 100vh;
+  background: primaryBg;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.load {
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+  margin: 0 auto;
+  border: 5px solid borderColor;
+  width: 100px;
+  height: 60px;
+}
+
+.loadItem {
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  margin: 0 auto;
+  border-top: 5px solid borderColor;
+  border-bottom: 5px solid borderColor;
+  border-right: 5px solid borderColor;
+  background: primaryBg;
+  width: 50px;
+  height: 60px;
+  transform-origin: 0 50%;
+  animation: flip 1.2s infinite linear;
+  animation-fill-mode: forwards;
+}
+
+.loadItem:nth-child(1) {
+  z-index: -1;
+  -webkit-animation-delay: 1.4s;
+  animation-delay: 1.4s;
+}
+
+.loadItem:nth-child(2) {
+  z-index: -2;
+  -webkit-animation-delay: 2.8s;
+  animation-delay: 2.8s;
+}
+
+.loadItem:nth-child(3) {
+  z-index: -3;
+  -webkit-animation-delay: 4.2s;
+  animation-delay: 4.2s;
+}
+
+@keyframes flip {
+  0%      { transform: perspective(600px) rotateY(-0deg); }
+  20%     { background: primaryShadedBg; }
+  29.9%   { background: primaryShadedBg; }
+  30%     { transform: perspective(200px) rotateY(-90deg); background: primaryBg; }
+  54.999% { opacity: 1; }
+  55%     { opacity: 0; }
+  60%     { transform: perspective(200px) rotateY(-180deg); background: primaryBg; }
+  100%    { transform: perspective(200px) rotateY(-180deg); background: primaryBg; }
+}

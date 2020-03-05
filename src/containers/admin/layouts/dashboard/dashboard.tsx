@@ -10,7 +10,7 @@ type DashboardProps = {
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
-  const filteredData = closedOrders.filter(entity => moment(entity.dateClose).isSame(new Date(), 'week'));
+  const filteredData = closedOrders.filter(entity => moment(entity.dateClose).isSame(new Date(), 'day'));
   const revenueAmount = calcSum<ClosedOrder>(filteredData, 'totalAmount');
   const averageAmount = average(filteredData.map(entity => entity.totalAmount));
   const profitAmount = calcSum<ClosedOrder>(filteredData, 'profit');

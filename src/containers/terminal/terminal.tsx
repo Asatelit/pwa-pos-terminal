@@ -4,6 +4,7 @@ import { Menu, Receipt, Items, ItemEditor, ChargeDialog, ReceiptsDialog, Drawer 
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
 import styles from './terminal.module.css';
+import {LoadScreen} from "../../common/components";
 
 type TerminalState = {
   isOpenReceiptsDialog: boolean;
@@ -37,7 +38,7 @@ const Terminal: React.FC = () => {
     />
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadScreen />;
 
   return (
     <Switch>

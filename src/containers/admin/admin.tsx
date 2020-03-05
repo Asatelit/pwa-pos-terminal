@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
+import { LoadScreen } from 'common/components';
 import { CategoryEditor, CategoryList, ItemList, ItemEditor, Dashboard } from './layouts';
 import { Drawer } from './components';
 import styles from './admin.module.css';
@@ -10,9 +11,7 @@ const Admin: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
   const { isLoading, categories, products, closedOrders } = context;
 
-  console.info(context.closedOrders);
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadScreen />;
 
   return (
     <div className={styles.root}>

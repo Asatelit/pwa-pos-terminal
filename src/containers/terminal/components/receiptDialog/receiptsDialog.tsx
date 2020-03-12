@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import moment from 'moment';
-import { Order, TerminalServices } from 'types';
+import { Order, TerminalServices, OrderStatuses } from 'types';
 import { ArrowLeftTwoTone, PlusTwoTone } from 'icons';
 import styles from './receiptsDialog.module.css';
 
@@ -12,6 +12,7 @@ type ReceiptsDialogProps = {
 };
 
 const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, services, onClose }) => {
+  const openOrders = orders.filter(entity => entity.status === OrderStatuses.Open);
 
   const selectOrder = (id: number) => {
     services.setCurrentOrder(id);
@@ -25,7 +26,7 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
 
   const closeDialog = () => onClose();
 
-  const renderOrdersList = orders.map(order => (
+  const renderOrdersList = openOrders.map(order => (
     <div
       key={order.id}
       className={`${styles.order} ${orderId === order.id ? styles.active : ''}`}

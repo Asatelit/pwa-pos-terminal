@@ -1,35 +1,32 @@
 import React, { Fragment, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { DashboardTwoTone, CardOutlineTwoTone, FolderTwoTone, TabletTwoTone } from 'icons';
+import { DashboardTwoTone, CardOutlineTwoTone, FolderTwoTone, TabletTwoTone, SettingsTwoTone } from 'icons';
 import { Routes } from 'common/const';
 import styles from './drawer.module.css';
 
+type DrawerNavLink = { name: string, to: string, icon: JSX.Element };
+
 const Drawer: React.FC = () => {
+  const nav: DrawerNavLink[] = [
+    { to: Routes.AdminDashboard, name: 'Dashboard', icon: <DashboardTwoTone /> },
+    { to: Routes.AdminCategoryList.replace(':id', 'root'), name: 'Categories', icon: <FolderTwoTone /> },
+    { to: Routes.AdminItemList, name: 'Items', icon: <CardOutlineTwoTone /> },
+    { to: Routes.AdminSettings, name: 'Settings', icon: <SettingsTwoTone /> },
+  ];
+
+  const renderNavLink = ({ name, to, icon }: DrawerNavLink) => (
+    <NavLink key={`AdminNavLink_${name}`} className={styles.menuItem} activeClassName={styles.menuItemActive} exact to={to}>
+      <div className={styles.menuIcon}>{icon}</div>
+      <div className={styles.menuLabel}>{name}</div>
+    </NavLink>
+  );
+
   return (
     <Fragment>
       <div className={styles.root}>
         <div className={styles.head} />
         <div className={styles.body}>
-          <NavLink exact className={styles.menuItem} activeClassName={styles.menuItemActive} to={Routes.AdminDashboard}>
-            <DashboardTwoTone className={styles.menuIcon} />
-            <div className={styles.menuLabel}>Dashboard</div>
-          </NavLink>
-          <NavLink
-            className={styles.menuItem}
-            activeClassName={styles.menuItemActive}
-            to={Routes.AdminCategoryList.replace(':id', 'root')}
-          >
-            <div className={styles.menuIcon}>
-              <FolderTwoTone />
-            </div>
-            <div className={styles.menuLabel}>Categories</div>
-          </NavLink>
-          <NavLink className={styles.menuItem} activeClassName={styles.menuItemActive} to={Routes.AdminItemList}>
-            <div className={styles.menuIcon}>
-              <CardOutlineTwoTone />
-            </div>
-            <div className={styles.menuLabel}>Items</div>
-          </NavLink>
+          {nav.map(entity => renderNavLink(entity))}
         </div>
         <div className={styles.foot}>
           <Link className={styles.menuItem} to={Routes.Terminal}>

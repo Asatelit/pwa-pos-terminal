@@ -1,4 +1,4 @@
-import { Category, Product, Order, ClosedOrder } from 'types';
+import { Category, Product, Order, ClosedOrder, Settings } from 'types';
 
 export type TerminalState = {
   isLoading: boolean;
@@ -11,6 +11,7 @@ export type TerminalState = {
   categories: Category[]; // Categories list
   orders: Order[]; // Orders list
   closedOrders: ClosedOrder[]; // Closed orders list
+  settings: Settings;
 };
 
 export type TerminalServices = {
@@ -29,4 +30,5 @@ export type TerminalServices = {
   updateCategory: (category: Category) => void;
   updateItem: (item: Product) => void;
   removeItem: (itemId: number) => void;
+  updateSettings: (settings: Partial<Settings>) => void;
 };

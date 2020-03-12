@@ -115,6 +115,23 @@
   opacity: .5;
 }
 
+.secondaryBtn {
+  composes: buttonTransparent from '../../../../styles/button.module.css';
+  border: 1px solid lightgrey;
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  opacity: .8;
+  margin-right: .25rem;
+}
+.secondaryBtn:not([disabled]):hover {
+  opacity: 1;
+}
+.secondaryBtn[disabled] {
+  opacity: .5;
+}
+
 .ghostly {
   opacity: .8;
   font-weight: 400;

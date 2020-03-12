@@ -1,0 +1,36 @@
+.root {
+  width: 375px;
+}
+
+.root table {
+  width: 100%;
+  text-align: left;
+}
+
+.root table td {
+  padding: .25rem 0;
+}
+
+.root table tr td:nth-child(2) {
+  text-align: right;
+}
+
+.head {
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.142rem;
+}
+
+.ghostly {
+  opacity: .75;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  padding: .25rem 0;
+  border-top: 1px dashed #e0e1e2;
+}

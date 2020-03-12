@@ -33,26 +33,26 @@
   width: 50px;
   height: 60px;
   transform-origin: 0 50%;
-  animation: flip 1.2s infinite linear;
+  animation: flip 1.5s infinite linear;
   animation-fill-mode: forwards;
 }
 
 .loadItem:nth-child(1) {
   z-index: -1;
-  -webkit-animation-delay: 1.4s;
-  animation-delay: 1.4s;
+  -webkit-animation-delay: .5s;
+  animation-delay: .5s;
 }
 
 .loadItem:nth-child(2) {
   z-index: -2;
-  -webkit-animation-delay: 2.8s;
-  animation-delay: 2.8s;
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
 }
 
 .loadItem:nth-child(3) {
   z-index: -3;
-  -webkit-animation-delay: 4.2s;
-  animation-delay: 4.2s;
+  -webkit-animation-delay: 1.5s;
+  animation-delay: 1.5s;
 }
 
 @keyframes flip {

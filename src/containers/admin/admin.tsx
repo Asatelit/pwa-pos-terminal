@@ -3,13 +3,13 @@ import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
 import { LoadScreen } from 'common/components';
-import { CategoryEditor, CategoryList, ItemList, ItemEditor, Dashboard } from './layouts';
+import { CategoryEditor, CategoryList, ItemList, ItemEditor, Dashboard, CommonSettings } from './layouts';
 import { Drawer } from './components';
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
-  const { isLoading, categories, products, closedOrders } = context;
+  const { isLoading, categories, settings, products, closedOrders } = context;
 
   if (isLoading) return <LoadScreen />;
 
@@ -41,6 +41,9 @@ const Admin: React.FC = () => {
             </Route>
             <Route exact path={Routes.AdminItemCreate}>
               <ItemEditor items={products} categories={categories} service={services} />
+            </Route>
+            <Route exact path={Routes.AdminSettings}>
+              <CommonSettings settings={settings} service={services} />
             </Route>
           </div>
         </Fragment>

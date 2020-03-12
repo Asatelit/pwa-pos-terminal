@@ -4,3 +4,4 @@ export { default as CategoryEditor } from './categoryEditor/categoryEditor';
 export { default as CategoryList } from './сategoryList/categoryList';
 export { default as ItemList } from './itemList/itemList';
 export { default as ItemEditor } from './itemEditor/itemEditor';
+export { default as CommonSettings } from './commonSettings/commonSettings';

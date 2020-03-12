@@ -4,8 +4,8 @@
   "private": true,
   "license": "Apache-2.0",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Asatelit/pwa-pos-terminal.git"
+    "type": "git",
+    "url": "https://github.com/Asatelit/pwa-pos-terminal.git"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.1.1",
@@ -23,6 +23,7 @@
     "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-print-tool": "^3.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "typescript": "^3.8.3"
@@ -49,6 +50,10 @@
     ]
   },
   "devDependencies": {
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "tslint": "^6.1.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.2.0"
   }
 }

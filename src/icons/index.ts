@@ -16,5 +16,7 @@ export { default as MenuSwapTwoTone } from './menuSwapTwoTone';
 export { default as MenuTwoTone } from './menuTwoTone';
 export { default as MinusTwoTone } from './minusTwoTone';
 export { default as PlusTwoTone } from './plusTwoTone';
+export { default as PrinterPosTwoTone } from './printerPosTwoTone';
+export { default as SettingsTwoTone } from './settingsTwoTone';
 export { default as TabletTwoTone } from './tabletTwoTone';
 export { default as TrashCanOutlineTwoTone } from './trashCanOutlineTwoTone';

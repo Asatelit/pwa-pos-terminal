@@ -1,10 +1,11 @@
 import React, { Fragment, useContext, useState } from 'react';
+import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
-import { Menu, Receipt, Items, ItemEditor, ChargeDialog, ReceiptsDialog, Drawer } from './components';
 import { AppContext } from 'hooks';
 import { Routes } from 'common/const';
+import { LoadScreen } from 'common/components';
+import { Menu, Receipt, Items, ItemEditor, ChargeDialog, ReceiptsDialog, Drawer, PrintReceipt } from './components';
 import styles from './terminal.module.css';
-import {LoadScreen} from "../../common/components";
 
 type TerminalState = {
   isOpenReceiptsDialog: boolean;
@@ -14,11 +15,21 @@ type TerminalState = {
 const Terminal: React.FC = () => {
   const [context, updateContext, services] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({ isOpenReceiptsDialog: false, isOpenDrawer: false });
-  const { isLoading, categories, currentCategoryId, currentOrderId, currentItemId, orders, products } = context;
+  const {
+    isLoading,
+    categories,
+    currentCategoryId,
+    currentOrderId,
+    currentItemId,
+    orders,
+    products,
+  } = context;
 
   const updateState = (data: Partial<TerminalState>) => setState({ ...state, ...data });
   const currentOrder = orders.find(order => currentOrderId === order.id) || null;
   const hasEditItemRequest = !!currentItemId;
+
+  const handlePrint = (orderId: number) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
@@ -44,7 +55,7 @@ const Terminal: React.FC = () => {
     <Switch>
       <Fragment>
         <Route path={Routes.TerminalOrderCharge}>
-          <ChargeDialog items={products} orders={orders} services={services} />
+          <ChargeDialog items={products} orders={orders} services={services} onPrintReceit={handlePrint} />
         </Route>
         {renderReceiptsDialog}
         {renderItemEditor}
@@ -58,6 +69,7 @@ const Terminal: React.FC = () => {
                 orderId={currentOrderId}
                 services={services}
                 onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
+                onPrintCheck={handlePrint}
               />
             </div>
             <div className={styles.itemsWrapper}>

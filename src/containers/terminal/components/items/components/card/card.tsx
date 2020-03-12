@@ -1,12 +1,12 @@
 import React from 'react';
-import { getTextIdentifier } from 'utils';
+import { getTextIdentifier, financial } from 'utils';
 import styles from './card.module.css';
 
 type CardProps = {
   label: string;
   color: string | null;
   picture: string | null;
-  price?: string | number;
+  price?: number;
   onClick?: (e: React.MouseEvent) => void
 };
 
@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ label, children, picture, color, price, onC
       {presentation}
       <div className={styles.info}>
         <div className={styles.name}>{label}</div>
-        {price !== undefined && <div className={styles.price}>{price}</div>}
+        {price !== undefined && <div className={styles.price}>{financial(price)}</div>}
       </div>
     </div>
   );

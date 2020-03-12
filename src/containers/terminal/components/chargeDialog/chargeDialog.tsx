@@ -20,9 +20,10 @@ type ChargeDialogProps = {
   items: Product[];
   orders: Order[];
   services: TerminalServices;
+  onPrintReceit: (orderId: number) => void;
 };
 
-const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services }) => {
+const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
   const { id } = useParams();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
@@ -85,6 +86,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services }) 
 
   const handleChargeOrder = () => {
     services.chargeOrder({ ...closedOrder, cashChange: hasChange ? changeAmount : 0 }, order.id);
+    onPrintReceit(order.id);
     closeDialog();
   };
 

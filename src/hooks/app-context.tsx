@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import localForage from 'localforage';
-import {TerminalState, TerminalServices, Order, ClosedOrder} from 'types';
+import { TerminalState, TerminalServices, Order, OrderStatuses, ClosedOrder } from 'types';
 import { isExist, getTimestamp } from 'utils';
 import { newOrderItem } from './app-assets';
 import { createOrder, getOrderData, getOrderItemIndexById } from './app-helpers';
@@ -20,6 +20,37 @@ export const TerminalInitialState: Context<TerminalState> = [
     currentUserId: 0,
     currentTableId: 0,
     currentItemId: 0,
+    settings: {
+      logo: '',
+      logoUrl: '',
+      name: '',
+      useTables: false,
+      useKitchen: false,
+      usePromotions: false,
+      useFiscalization: false,
+      isAllowPrintCheck: false,
+      useFastPay: false,
+      wifiName: '',
+      wifiPass: '',
+      tipAmount: 0,
+      predictions: [],
+      printReceiptNumber: false,
+      printAddress: false,
+      printPrediction: false,
+      printReceiptDuplicate: false,
+      printCheckDuplicate: false,
+      printSumWeightOnReceipt: false,
+      printReceipt: false,
+      printReceiptByDefault: false,
+      printWifi: false,
+      printReceiptComment: false,
+      lang: window.navigator.language,
+      timezone: '',
+      currencyCodeIso: 'USD',
+      currency: '$',
+      currencySymbol: '$',
+      paymentMethods: [],
+    },
   },
   () => {},
   null as any,
@@ -27,8 +58,9 @@ export const TerminalInitialState: Context<TerminalState> = [
 
 const readContextFromLocalStorage = (initState: TerminalState): Promise<TerminalState> => {
   // get parsed state from local storage
-  return localForage.getItem('state')
-    .then((state => state ? { ...initState, ...JSON.parse(state as string) } : initState))
+  return localForage
+    .getItem('state')
+    .then(state => (state ? { ...initState, ...JSON.parse(state as string) } : initState))
     .catch(err => {
       throw new Error(`Cannot read storage data. Error: ${err}`);
     });
@@ -59,7 +91,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
   const services: TerminalServices = {
     // Adds the selected item to the current order
     addItemToCurrentOrder: product => {
-      let [updOrders, updOrder] = getOrderData(state);
+      const [updOrders, updOrder] = getOrderData(state);
       const currentItemIndex = getOrderItemIndexById(updOrder.items, product.id);
 
       // if the order item already exists just update it, otherwise create a new one.
@@ -79,19 +111,24 @@ export const AppContextProvider: React.FC = ({ children }) => {
     // Order Closing
     chargeOrder: (order, orderId) => {
       const closedOrder: ClosedOrder = { ...order, dateUpdated: getTimestamp(), dateClose: getTimestamp() };
-      const updOrders = [...state.orders.filter(order => order.id !== orderId)];
+      const currentOrder = state.orders.find(order => order.id === orderId);
+      if (!currentOrder) throw new Error('The specified order does not exist');
+      const updOrders = [
+        ...state.orders.filter(order => order.id !== orderId),
+        { ...currentOrder, status: OrderStatuses.Closed, dateClose: getTimestamp(), dateUpdated: getTimestamp() } as Order,
+      ];
       const updClosedOrders: ClosedOrder[] = [closedOrder, ...state.closedOrders];
-      setContext({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: 0 });
+      setContext({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: 0, currentOrderId: 0 });
     },
 
     // Updates current order data
     updateCurrentOrder: order => {
       const updOrders = [...state.orders];
-      let currentOrderIndex = updOrders.findIndex(order => state.currentOrderId === order.id);
+      const currentOrderIndex = updOrders.findIndex(order => state.currentOrderId === order.id);
 
       // if the order exists just update it
       if (isExist(currentOrderIndex)) {
-        let updOrder: Order = { ...order };
+        const updOrder: Order = { ...order };
         updOrder.dateUpdated = getTimestamp(); // update the last modification time
         updOrder.totalAmount = updOrder.items.reduce((a, b) => a + b.quantity * b.price, 0);
         updOrders[currentOrderIndex] = updOrder;
@@ -139,6 +176,8 @@ export const AppContextProvider: React.FC = ({ children }) => {
       updItems[targetEntity].isDeleted = true;
       setContext({ products: updItems });
     },
+
+    updateSettings: settings => setContext({ settings: {...state.settings, ...settings } }),
   };
 
   return <AppContext.Provider value={[state, setContext, services]}>{children}</AppContext.Provider>;

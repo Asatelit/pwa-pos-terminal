@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Order, Product, TerminalServices } from 'types';
 import { financial } from 'utils';
-import { MenuSwapTwoTone } from 'icons';
+import { MenuSwapTwoTone, PrinterPosTwoTone } from 'icons';
 import { Routes } from 'common/const';
 import styles from './receipt.module.css';
 
@@ -13,15 +12,17 @@ type ReceiptProps = {
   orderId: number;
   services: TerminalServices;
   onShowReceipts: () => void;
+  onPrintCheck: (orderId: number) => void;
 };
 
-const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onShowReceipts }) => {
+const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onShowReceipts, onPrintCheck }) => {
   // helpers
   const getItemName = (id: number) => items.find(item => item.id === id)?.name || id;
 
   // handlers
   const handleShowReceipts = () => onShowReceipts();
   const handleEditOrderItem = (orderItemId: number) => services.setCurrentItem(orderItemId);
+  const handlePrint = () => onPrintCheck(orderId);
 
   // assets
   const renderOrderItems = () => {
@@ -50,22 +51,18 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
           <MenuSwapTwoTone className={styles.receiptsIcon} />
         </button>
       </div>
-      <div className={styles.head}>
-        <img style={{ display: 'none' }} src="" alt="" />
-        <h1 style={{ display: 'none' }} className="place-name">
-          {/*TODO: Add Place Name*/}
-        </h1>
-        <dl>
-          <dt>Receipt #</dt>
-          <dd>{order?.orderName}</dd>
-          <dt>Printed at</dt>
-          <dd className="print-time">{moment().format('lll')}</dd>
-        </dl>
-      </div>
       <div className={styles.body}>
         <table className={styles.listing}>{renderOrderItems()}</table>
       </div>
       <div className={styles.foot}>
+        <button
+          className={styles.secondaryBtn}
+          title="Print the check"
+          disabled={!order?.items.length}
+          onClick={() => handlePrint()}
+        >
+          <PrinterPosTwoTone />
+        </button>
         <Link
           className={`${styles.charge} ${!order || !order.totalAmount ? 'disabled' : ''}`}
           to={Routes.TerminalOrderCharge.replace(':id', `${orderId}`)}

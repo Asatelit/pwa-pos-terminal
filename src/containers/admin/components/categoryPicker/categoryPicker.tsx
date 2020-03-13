@@ -67,7 +67,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
       <div key={id} className={styles.item} onClick={event => handleOnClickOnItem(event, id)}>
         <div className={`${styles.info} ${activeClass}`} style={{ paddingLeft: `${level}rem` }}>
           <div className={styles.toggle} onClick={event => handleOnClickOnToggle(event, id)}>
-            {React.Children.count(child) && toggleIcon}
+            {!!React.Children.count(child) && toggleIcon}
           </div>
           <div className={styles.icon}>
             <FolderTwoTone />

@@ -33,6 +33,7 @@
 }
 
 .controlLabel {
+  padding: .375rem 0;
   min-width: 150px;
 }
 
@@ -54,6 +55,10 @@
 
 .primaryAction {
   composes: buttonPrimary from '../../../../styles/button.module.css';
+}
+
+.secondaryAction {
+  composes: buttonLink from '../../../../styles/button.module.css';
 }
 
 .closeBtn {

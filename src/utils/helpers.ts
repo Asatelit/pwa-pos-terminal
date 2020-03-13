@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react';
+
 export function getTextIdentifier(name: string): string {
   const segments = name.split(' ');
   return segments.length > 1
@@ -50,4 +52,18 @@ export function round(num: number, decimalPlaces: number = 0): number {
   const e = 1e-8; // Allow for rounding errors in f
   const r = f > 0.5 - e && f < 0.5 + e ? i + (i % 2) : Math.round(n);
   return d ? r / m : r;
+}
+
+export function encodeImage(event: ChangeEvent<HTMLInputElement>, cb: (base64: string) => void): void {
+  if (!event.currentTarget.files?.length) return;
+  const file = event.currentTarget.files[0];
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    const { result } = reader;
+    console.info(typeof result);
+    if (typeof result === 'string') {
+      cb(result);
+    }
+  };
+  reader.readAsDataURL(file);
 }

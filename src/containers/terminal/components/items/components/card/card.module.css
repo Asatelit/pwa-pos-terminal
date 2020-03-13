@@ -38,6 +38,9 @@
   text-transform: uppercase;
   letter-spacing: .015em;
   height: 150px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .info {

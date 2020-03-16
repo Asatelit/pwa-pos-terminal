@@ -3,11 +3,18 @@
   flex-direction: column;
   height: 100%;
   font-size: .875rem;
+  min-width: 368px;
+}
+@media screen and (min-width: 1366px) {
+  .root { min-width: 394px; }
+}
+@media screen and (min-width: 1920px) {
+  .root { min-width: 474px; }
 }
 
 .actions {
   position: relative;
-  height: 54px;
+  min-height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;

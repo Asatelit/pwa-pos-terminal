@@ -8,20 +8,10 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
-}
-
-.menuWrapper {
-  height: 54px;
-}
-
-.receiptWrapper {
-  width: 25%;
-  min-width: 220px;
   height: 100%;
 }
 
-.itemsWrapper {
-  width: 70%;
+.items {
   height: 100%;
   display: flex;
   flex-direction: column;

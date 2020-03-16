@@ -60,7 +60,6 @@ export function encodeImage(event: ChangeEvent<HTMLInputElement>, cb: (base64: s
   const reader = new FileReader();
   reader.onloadend = () => {
     const { result } = reader;
-    console.info(typeof result);
     if (typeof result === 'string') {
       cb(result);
     }

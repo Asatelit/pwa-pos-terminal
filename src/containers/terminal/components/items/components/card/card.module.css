@@ -1,9 +1,9 @@
 .root {
   display: inline-flex;
   flex-direction: column;
-  width: calc(20% - 6px);
-  margin-bottom: 6px;
-  margin-right: 6px;
+  width: 150px;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
   position: relative;
   text-align: center;
   cursor: pointer;
@@ -11,21 +11,6 @@
   border-radius: .25rem;
   background-color: white;
   user-select: none;
-}
-@media (max-width: 1024px) {
-  .root {
-    width: calc(25% - 6px);
-  }
-}
-@media (max-width: 980px) {
-  .root {
-    width: calc(33.33% - 6px);
-  }
-}
-@media (max-width: 768px) {
-  .root {
-    width: calc(50% - 6px);
-  }
 }
 
 .presentation {
@@ -38,6 +23,9 @@
   text-transform: uppercase;
   letter-spacing: .015em;
   height: 150px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .info {
@@ -50,7 +38,7 @@
 }
 
 .name {
-  font-size: 1rem;
+  font-size: .875rem;
   flex: 1 1 auto;
   text-align: left;
   white-space: nowrap;

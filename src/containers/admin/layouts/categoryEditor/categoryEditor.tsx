@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { ArrowLeftTwoTone } from 'icons';
 import { Category, TerminalServices } from 'types';
+import { encodeImage } from 'utils';
 import { Routes } from 'common/const';
 import { newCategory, NewCategory, getCategoryById } from 'hooks';
 import CategoryPicker from '../../components/categoryPicker/categoryPicker';
@@ -66,11 +67,11 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, services, c
       </div>
       <div className={styles.form}>
         <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemFormName">
+          <label className={styles.controlLabel} htmlFor="CategoryEditorName">
             Name
           </label>
           <input
-            id="ItemFormName"
+            id="CategoryEditorName"
             type="text"
             className={styles.controlInput}
             value={data.name}
@@ -78,14 +79,14 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, services, c
           />
         </div>
         <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemFormName">
+          <label className={styles.controlLabel} htmlFor="CategoryEditorCategory">
             Category
           </label>
           <div className={styles.controlGroup}>
             <input
               readOnly
               type="text"
-              id="CreateCategoryFormCategoryNameField"
+              id="CategoryEditorCategory"
               className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
               value={getParentCategory(data?.parentId || 0).name}
               onClick={() => togglePicker(!isPickerShown)}
@@ -103,10 +104,11 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, services, c
           </div>
         </div>
         <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemFormName">
+          <label className={styles.controlLabel} htmlFor="CategoryEditorColor">
             Color
           </label>
           <select
+            id="CategoryEditorColor"
             className={styles.controlInput}
             value={data.color || 'transparent'}
             onChange={evt => updateData({ color: evt.target.value })}
@@ -121,6 +123,22 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, services, c
               <option value="orange">Orange</option>
             </optgroup>
           </select>
+        </div>
+        <div className={styles.control}>
+          <label className={styles.controlLabel} htmlFor="CategoryEditorPicture">
+            Picture
+          </label>
+          {!data.picture && <input
+            id="CategoryEditorPicture"
+            type="file"
+            className={styles.controlInput}
+            onChange={evt => encodeImage(evt, (picture) => updateData({ picture }))}
+          />}
+          {!!data.picture && (
+            <button className={styles.secondaryAction} onClick={() => updateData({ picture: '' })}>
+              Remove
+            </button>
+          )}
         </div>
         <div className={styles.control}>
           <div className={styles.controlLabel} />

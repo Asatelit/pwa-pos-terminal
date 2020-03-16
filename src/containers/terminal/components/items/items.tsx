@@ -27,27 +27,32 @@ const Items: React.FC<GoodsProps> = ({ categories, products, currentCategoryId, 
     ? products.filter(
         product =>
           !product.isDeleted && !product.isHidden &&
-          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.barcode.toLowerCase().includes(searchTerm.toLowerCase()),
+          (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.barcode.toLowerCase().includes(searchTerm.toLowerCase())),
       )
     : [];
 
   const changeCurrentCategory = (categoryId: number) => services.setCurrentCategory(categoryId);
 
-  const renderItems = (items: Product[]) => (
-    <Fragment>
-      {items.map(product => (
-        <Card
-          key={`product-${product.id}`}
-          label={product.name}
-          price={product.price}
-          picture={product.picture}
-          color={product.color}
-          onClick={() => services.addItemToCurrentOrder(product)}
-        />
-      ))}
-    </Fragment>
-  );
+  const renderItems = (items: Product[]) => {
+    if (!items.length) {
+      return <div className={styles.empty}>There are no items in this category</div>;
+    }
+    return (
+      <Fragment>
+        {items.map(product => (
+          <Card
+            key={`product-${product.id}`}
+            label={product.name}
+            price={product.price}
+            picture={product.picture}
+            color={product.color}
+            onClick={() => services.addItemToCurrentOrder(product)}
+          />
+        ))}
+      </Fragment>
+    );
+  };
 
   const renderFilteredItems = () => <Fragment>{renderItems(filteredItems)}</Fragment>;
 
@@ -82,4 +87,4 @@ const Items: React.FC<GoodsProps> = ({ categories, products, currentCategoryId, 
   );
 };
 
-export default Items;
+export default Items;;

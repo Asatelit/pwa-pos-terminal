@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Routes } from 'common/const';
+import { encodeImage } from 'utils';
 import { ArrowLeftTwoTone } from 'icons';
 import { Category, Product, TerminalServices } from 'types';
 import { getItemById, newItem } from 'hooks';
@@ -19,6 +20,7 @@ type ItemEditorState = {
   price: string;
   costPrice: string;
   color: string;
+  picture: string;
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, service }) => {
@@ -30,6 +32,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, service }) =
     price: `${currentItem?.price || 0}`,
     costPrice: `${currentItem?.costPrice || 0}`,
     color: currentItem?.color || '',
+    picture: currentItem?.picture || '',
   };
 
   const [item, setItem] = useState<ItemEditorState>(initialState);
@@ -155,6 +158,21 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, service }) =
               <option value="orange">Orange</option>
             </optgroup>
           </select>
+        </div>
+        <div className={styles.control}>
+          <label className={styles.controlLabel} htmlFor="ItemEditorColor">
+            Image
+          </label>
+          {!item.picture && <input
+            type="file"
+            className={styles.controlInput}
+            onChange={evt => encodeImage(evt, (picture) => updateItem({ picture }))}
+          />}
+          {!!item.picture && (
+            <button className={styles.secondaryAction} onClick={() => updateItem({ picture: '' })}>
+              Remove
+            </button>
+          )}
         </div>
         <div className={styles.control}>
           <div className={styles.controlLabel} />

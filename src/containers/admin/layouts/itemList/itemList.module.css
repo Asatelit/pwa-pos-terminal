@@ -1,7 +1,9 @@
 @value moduleHeight: 4rem;
 
 .root {
-
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .head {
@@ -41,6 +43,8 @@
 }
 
 .body {
+  overflow: auto;
+  flex: 1;
 }
 
 .entity {
@@ -92,6 +96,9 @@
   user-select: none;
   margin: .5rem 0;
   border-radius: .25rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .empty {

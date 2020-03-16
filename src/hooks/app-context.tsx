@@ -7,6 +7,12 @@ import { createOrder, getOrderData, getOrderItemIndexById } from './app-helpers'
 
 type Context<S> = [S, (value: Partial<S>) => void, TerminalServices];
 
+const store = localForage.createInstance({
+  driver      : localForage.INDEXEDDB,
+  name        : 'AsatelitPOS',
+  version     : 0.2,
+});
+
 // initial state
 export const TerminalInitialState: Context<TerminalState> = [
   {
@@ -58,9 +64,9 @@ export const TerminalInitialState: Context<TerminalState> = [
 
 const readContextFromLocalStorage = (initState: TerminalState): Promise<TerminalState> => {
   // get parsed state from local storage
-  return localForage
+  return store
     .getItem('state')
-    .then(state => (state ? { ...initState, ...JSON.parse(state as string) } : initState))
+    .then(state => state ? { ...initState, ...JSON.parse(state as string) } : initState)
     .catch(err => {
       throw new Error(`Cannot read storage data. Error: ${err}`);
     });
@@ -73,8 +79,11 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async function updateState() {
+      const demoData = await fetch('./demo.json')
+        .then(response => response.json())
+        .then(data => data || {});
       const state = await readContextFromLocalStorage(TerminalInitialState[0]);
-      setState({ ...state, isLoading: false });
+      setState({ ...state, ...demoData, isLoading: false });
     })();
   }, []);
 
@@ -82,7 +91,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
     try {
       const newState = { ...state, ...value };
       setState(newState); // update state
-      localForage.setItem('state', JSON.stringify(newState)); // save state to local storage
+      store.setItem('state', JSON.stringify(newState)); // save state to local storage
     } catch (error) {
       throw new Error('Error writing data to offline storage.');
     }

@@ -62,17 +62,15 @@ const Terminal: React.FC = () => {
         {renderDrawer}
         <div className={styles.root}>
           <div className={styles.content}>
-            <div className={styles.receiptWrapper}>
-              <Receipt
-                items={products}
-                order={currentOrder}
-                orderId={currentOrderId}
-                services={services}
-                onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
-                onPrintCheck={handlePrint}
-              />
-            </div>
-            <div className={styles.itemsWrapper}>
+            <Receipt
+              items={products}
+              order={currentOrder}
+              orderId={currentOrderId}
+              services={services}
+              onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
+              onPrintCheck={handlePrint}
+            />
+            <div className={styles.items}>
               <Menu onOpenDrawer={() => updateState({ isOpenDrawer: true })} />
               <Items
                 categories={categories}

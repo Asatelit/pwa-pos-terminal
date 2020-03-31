@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "license": "Apache-2.0",
+  "homepage": "http://pos.asatelit.com/build",
   "repository": {
     "type": "git",
     "url": "https://github.com/Asatelit/pwa-pos-terminal.git"

@@ -18,20 +18,20 @@ const NoMatch = () => (
 );
 
 ReactDOM.render(
-    <AppContextProvider>
-      <Router history={hashHistory}>
-        <Switch>
-          <Route path={Routes.Terminal}>
-            <Terminal />
-          </Route>
-          <Route path={Routes.AdminDashboard}>
-            <Admin />
-          </Route>
-          <Redirect strict from='/' to={Routes.Terminal} />
-          <Route render={NoMatch} />
-        </Switch>
-      </Router>
-    </AppContextProvider>,
+  <AppContextProvider>
+    <Router history={hashHistory}>
+      <Switch>
+        <Route path={Routes.Terminal}>
+          <Terminal />
+        </Route>
+        <Route path={Routes.AdminDashboard}>
+          <Admin />
+        </Route>
+        <Redirect strict from="/" to={Routes.Terminal} />
+        <Route render={NoMatch} />
+      </Switch>
+    </Router>
+  </AppContextProvider>,
   document.getElementById('root'),
 );
 

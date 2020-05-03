@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { ChevronRightTwoTone } from 'icons';
-import { Category } from 'types';
+import { ChevronRightTwoTone } from 'common/icons';
+import { Category } from 'common/types';
 import styles from './breadcrumbs.module.css';
 
 export type BreadcrumbsProps = {

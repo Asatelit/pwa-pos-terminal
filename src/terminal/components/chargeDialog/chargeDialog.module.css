@@ -1,0 +1,198 @@
+@value moduleHeight: 4rem;
+
+.root {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  outline: 0;
+  transition: opacity 0.15s linear;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9;
+  opacity: 0.5;
+}
+
+.dialog {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  pointer-events: none;
+  transition: transform 0.3s ease-out;
+  transform: none;
+  margin: auto;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  outline: 0;
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: moduleHeight;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.closeBtn {
+  composes: buttonTransparent from '../../../common/styles/button.module.css';
+  color: inherit;
+  height: moduleHeight;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  opacity: .85;
+}
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.closeBtn span {
+  margin-left: 6px;
+}
+
+.itemInfo {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+
+.order {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.orderHead {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.changeInfo {
+  font-size: 1rem;
+  font-weight: 400;
+  min-height: 1.5rem;
+  margin: .5rem 0;
+}
+
+.control {
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  width: 100%;
+  height: 3rem;
+  padding: 0 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #aaaaaa;
+  border-radius: 2px;
+}
+
+.control:focus-within {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.controlLabel {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 1.25rem;
+  user-select: none;
+}
+
+.controlInput {
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: right;
+  border: none;
+  outline: none;
+}
+
+.btnPrimary {
+  composes: buttonPrimary from '../../../common/styles/button.module.css';
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+}
+
+.btnSecondary {
+  composes: buttonLink from '../../../common/styles/button.module.css';
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.btnSecondary optgroup {
+  font-size: 1.142rem;
+}
+
+.orderFoot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.helper {
+  padding: 1rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  background-color: #dae0e5;
+  min-width: 350px;
+  max-width: 500px;
+}
+
+.numpad {
+  flex: 1 1 auto;
+  max-height: 400px;
+  padding: 2rem;
+}

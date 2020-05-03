@@ -1,0 +1,86 @@
+@value moduleHeight: 4rem;
+
+.root {
+
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: moduleHeight;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.itemInfo {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.form {
+  padding: 0 2rem;
+  max-width: 800px;
+}
+
+.picker {
+  padding: .5rem .25rem;
+  border: 1px solid #80bdff;
+  border-top: transparent;
+  border-radius: 0 0 .25rem .25rem;
+}
+
+.control {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.controlGroup {
+  flex: 1 1 auto;
+}
+
+.controlLabel {
+  padding: .375rem 0;
+  min-width: 150px;
+}
+
+.controlInput {
+  composes: input from '../../../common/styles/button.module.css';
+  flex: 1 1 auto;
+}
+
+.primaryAction {
+  composes: buttonPrimary from '../../../common/styles/button.module.css';
+}
+
+.secondaryAction {
+  composes: buttonLink from '../../../common/styles/button.module.css';
+}
+
+.closeBtn {
+  composes: buttonTransparent from '../../../common/styles/button.module.css';
+  height: moduleHeight;
+  width: moduleHeight;
+  opacity: .65;
+  color: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.switch {
+  composes: switch from '../../../common/styles/switch.module.css';
+  display: flex;
+  margin-bottom: 1rem;
+}

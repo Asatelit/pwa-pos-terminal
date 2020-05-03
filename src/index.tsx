@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createHashHistory } from 'history';
-import { Terminal, Admin } from 'containers';
-import { AppContextProvider } from 'hooks';
+import { AppContextProvider } from 'common/hooks';
 import { Routes } from 'common/const';
+import Terminal from './terminal/terminal';
+import Admin from './admin/admin';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 

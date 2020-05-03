@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { capitalizeFirstLetter } from 'utils';
+import { capitalizeFirstLetter } from 'common/utils';
 import styles from './svgIcon.module.css';
 
 type FontSize = 'inherit' | 'default' | 'small' | 'large';

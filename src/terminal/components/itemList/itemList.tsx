@@ -8,7 +8,7 @@ import styles from './itemList.module.css';
 type ItemListProps = {
   categories: Category[];
   items: Item[];
-  currentCategoryId: string | null;
+  currentCategoryId: string;
   services: AppActions;
 };
 
@@ -20,7 +20,7 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, currentCategoryI
   const visibleItems = getVisibleItems(currentCategoryId, items, searchTerm);
 
   // handlers
-  const changeCurrentCategory = (categoryId: string | null) => services.category.select(categoryId);
+  const changeCurrentCategory = (categoryId: string) => services.category.select(categoryId);
 
   // render items
   const renderItems = (items: Item[]) => {

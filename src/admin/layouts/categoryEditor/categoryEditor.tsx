@@ -86,15 +86,16 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
               type="text"
               id="CategoryEditorCategory"
               className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
-              value={getParentCategory(data?.parentId || null).name}
+              value={getParentCategory(data.parentId).name}
               onClick={() => togglePicker(!isPickerShown)}
             />
             {isPickerShown && (
               <CategoryPicker
-                removeMode
+                removeMode={!createMode}
                 className={styles.picker}
                 categories={categories}
-                selected={contextCategoryId}
+                parent={data.parentId}
+                selected={data.id}
                 onChange={handleOnChangeCategoryPicker}
                 onClose={() => togglePicker(false)}
               />

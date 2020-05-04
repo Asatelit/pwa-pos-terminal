@@ -1,15 +1,17 @@
 import React, { useState, Fragment } from 'react';
 import { FolderTwoTone, MenuRightTwoTone, MenuDownTwoTone } from 'common/icons';
+import { Entities } from 'common/const';
 import { Category } from 'common/types';
 import { getCategoryById } from 'common/assets';
 import styles from './categoryPicker.module.css';
 
 type CategoryPickerProps = {
   categories: Category[];
-  onChange: (categoryId: string | null) => void;
+  onChange: (categoryId: string) => void;
   onClose: () => void;
+  selected: string;
+  parent?: string | null;
   className?: string;
-  selected?: string | null;
   removeMode?: boolean;
 };
 
@@ -18,51 +20,55 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
   onChange,
   onClose,
   className = '',
-  selected = null,
+  selected,
+  parent = Entities.RootCategoryId,
   removeMode = false,
 }) => {
   const getInitialExpandedNodes = () => {
-    const nodes: any[] = [null];
-    const getExpandedNode = (nodeId: string | null) => {
-      if (nodeId === null) return;
-      const parentId = categories.find(entry => nodeId === entry.id);
-      if (parentId) {
-        nodes.push(parentId.id);
-        getExpandedNode(parentId.parentId);
-      }
+    const nodes: string[] = [Entities.RootCategoryId];
+
+    const findExpandedNode = (nodeId: string | null) => {
+      if (!nodeId || nodeId === Entities.RootCategoryId) return;
+      const parent = categories.find(entry => nodeId === entry.id);
+      if (!parent) return;
+      nodes.push(parent.id);
+      findExpandedNode(parent.parentId);
     };
-    getExpandedNode(selected);
+
+    findExpandedNode(selected);
     return nodes;
   };
 
   const [expandedNodes, setExpandedNodes] = useState<any[]>(getInitialExpandedNodes());
-  const parentNode = selected ? getCategoryById(categories, selected).parentId : null;
 
-  const handleOnClickOnToggle = (event: React.MouseEvent<HTMLDivElement>, categoryId: string | null) => {
+  const handleOnClickOnToggle = (event: React.MouseEvent<HTMLDivElement>, categoryId: string) => {
     event.stopPropagation();
     const isExpanded = expandedNodes.includes(categoryId);
     setExpandedNodes(isExpanded ? expandedNodes.filter(i => i !== categoryId) : [...expandedNodes, categoryId]);
   };
 
-  const handleOnClickOnItem = (event: React.MouseEvent<HTMLDivElement>, categoryId: string | null) => {
+  const handleOnClickOnItem = (event: React.MouseEvent<HTMLDivElement>, categoryId: string) => {
     event.stopPropagation();
+    console.info(categoryId, selected);
     if (categoryId !== selected) onChange(categoryId);
     onClose();
   };
 
-  const getCategories = (id: string | null = null, level: number = 0) => {
+  const getCategories = (id: string = Entities.RootCategoryId, level: number = 0) => {
     const data = categories.filter(cat => id === cat.parentId && !cat.isDeleted);
     if (!data.length) return null;
     return <Fragment>{data.map(entity => renderItem(entity.id, entity.name, level))}</Fragment>;
   };
 
-  const renderItem = (id: string | null, name: string, level: number = 0) => {
+  const renderItem = (id: string, name: string, level: number = 0) => {
     const child = getCategories(id, level + 1);
     const isExpanded = expandedNodes.includes(id);
-    const isDisabled = id === selected;
+    const isDisabled = removeMode && id !== Entities.RootCategoryId && id === selected;
     const toggleIcon = isExpanded ? <MenuDownTwoTone /> : <MenuRightTwoTone />;
-    const activeClass = id === parentNode ? styles.infoActive : '';
-    if (removeMode && isDisabled) return null;
+    const activeClass = id === parent ? styles.infoActive : '';
+
+    if (isDisabled) return null;
+
     return (
       <div key={`${id}`} className={styles.item} onClick={event => handleOnClickOnItem(event, id)}>
         <div className={`${styles.info} ${activeClass}`} style={{ paddingLeft: `${level}rem` }}>
@@ -79,7 +85,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
     );
   };
 
-  return <div className={`${styles.root} ${className}`}>{renderItem(null, 'Home Screen')}</div>;
+  return <div className={`${styles.root} ${className}`}>{renderItem(Entities.RootCategoryId, 'Home Screen')}</div>;
 };
 
 export default CategoryPicker;

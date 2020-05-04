@@ -1,4 +1,5 @@
 import { Context, AppState } from 'common/types';
+import { Entities } from 'common/const';
 
 export const AppInitialSettings = {
   currency: '$',
@@ -37,7 +38,7 @@ export const AppInitialState: Context<AppState> = [
   {
     categories: [],
     closedOrders: [],
-    currentCategoryId: null,
+    currentCategoryId: Entities.RootCategoryId,
     currentItemId: null,
     currentOrderId: null,
     currentTableId: null,

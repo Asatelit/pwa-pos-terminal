@@ -17,8 +17,7 @@ type ItemEditorProps = {
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
   const { id } = useParams();
-  const currentItem = id ? getItemById(items, id) : null;
-  const initialState: Item = currentItem || getItemEntity();
+  const initialState = id ? getItemById(items, id) : getItemEntity();
 
   const [item, setItem] = useState<Item>(initialState);
   const [redirect, setRedirect] = useState('');
@@ -29,22 +28,10 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
   const updateItem = (data: Partial<Item>) => setItem({ ...item, ...data });
   const isInvalid = !item.name;
 
-  const getItem = (): Item => {
-    const { price, costPrice, ...other } = item;
-    return getItemEntity({ ...other, price, costPrice });
-  };
-
   const handleOnChangeCategoryPicker = (categoryId: string | null) => updateItem({ parentId: categoryId });
 
   const handleOnClickOnPrimaryBtn = () => {
-    if (currentItem) {
-      // update an existing item
-      const { price, costPrice, ...other } = item;
-      actions.item.update({ ...currentItem, ...other, price, costPrice });
-    } else {
-      // create a new item
-      actions.item.add(getItem());
-    }
+    actions.item.update(item);
     setRedirect(Routes.AdminItemList);
   };
 
@@ -70,7 +57,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
           <ArrowLeftTwoTone />
         </Link>
         <div className={styles.itemInfo}>
-          <span className={styles.itemName}>{currentItem ? 'Edit Item' : 'Create Item'}</span>
+          <span className={styles.itemName}>{id ? 'Edit Item' : 'Create Item'}</span>
         </div>
       </div>
       <div className={styles.form}>
@@ -103,7 +90,8 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
               <CategoryPicker
                 className={styles.picker}
                 categories={categories}
-                selected={currentItem?.parentId || null}
+                parent={item.parentId}
+                selected={item.id}
                 onChange={handleOnChangeCategoryPicker}
                 onClose={() => togglePicker(false)}
               />
@@ -177,7 +165,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
         <div className={styles.control}>
           <div className={styles.controlLabel} />
           <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
-            {currentItem ? 'Update' : 'Add'}
+            {id ? 'Update' : 'Add'}
           </button>
         </div>
       </div>

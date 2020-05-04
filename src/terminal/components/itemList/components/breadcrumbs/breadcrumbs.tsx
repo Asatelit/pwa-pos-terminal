@@ -14,7 +14,7 @@ const Breadcrumbs: React.FC = () => {
     : undefined;
 
   const resetCurrentCategory = () => service.category.select(rootCategory);
-  const changeCurrentCategory = (categoryId: string | null) => service.category.select(categoryId);
+  const changeCurrentCategory = (categoryId: string) => service.category.select(categoryId);
 
   const renderRootSegment = (
     <div className={styles.segment} onClick={resetCurrentCategory}>

@@ -3,7 +3,7 @@ import { Category, Item, Order, ClosedOrder, Settings, Tax } from 'common/types'
 export type AppState = {
   categories: Category[]; // Categories list
   closedOrders: ClosedOrder[]; // Closed orders list
-  currentCategoryId: string | null; // Current category identifier
+  currentCategoryId: string; // Current category identifier
   currentItemId: string | null; // Current item identifier
   currentOrderId: string | null; // Current order identifier
   currentTableId: string | null; // Current table identifier
@@ -26,7 +26,7 @@ export type AppActions = {
 export type CategoryActions = {
   add: (category?: Partial<Category>) => void;
   remove: (categoryId: string) => void;
-  select: (categoryId: string | null) => void;
+  select: (categoryId: string) => void;
   update: (category: Category) => void;
 };
 

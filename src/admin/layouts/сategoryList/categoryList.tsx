@@ -3,7 +3,7 @@ import { Link, Redirect, useParams } from 'react-router-dom';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
 import { getTextIdentifier } from 'common/utils';
-import { Routes } from 'common/const';
+import { Routes, Entities } from 'common/const';
 import { Breadcrumbs } from 'common/components';
 import styles from './categoryList.module.css';
 
@@ -17,7 +17,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
 
   // handle route params
   const { id } = useParams();
-  const selectedCategoryId = id || null;
+  const selectedCategoryId = id || Entities.RootCategoryId;
 
   useEffect(() => {
     setRedirect('');

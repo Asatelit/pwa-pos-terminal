@@ -20,7 +20,7 @@
     "classnames": "^2.2.6",
     "history": "^4.10.1",
     "localforage": "^1.7.3",
-    "moment": "^2.25.1",
+    "moment": "^2.25.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-print-tool": "^3.0.0",

@@ -1,5 +1,5 @@
 export type Table = {
-  id: number;
+  id: string;
   seats: number;
   name: string;
   x: number;

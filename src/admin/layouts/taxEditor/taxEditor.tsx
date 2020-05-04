@@ -1,10 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Routes } from 'common/const';
-import { NewTax } from 'common/prototypes';
+import { getTaxEntity, getTaxById } from 'common/assets';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
-import { getTaxById } from 'common/helpers';
 import { CommonLayout } from '../../layouts';
 import styles from './taxEditor.module.css';
 
@@ -15,8 +14,8 @@ type TaxEditorProps = {
 
 const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
   const { id } = useParams();
-  const currentTaxRecord = id ? getTaxById(taxes, Number(id)) : null;
-  const initialTaxRecord: Tax = currentTaxRecord ? currentTaxRecord : NewTax();
+  const currentTaxRecord = id ? getTaxById(taxes, id) : null;
+  const initialTaxRecord: Tax = currentTaxRecord ? currentTaxRecord : getTaxEntity();
 
   const [taxRecord, setTaxRecord] = useState<Tax>(initialTaxRecord);
   const [redirect, setRedirect] = useState('');

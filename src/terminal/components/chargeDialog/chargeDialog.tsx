@@ -11,7 +11,7 @@ import {
 } from 'common/types';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { financial, round, calcSum } from 'common/utils';
-import { getOrderById } from 'common/helpers';
+import { getOrderById } from 'common/assets';
 import { Routes } from 'common/const';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
@@ -20,7 +20,7 @@ type ChargeDialogProps = {
   items: Item[];
   orders: Order[];
   services: AppActions;
-  onPrintReceit: (orderId: number) => void;
+  onPrintReceit: (orderId: string) => void;
 };
 
 const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
@@ -34,7 +34,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
 
   // order reference check
   if (!id) setRedirect(Routes.PageBadRequest);
-  const order = getOrderById(orders, Number(id));
+  const order = getOrderById(orders, id || null);
 
   // helpers
   const setCashPaymentAmount = (cashPaymentAmount: string) => setState({ ...state, cashPaymentAmount });

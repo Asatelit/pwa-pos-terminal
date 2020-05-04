@@ -25,14 +25,14 @@ export type Order = {
   dateUpdated: number;
   discountAmount: number;
   guestsCount?: number;
-  id: number;
+  id: string;
   isDiscounted: boolean;
   isSplited?: boolean;
   isTipIncluded: boolean;
   items: OrderItem[];
   notes: string;
   orderName: number;
-  parentId: number;
+  parentId: string | null;
   paymentMethodId: number;
   platformDiscount?: number;
   rewardEarnedAmount: number;
@@ -41,7 +41,7 @@ export type Order = {
   status: OrderStatuses;
   subTotalAmount: number;
   subTotalRoundedAmount: number;
-  tableId?: number;
+  tableId?: string | null;
   taxAmount: number;
   taxRoundedAmount: number;
   tipsAmount: number;
@@ -50,12 +50,12 @@ export type Order = {
   totalAmount: number;
   totalPaymentAmount: number;
   totalRoundedAmount: number;
-  userId: number;
+  userId: string | null;
 };
 
 export interface ClosedOrder extends Order {
-  usedPromotions?: number[];
-  childOrders?: number[];
+  usedPromotions?: string[];
+  childOrders?: string[];
   closingReason: OrderClosingReasons;
   cashChange: number;
   profit: number;
@@ -63,7 +63,7 @@ export interface ClosedOrder extends Order {
 }
 
 export type OrderItem = {
-  id: number;
+  id: string;
   variant: number;
   quantity: number;
   price: number;

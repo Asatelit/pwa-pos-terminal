@@ -2,7 +2,7 @@ import React from 'react';
 import { Tax } from 'common/types';
 
 export type TaxNameProps = {
-  taxId: number; // Nodes passed into the SVG element.
+  taxId: string; // Nodes passed into the SVG element.
   taxes: Tax[];
   className?: string; // Add a custom class name
 };

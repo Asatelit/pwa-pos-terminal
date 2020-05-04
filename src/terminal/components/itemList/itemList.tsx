@@ -1,39 +1,28 @@
 import React, { Fragment, useState } from 'react';
 import { Item, Category, AppActions } from 'common/types';
 import { Breadcrumbs } from 'common/components';
+import { getVisibleCategories, getVisibleItems } from 'common/assets';
 import { Card, Search } from './components';
 import styles from './itemList.module.css';
 
 type ItemListProps = {
   categories: Category[];
-  products: Item[];
-  currentCategoryId: number;
+  items: Item[];
+  currentCategoryId: string | null;
   services: AppActions;
 };
 
-const ItemList: React.FC<ItemListProps> = ({ categories, products, currentCategoryId, services }) => {
+const ItemList: React.FC<ItemListProps> = ({ categories, items, currentCategoryId, services }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const hasSearchTerm = !!searchTerm;
 
-  const visibleCategories = categories.filter(
-    cat => !cat.isDeleted && !cat.isHidden && cat.parentId === currentCategoryId,
-  );
+  // helpers
+  const visibleCategories = getVisibleCategories(currentCategoryId, categories);
+  const visibleItems = getVisibleItems(currentCategoryId, items, searchTerm);
 
-  const visibleItems = products.filter(
-    product => !product.isDeleted && !product.isHidden && product.parentId === currentCategoryId,
-  );
+  // handlers
+  const changeCurrentCategory = (categoryId: string | null) => services.category.select(categoryId);
 
-  const filteredItems = hasSearchTerm
-    ? products.filter(
-        product =>
-          !product.isDeleted && !product.isHidden &&
-          (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.barcode.toLowerCase().includes(searchTerm.toLowerCase())),
-      )
-    : [];
-
-  const changeCurrentCategory = (categoryId: number) => services.category.select(categoryId);
-
+  // render items
   const renderItems = (items: Item[]) => {
     if (!items.length) {
       return <div className={styles.empty}>There are no items in this category</div>;
@@ -54,8 +43,10 @@ const ItemList: React.FC<ItemListProps> = ({ categories, products, currentCatego
     );
   };
 
-  const renderFilteredItems = () => <Fragment>{renderItems(filteredItems)}</Fragment>;
+  // render filtered content
+  const renderFilteredItems = () => <Fragment>{renderItems(visibleItems)}</Fragment>;
 
+  // render visible categories and items
   const renderContent = () => (
     <Fragment>
       {visibleCategories.map(category => (
@@ -82,7 +73,7 @@ const ItemList: React.FC<ItemListProps> = ({ categories, products, currentCatego
         />
         <Search onChange={setSearchTerm} />
       </div>
-      <div className={styles.body}>{hasSearchTerm ? renderFilteredItems() : renderContent()}</div>
+      <div className={styles.body}>{!searchTerm ? renderContent() : renderFilteredItems()}</div>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import { isExist } from 'common/utils';
 import { TaxActions, Action } from 'common/types';
-import { NewTax } from 'common/prototypes';
+import { getTaxEntity } from 'common/assets';
 
-const categoryActions: Action<TaxActions> = (state, updateState) => ({
+const taxActions: Action<TaxActions> = (state, updateState) => ({
   // add a tax
-  add: (data) => updateState({ taxes: [...state.taxes, NewTax(data)] }),
+  add: (tax) => updateState({ taxes: [...state.taxes, getTaxEntity(tax)] }),
 
   // remove a tax
   remove: (taxId) => {
@@ -16,10 +16,10 @@ const categoryActions: Action<TaxActions> = (state, updateState) => ({
   },
 
   // update a tax
-  update: (taxData) => {
-    const updTaxes = [...state.taxes.filter((entity) => entity.id !== taxData.id)];
-    updateState({ taxes: [...updTaxes, { ...taxData }] });
+  update: (tax) => {
+    const updTaxes = [...state.taxes.filter((entity) => entity.id !== tax.id), tax];
+    updateState({ taxes: updTaxes });
   },
 });
 
-export default categoryActions;
+export default taxActions;

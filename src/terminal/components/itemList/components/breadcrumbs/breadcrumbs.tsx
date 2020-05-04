@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { AppContext } from 'common/hooks';
-import { AppInitialState } from 'common/prototypes';
+import { AppInitialState } from 'common/assets';
 import { ChevronRightTwoTone } from 'common/icons';
 import styles from './breadcrumbs.module.css';
 
@@ -14,7 +14,7 @@ const Breadcrumbs: React.FC = () => {
     : undefined;
 
   const resetCurrentCategory = () => service.category.select(rootCategory);
-  const changeCurrentCategory = (categoryId: number) => service.category.select(categoryId);
+  const changeCurrentCategory = (categoryId: string | null) => service.category.select(categoryId);
 
   const renderRootSegment = (
     <div className={styles.segment} onClick={resetCurrentCategory}>

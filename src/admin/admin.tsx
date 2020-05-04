@@ -18,7 +18,7 @@ import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
   const [context, actions] = useContext(AppContext);
-  const { isLoading, categories, settings, products, closedOrders, taxes } = context;
+  const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
 
   if (isLoading) return <LoadScreen />;
 

@@ -5,7 +5,7 @@ import { CloseTwoTone, PlusTwoTone, MinusTwoTone } from 'common/icons';
 import styles from './itemEditor.module.css';
 
 type EditorProps = {
-  orderItemId: number;
+  orderItemId: string | null;
   order: Order | null;
   products: Item[];
   services: AppActions;
@@ -29,7 +29,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
 
   // Fallback
   if (!state || !state.instance) {
-    services.item.select(0);
+    services.item.select(null);
     return null;
   }
 
@@ -53,7 +53,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
   const handleNotesChange = (notes: string) => setState({ ...state, order: { ...state.order, notes } });
   const handleRemove = () => services.orders.updateSelected(getUpdatedOrder({ ...item, quantity: 0 }));
   const handleApply = () => services.orders.updateSelected(getUpdatedOrder());
-  const handleCancel = () => services.item.select(0);
+  const handleCancel = () => services.item.select(null);
 
   return (
     <Fragment>

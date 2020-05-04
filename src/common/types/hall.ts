@@ -1,5 +1,5 @@
 export type Hall = {
-  id: number;
+  id: string;
   name: string;
   sortOrder: number;
   isHidden: boolean;

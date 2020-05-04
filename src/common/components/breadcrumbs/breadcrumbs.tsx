@@ -5,20 +5,20 @@ import styles from './breadcrumbs.module.css';
 
 export type BreadcrumbsProps = {
   categories: Category[];
-  currentCategoryId: number;
-  onChange: (categoryId: number) => void;
+  currentCategoryId: string | null;
+  onChange: (categoryId: string | null) => void;
   className?: string;
 };
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ categories, currentCategoryId, onChange, className = '' }) => {
-  const rootCategory = 0;
+  const rootCategory = null;
   const currentCategory = categories.find(category => currentCategoryId === category.id);
   const middleCategory = currentCategory
     ? categories.find(category => currentCategory.parentId === category.id)
     : undefined;
 
   const resetCurrentCategory = () => onChange(rootCategory);
-  const changeCurrentCategory = (categoryId: number) => onChange(categoryId);
+  const changeCurrentCategory = (categoryId: string | null) => onChange(categoryId);
 
   const renderRootSegment = (
     <div className={styles.segment} onClick={resetCurrentCategory}>

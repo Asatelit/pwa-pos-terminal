@@ -1,5 +1,5 @@
 export type Waiter = {
-  id: number;
+  id: string;
   name: string;
   pinCode: string;
   activeOrderId: number;

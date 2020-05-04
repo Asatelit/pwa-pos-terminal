@@ -1,5 +1,5 @@
 export type Tax = {
-  id: number;
+  id: string;
   name: string;
   precentage: number;
   applyToCustomAmounts: boolean;
@@ -9,7 +9,7 @@ export type Tax = {
 };
 
 export type TaxRecord = {
-  id: number;
+  id: string;
   includedTaxAmount: number;
   taxAmount: number;
 };

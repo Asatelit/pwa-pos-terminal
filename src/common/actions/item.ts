@@ -1,30 +1,31 @@
 import { isExist, getTimestamp } from 'common/utils';
 import { ItemActions, Action, Item } from 'common/types';
+import { getItemEntity } from 'common/assets';
 
-function update(item: Item): Item {
+function updateItem(item: Item): Item {
   const updItem = { ...item };
   item.lastModifiedTime = getTimestamp();
   return updItem;
 }
 
 const itemActions: Action<ItemActions> = (state, updateState) => ({
-  select: (itemId: number) => updateState({ currentItemId: itemId }),
+  select: (itemId) => updateState({ currentItemId: itemId }),
 
-  add: (product) => updateState({ products: [...state.products, update(product)] }),
+  add: (item) => updateState({ items: [...state.items, getItemEntity(item)] }),
 
   update: (item) => {
-    const restItems = [...state.products.filter((entity) => entity.id !== item.id)];
-    updateState({ products: [...restItems, update(item)] });
+    const restItems = [...state.items.filter((entity) => entity.id !== item.id)];
+    updateState({ items: [...restItems, updateItem(item)] });
   },
 
   remove: (itemId) => {
-    const updItems = [...state.products];
-    const targetEntity = state.products.findIndex((entity) => itemId === entity.id);
+    const updItems = [...state.items];
+    const targetEntity = state.items.findIndex((entity) => itemId === entity.id);
     if (!isExist(targetEntity)) throw new Error('The specified item does not exist');
     let updItem = updItems[targetEntity];
     updItem.isDeleted = true;
-    updItem = update(updItem);
-    updateState({ products: updItems });
+    updItem = updateItem(updItem);
+    updateState({ items: updItems });
   },
 });
 

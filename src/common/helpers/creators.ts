@@ -1,5 +1,5 @@
 import { Tax, AppState, Order, OrderItem, OrderStatuses, Item } from 'common/types';
-import { getTimestamp } from 'common/utils';
+import { getTimestamp, generateId } from 'common/utils';
 
 export const createNewOrder = (state: AppState): Order => ({
   cardPaymentAmount: 0,
@@ -12,13 +12,13 @@ export const createNewOrder = (state: AppState): Order => ({
   dateStart: getTimestamp(),
   dateUpdated: 0,
   discountAmount: 0,
-  id: getTimestamp(),
+  id: generateId(),
   isDiscounted: false,
   isTipIncluded: false,
   items: [],
   notes: '',
   orderName: Math.max(...state.orders.map((order) => order.orderName), 0) + 1,
-  parentId: 0,
+  parentId: null,
   paymentMethodId: 0,
   rewardEarnedAmount: 0,
   rewardPaymentAmount: 0,
@@ -39,7 +39,7 @@ export const createNewOrder = (state: AppState): Order => ({
 });
 
 export const createNewTaxItem = (): Tax => ({
-  id: getTimestamp(),
+  id: generateId(),
   name: '',
   applyToCustomAmounts: false,
   isDeleted: false,

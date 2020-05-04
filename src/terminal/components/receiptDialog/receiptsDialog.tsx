@@ -5,7 +5,7 @@ import { ArrowLeftTwoTone, PlusTwoTone } from 'common/icons';
 import styles from './receiptsDialog.module.css';
 
 type ReceiptsDialogProps = {
-  orderId: number;
+  orderId: string | null;
   orders: Order[];
   services: AppActions;
   onClose: () => void;
@@ -14,7 +14,7 @@ type ReceiptsDialogProps = {
 const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, services, onClose }) => {
   const openOrders = orders.filter(entity => entity.status === OrderStatuses.Open);
 
-  const selectOrder = (id: number) => {
+  const selectOrder = (id: string) => {
     services.orders.select(id);
     closeDialog();
   };

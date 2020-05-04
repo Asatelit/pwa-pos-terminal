@@ -1,7 +1,8 @@
-import { NewOrder } from 'common/prototypes';
+import { getTaxes} from 'common/assets/tax';
+import { getOrderEntity, createOrder, getOrderIndexById, getOrderItemIndexById } from 'common/assets/order';
 import { isExist, getTimestamp, calcSum, round } from 'common/utils';
 import { OrdersActions, Action, ClosedOrder, Order, OrderStatuses, AppState, OrderItem, TaxRecord } from 'common/types';
-import { createNewOrderItem, createOrder, getOrderIndexById, getOrderItemIndexById, getTaxes } from '../helpers';
+import { createNewOrderItem  } from '../helpers';
 
 function update(order: Order, state: AppState): Order {
   const updOrder = { ...order };
@@ -10,7 +11,7 @@ function update(order: Order, state: AppState): Order {
 
   // recalculates the order items amounts
   updOrder.items.forEach((orderItem) => {
-    const item = state.products.find((entity) => entity.id === orderItem.id);
+    const item = state.items.find((entity) => entity.id === orderItem.id);
     if (!item) return;
     const { quantity, price } = orderItem;
     const taxes = getTaxes(item, state);
@@ -33,8 +34,8 @@ function update(order: Order, state: AppState): Order {
   updOrder.items = updOrderItems;
 
   // recalculates the order items amounts
-  const unquieTaxIds: number[] = Array.from(new Set(appliedTaxes.map((item) => item.id)));
-  const orderTaxes = unquieTaxIds.map((taxId: number) => {
+  const unquieTaxIds: string[] = Array.from(new Set(appliedTaxes.map((item) => item.id)));
+  const orderTaxes = unquieTaxIds.map((taxId: string) => {
     const taxList = appliedTaxes.filter((entity) => entity.id === taxId);
     return {
       id: taxId,
@@ -64,7 +65,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
 
     // If the order does not exist create a new one
     if (!isExist(orderIndex)) {
-      const order = { ...NewOrder(state) };
+      const order = { ...getOrderEntity(state) };
       updOrders.push(order);
       orderIndex = updOrders.length - 1;
     }
@@ -83,7 +84,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
     // recalculate order's data
     Object.assign(updOrder, update(updOrder, state));
 
-    updateState({ orders: updOrders, currentOrderId: updOrder.id, currentItemId: 0 });
+    updateState({ orders: updOrders, currentOrderId: updOrder.id, currentItemId: null });
   },
 
   // Order Closing
@@ -101,7 +102,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
       } as Order,
     ];
     const updClosedOrders: ClosedOrder[] = [closedOrder, ...state.closedOrders];
-    updateState({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: 0, currentOrderId: 0 });
+    updateState({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: null, currentOrderId: null });
   },
 
   // Updates current order data
@@ -115,7 +116,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
       updOrders[currentOrderIndex] = update(updOrder, state);
     }
 
-    updateState({ orders: updOrders, currentItemId: 0 });
+    updateState({ orders: updOrders, currentItemId: null });
   },
 
   add: () => {
@@ -123,7 +124,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
     updateState({ orders: updOrders, currentOrderId: updOrder.id });
   },
 
-  select: (orderId: number) => updateState({ currentOrderId: orderId }),
+  select: (orderId: string | null) => updateState({ currentOrderId: orderId }),
 });
 
 export default ordersActions;

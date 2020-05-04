@@ -1,7 +1,7 @@
 export type Category = {
-  id: number;
+  id: string;
   name: string;
-  parentId: number;
+  parentId: string | null;
   color: string | null;
   picture: string | null;
   isHidden: boolean;

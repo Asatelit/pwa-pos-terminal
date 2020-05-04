@@ -1,7 +1,7 @@
 import localForage from 'localforage';
 import React, { createContext, useState, useEffect } from 'react';
 import { Context, AppState, AppActions } from 'common/types';
-import { AppInitialState } from 'common/prototypes';
+import { AppInitialState } from 'common/assets';
 import * as A from '../actions';
 
 const store = localForage.createInstance({

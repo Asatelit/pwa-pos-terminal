@@ -22,14 +22,14 @@ const Terminal: React.FC = () => {
     currentOrderId,
     currentItemId,
     orders,
-    products,
+    items: products,
   } = context;
 
   const updateState = (data: Partial<TerminalState>) => setState({ ...state, ...data });
   const currentOrder = orders.find(order => currentOrderId === order.id) || null;
   const hasEditItemRequest = !!currentItemId;
 
-  const handlePrint = (orderId: number) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
+  const handlePrint = (orderId: string | null) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
@@ -74,7 +74,7 @@ const Terminal: React.FC = () => {
               <Menu onOpenDrawer={() => updateState({ isOpenDrawer: true })} />
               <ItemList
                 categories={categories}
-                products={products}
+                items={products}
                 currentCategoryId={currentCategoryId}
                 services={services}
               />

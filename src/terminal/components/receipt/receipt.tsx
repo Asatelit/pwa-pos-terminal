@@ -9,19 +9,19 @@ import styles from './receipt.module.css';
 type ReceiptProps = {
   items: Item[];
   order: Order | null;
-  orderId: number;
+  orderId: string | null;
   services: AppActions;
   onShowReceipts: () => void;
-  onPrintCheck: (orderId: number) => void;
+  onPrintCheck: (orderId: string | null) => void;
 };
 
 const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onShowReceipts, onPrintCheck }) => {
   // helpers
-  const getItemName = (id: number) => items.find(item => item.id === id)?.name || id;
+  const getItemName = (id: string) => items.find(item => item.id === id)?.name || id;
 
   // handlers
   const handleShowReceipts = () => onShowReceipts();
-  const handleEditOrderItem = (orderItemId: number) => services.item.select(orderItemId);
+  const handleEditOrderItem = (orderItemId: string) => services.item.select(orderItemId);
   const handlePrint = () => onPrintCheck(orderId);
 
   // assets

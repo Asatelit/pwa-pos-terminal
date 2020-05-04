@@ -18,6 +18,12 @@ export function getTimestamp(): number {
   return new Date().valueOf();
 }
 
+export function generateId(): string {
+  const seed = new Uint32Array(4);
+  const cryptoObj = window?.crypto || ((window as any).msCrypto as Crypto);
+  return cryptoObj.getRandomValues(seed).join('-');
+}
+
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -37,13 +43,20 @@ export function calcSum<T>(items: T[], propName: keyof T): number {
 }
 
 // Merge array of objects with sum of values;
-export function mergeAndSum<T, K extends keyof T>(items: T[], groupKey: K, sumKey: keyof T): (Pick<T, K> & { sum: number; })[] {
+export function mergeAndSum<T, K extends keyof T>(
+  items: T[],
+  groupKey: K,
+  sumKey: keyof T,
+): (Pick<T, K> & { sum: number })[] {
   const result: any = [];
   items.forEach((item) => {
     const updItem = { [groupKey]: item[groupKey], sum: 0 };
     const index = result.findIndex((entity: T) => entity[groupKey] === item[groupKey]);
     if (isExist(index)) return;
-    updItem.sum = calcSum<T>(items.filter(entity => entity[groupKey] === item[groupKey]), sumKey);
+    updItem.sum = calcSum<T>(
+      items.filter((entity) => entity[groupKey] === item[groupKey]),
+      sumKey,
+    );
     result.push(updItem);
   });
   return result;

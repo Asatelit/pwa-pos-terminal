@@ -4,8 +4,7 @@ import { Routes } from 'common/const';
 import { encodeImage } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, Item, Tax, AppActions } from 'common/types';
-import { getItemById } from 'common/helpers';
-import { newItem } from 'common/prototypes';
+import { getItemEntity, getItemById } from 'common/assets';
 import { CategoryPicker } from '../../components';
 import styles from './itemEditor.module.css';
 
@@ -16,50 +15,32 @@ type ItemEditorProps = {
   actions: AppActions;
 };
 
-type ItemEditorState = {
-  name: string;
-  parentId: number;
-  price: string;
-  costPrice: string;
-  color: string;
-  picture: string;
-  taxes: number[];
-};
-
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
   const { id } = useParams();
-  const currentItem = id ? getItemById(items, Number(id)) : null;
-  const initialState: ItemEditorState = {
-    name: currentItem?.name || '',
-    parentId: currentItem?.parentId || 0,
-    price: `${currentItem?.price || 0}`,
-    costPrice: `${currentItem?.costPrice || 0}`,
-    color: currentItem?.color || '',
-    picture: currentItem?.picture || '',
-    taxes: currentItem?.taxes || [],
-  };
+  const currentItem = id ? getItemById(items, id) : null;
+  const initialState: Item = currentItem || getItemEntity();
 
-  const [item, setItem] = useState<ItemEditorState>(initialState);
+  const [item, setItem] = useState<Item>(initialState);
   const [redirect, setRedirect] = useState('');
   const [isPickerShown, togglePicker] = useState(false);
 
   // Helpers
   const selectedCategoryName = categories.find(entity => entity.id === item.parentId)?.name || 'Home Screen';
-  const updateItem = (data: Partial<ItemEditorState>) => setItem({ ...item, ...data });
+  const updateItem = (data: Partial<Item>) => setItem({ ...item, ...data });
   const isInvalid = !item.name;
 
   const getItem = (): Item => {
     const { price, costPrice, ...other } = item;
-    return newItem({ ...other, price: parseFloat(price), costPrice: parseFloat(costPrice) });
+    return getItemEntity({ ...other, price, costPrice });
   };
 
-  const handleOnChangeCategoryPicker = (categoryId: number) => updateItem({ parentId: categoryId });
+  const handleOnChangeCategoryPicker = (categoryId: string | null) => updateItem({ parentId: categoryId });
 
   const handleOnClickOnPrimaryBtn = () => {
     if (currentItem) {
       // update an existing item
       const { price, costPrice, ...other } = item;
-      actions.item.update({ ...currentItem, ...other, price: parseFloat(price), costPrice: parseFloat(costPrice) });
+      actions.item.update({ ...currentItem, ...other, price, costPrice });
     } else {
       // create a new item
       actions.item.add(getItem());
@@ -122,7 +103,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
               <CategoryPicker
                 className={styles.picker}
                 categories={categories}
-                selected={currentItem?.parentId || 0}
+                selected={currentItem?.parentId || null}
                 onChange={handleOnChangeCategoryPicker}
                 onClose={() => togglePicker(false)}
               />
@@ -139,7 +120,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             id="ItemEditorPrice"
             placeholder="Price"
             value={item.price}
-            onChange={evt => updateItem({ price: evt.target.value })}
+            onChange={evt => updateItem({ price: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>
@@ -152,7 +133,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             id="ItemEditorCostPrice"
             placeholder="Cost Price"
             value={item.costPrice}
-            onChange={evt => updateItem({ costPrice: evt.target.value })}
+            onChange={evt => updateItem({ costPrice: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>

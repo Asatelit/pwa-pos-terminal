@@ -15,7 +15,7 @@ const TaxList: React.FC<TaxListProps> = ({ taxes, actions }) => {
   const list = taxes.filter((item) => !item.isDeleted);
 
   // Delete selected tax record
-  const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: number) => {
+  const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: string) => {
     event.preventDefault();
     event.stopPropagation();
     actions.item.remove(itemId);

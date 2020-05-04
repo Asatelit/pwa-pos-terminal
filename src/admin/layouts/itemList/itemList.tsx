@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
-import { getCategoryById } from 'common/helpers';
+import { getCategoryById } from 'common/assets';
 import { Category, Item, AppActions } from 'common/types';
 import { getTextIdentifier, financial } from 'common/utils';
 import styles from './itemList.module.css';
@@ -14,7 +14,7 @@ type ItemListProps = {
 };
 
 const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
-  const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: number) => {
+  const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: string) => {
     event.preventDefault();
     event.stopPropagation();
     actions.item.remove(itemId);

@@ -4,8 +4,7 @@ import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
 import { Routes } from 'common/const';
 import { encodeImage } from 'common/utils';
-import { getCategoryById } from 'common/helpers';
-import { newCategory, NewCategory } from 'common/prototypes';
+import { getCategoryEntity, getCategoryById } from 'common/assets';
 import CategoryPicker from '../../components/categoryPicker/categoryPicker';
 import styles from './categoryEditor.module.css';
 
@@ -16,18 +15,16 @@ type CategoryEditorProps = {
 };
 
 const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, createMode = false }) => {
-  const initialState: NewCategory = { name: '', parentId: 0, color: null, picture: null };
+  const defaultCategory: Category = getCategoryEntity();
   const { id: contextCategoryId } = useParams();
 
   const [isPickerShown, togglePicker] = useState(false);
   const [redirect, setRedirect] = useState('');
-  const updateData = (upd: Partial<NewCategory>) => setData({ ...data, ...upd });
+  const updateData = (upd: Partial<Category>) => setData({ ...data, ...upd });
 
-  const { id, name, parentId, color, picture } = contextCategoryId
-    ? getCategoryById(categories, Number(contextCategoryId))
-    : { ...initialState, id: 0 };
-  const updData: NewCategory = createMode ? { ...initialState, parentId: id } : { name, parentId, color, picture };
-  const [data, setData] = useState<NewCategory>(updData);
+  const category = contextCategoryId ? getCategoryById(categories, contextCategoryId) : defaultCategory;
+  const updData: Category = createMode ? { ...defaultCategory, parentId: category.id } : category;
+  const [data, setData] = useState<Category>(updData);
 
   if (!contextCategoryId) setRedirect(Routes.PageBadRequest);
 
@@ -36,18 +33,18 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
 
   // helpers
   const hasInvalidData = !data.name;
-  const getParentCategory = (id: number) => getCategoryById(categories, id);
-  const createCategory = () => actions.category.add(newCategory(data));
+  const getParentCategory = (id: string | null) => getCategoryById(categories, id);
+  const createCategory = () => actions.category.add(getCategoryEntity(data));
   const editCategory = (category: Category) => actions.category.update(category);
   const closeEditor = () =>
     setRedirect(Routes.AdminCategoryList.replace(':id', contextCategoryId ? contextCategoryId.toString() : 'root'));
 
   // handlers
-  const handleOnChangeCategoryPicker = (categoryId: number) => updateData({ parentId: categoryId });
+  const handleOnChangeCategoryPicker = (categoryId: string | null) => updateData({ parentId: categoryId });
   const handleOnClickOnClose = () => closeEditor();
   const handleOnClickOnPrimaryAction = () => {
     if (!createMode && contextCategoryId) {
-      const category = getCategoryById(categories, Number(contextCategoryId));
+      const category = getCategoryById(categories, contextCategoryId);
       editCategory({ ...category, ...data });
     } else {
       createCategory();
@@ -76,7 +73,7 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
             type="text"
             className={styles.controlInput}
             value={data.name}
-            onChange={evt => updateData({ name: evt.target.value })}
+            onChange={(evt) => updateData({ name: evt.target.value })}
           />
         </div>
         <div className={styles.control}>
@@ -89,7 +86,7 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
               type="text"
               id="CategoryEditorCategory"
               className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
-              value={getParentCategory(data?.parentId || 0).name}
+              value={getParentCategory(data?.parentId || null).name}
               onClick={() => togglePicker(!isPickerShown)}
             />
             {isPickerShown && (
@@ -97,7 +94,7 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
                 removeMode
                 className={styles.picker}
                 categories={categories}
-                selected={Number(contextCategoryId)}
+                selected={contextCategoryId}
                 onChange={handleOnChangeCategoryPicker}
                 onClose={() => togglePicker(false)}
               />
@@ -112,7 +109,7 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
             id="CategoryEditorColor"
             className={styles.controlInput}
             value={data.color || 'transparent'}
-            onChange={evt => updateData({ color: evt.target.value })}
+            onChange={(evt) => updateData({ color: evt.target.value })}
           >
             <optgroup label="Please specify the color">
               <option value="transparent">Default</option>
@@ -129,12 +126,14 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
           <label className={styles.controlLabel} htmlFor="CategoryEditorPicture">
             Picture
           </label>
-          {!data.picture && <input
-            id="CategoryEditorPicture"
-            type="file"
-            className={styles.controlInput}
-            onChange={evt => encodeImage(evt, (picture) => updateData({ picture }))}
-          />}
+          {!data.picture && (
+            <input
+              id="CategoryEditorPicture"
+              type="file"
+              className={styles.controlInput}
+              onChange={(evt) => encodeImage(evt, (picture) => updateData({ picture }))}
+            />
+          )}
           {!!data.picture && (
             <button className={styles.secondaryAction} onClick={() => updateData({ picture: '' })}>
               Remove

@@ -1,15 +1,15 @@
 import React, { useState, Fragment } from 'react';
 import { FolderTwoTone, MenuRightTwoTone, MenuDownTwoTone } from 'common/icons';
 import { Category } from 'common/types';
-import { getCategoryById } from 'common/helpers/actionHelpers';
+import { getCategoryById } from 'common/assets';
 import styles from './categoryPicker.module.css';
 
 type CategoryPickerProps = {
   categories: Category[];
-  onChange: (categoryId: number) => void;
+  onChange: (categoryId: string | null) => void;
   onClose: () => void;
   className?: string;
-  selected?: number;
+  selected?: string | null;
   removeMode?: boolean;
 };
 
@@ -18,13 +18,13 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
   onChange,
   onClose,
   className = '',
-  selected = 0,
+  selected = null,
   removeMode = false,
 }) => {
   const getInitialExpandedNodes = () => {
-    const nodes: number[] = [0];
-    const getExpandedNode = (nodeId: number) => {
-      if (nodeId === 0) return;
+    const nodes: any[] = [null];
+    const getExpandedNode = (nodeId: string | null) => {
+      if (nodeId === null) return;
       const parentId = categories.find(entry => nodeId === entry.id);
       if (parentId) {
         nodes.push(parentId.id);
@@ -35,28 +35,28 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
     return nodes;
   };
 
-  const [expandedNodes, setExpandedNodes] = useState<number[]>(getInitialExpandedNodes());
-  const parentNode = selected ? getCategoryById(categories, selected).parentId : 0;
+  const [expandedNodes, setExpandedNodes] = useState<any[]>(getInitialExpandedNodes());
+  const parentNode = selected ? getCategoryById(categories, selected).parentId : null;
 
-  const handleOnClickOnToggle = (event: React.MouseEvent<HTMLDivElement>, categoryId: number) => {
+  const handleOnClickOnToggle = (event: React.MouseEvent<HTMLDivElement>, categoryId: string | null) => {
     event.stopPropagation();
     const isExpanded = expandedNodes.includes(categoryId);
     setExpandedNodes(isExpanded ? expandedNodes.filter(i => i !== categoryId) : [...expandedNodes, categoryId]);
   };
 
-  const handleOnClickOnItem = (event: React.MouseEvent<HTMLDivElement>, categoryId: number) => {
+  const handleOnClickOnItem = (event: React.MouseEvent<HTMLDivElement>, categoryId: string | null) => {
     event.stopPropagation();
     if (categoryId !== selected) onChange(categoryId);
     onClose();
   };
 
-  const getCategories = (id: number = 0, level: number = 0) => {
+  const getCategories = (id: string | null = null, level: number = 0) => {
     const data = categories.filter(cat => id === cat.parentId && !cat.isDeleted);
     if (!data.length) return null;
     return <Fragment>{data.map(entity => renderItem(entity.id, entity.name, level))}</Fragment>;
   };
 
-  const renderItem = (id: number, name: string, level: number = 0) => {
+  const renderItem = (id: string | null, name: string, level: number = 0) => {
     const child = getCategories(id, level + 1);
     const isExpanded = expandedNodes.includes(id);
     const isDisabled = id === selected;
@@ -64,7 +64,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
     const activeClass = id === parentNode ? styles.infoActive : '';
     if (removeMode && isDisabled) return null;
     return (
-      <div key={id} className={styles.item} onClick={event => handleOnClickOnItem(event, id)}>
+      <div key={`${id}`} className={styles.item} onClick={event => handleOnClickOnItem(event, id)}>
         <div className={`${styles.info} ${activeClass}`} style={{ paddingLeft: `${level}rem` }}>
           <div className={styles.toggle} onClick={event => handleOnClickOnToggle(event, id)}>
             {!!React.Children.count(child) && toggleIcon}
@@ -79,7 +79,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
     );
   };
 
-  return <div className={`${styles.root} ${className}`}>{renderItem(0, 'Home Screen')}</div>;
+  return <div className={`${styles.root} ${className}`}>{renderItem(null, 'Home Screen')}</div>;
 };
 
 export default CategoryPicker;

@@ -5,12 +5,12 @@ import { AppState } from 'common/types';
 import { TaxName } from 'common/components';
 import styles from './printReceipt.module.css';
 
-type PrintReceiptProps = { orderId: number; state: AppState };
+type PrintReceiptProps = { orderId: string | null; state: AppState };
 
 const PrintReceipt: React.FC<PrintReceiptProps> = ({ orderId, state }) => {
-  const { products, orders, settings } = state;
+  const { items: products, orders, settings } = state;
   const order = orders.find((order) => order.id === orderId);
-  const getItemName = (id: number) => products.find((item) => item.id === id)?.name || id;
+  const getItemName = (id: string | null) => products.find((item) => item.id === id)?.name || id;
 
   if (!order) return <div>Matching order not found.</div>;
 

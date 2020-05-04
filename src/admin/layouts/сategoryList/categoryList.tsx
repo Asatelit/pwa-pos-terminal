@@ -17,7 +17,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
 
   // handle route params
   const { id } = useParams();
-  const selectedCategoryId = Number(id) || 0;
+  const selectedCategoryId = id || null;
 
   useEffect(() => {
     setRedirect('');
@@ -27,22 +27,23 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   if (redirect) return <Redirect to={redirect} />;
 
   // redirect helper
-  const updateRedirect = (categoryId: number) => {
+  const updateRedirect = (categoryId: string | null) => {
     if (categoryId === selectedCategoryId) return;
-    setRedirect(Routes.AdminCategoryList.replace(':id', categoryId ? categoryId.toString() : 'root'))
+    setRedirect(Routes.AdminCategoryList.replace(':id', categoryId ? categoryId : 'root'));
   };
 
-  const handleOnChangeBreadCrumbs = (categoryId: number) => updateRedirect(categoryId);
-  const handleOnClickOnCategoryListItem = (categoryId: number) => updateRedirect(categoryId);
+  const handleOnChangeBreadCrumbs = (categoryId: string | null) => updateRedirect(categoryId);
+  const handleOnClickOnCategoryListItem = (categoryId: string | null) => updateRedirect(categoryId);
 
-  const handleOnClickOnCategoryListItemDelete = (event: React.MouseEvent, categoryId: number) => {
+  const handleOnClickOnCategoryListItemDelete = (event: React.MouseEvent, categoryId: string | null) => {
     event.stopPropagation();
+    if (categoryId === null) return;
     actions.category.remove(categoryId);
   };
 
-  const handleOnClickOnCategoryListItemEdit = (event: React.MouseEvent, categoryId: number) => {
+  const handleOnClickOnCategoryListItemEdit = (event: React.MouseEvent, categoryId: string | null) => {
     event.stopPropagation();
-    setRedirect(Routes.AdminCategoryEdit.replace(':id', categoryId.toString()));
+    setRedirect(Routes.AdminCategoryEdit.replace(':id', categoryId || 'root'));
   };
 
   const visibleCategories = categories.filter(
@@ -60,7 +61,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   };
 
   const renderCategory = (item: Category) => (
-    <div key={item.id} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
+    <div key={`${item.id}`} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
       {renderPresenter(item)}
       <div className={styles.name}>{item.name}</div>
       <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
@@ -79,7 +80,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
         <div className={styles.itemInfo}>
           <span className={styles.itemName}>Category</span>
         </div>
-        <Link className={styles.primaryBtn} to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId.toString())}>
+        <Link className={styles.primaryBtn} to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}>
           <PlusTwoTone />
           <span>New Category</span>
         </Link>
@@ -88,7 +89,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
         <Breadcrumbs
           className={styles.breadcrumbs}
           categories={categories}
-          currentCategoryId={Number(selectedCategoryId)}
+          currentCategoryId={selectedCategoryId}
           onChange={handleOnChangeBreadCrumbs}
         />
         {visibleCategories.length ? (

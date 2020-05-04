@@ -1,32 +1,32 @@
 export type Item = {
   barcode: string;
   color: string | null;
-  cookingTime?: number;
+  cookingTime: number;
   costPrice: number;
   extras: string[];
   hasModificationsPrices: boolean;
-  id: number;
-  isDeleted?: boolean;
+  id: string;
+  isDeleted: boolean;
   isHidden: boolean;
   isNonDiscounted: boolean;
   isWeighing: boolean;
   lastModifiedTime: number;
   modifications: ItemModification[];
   name: string;
-  parentId: number;
+  parentId: string | null;
   picture: string | null;
   price: number;
   sortOrder: number;
-  taxes: number[];
+  taxes: string[];
   unit: string;
 };
 
 export type ItemModification = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   barcode: string;
   modifierProductCode: string; // SKU
   isHidden: boolean;
-  isDeleted?: boolean;
+  isDeleted: boolean;
 };

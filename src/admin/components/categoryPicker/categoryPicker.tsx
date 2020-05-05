@@ -2,7 +2,6 @@ import React, { useState, Fragment } from 'react';
 import { FolderTwoTone, MenuRightTwoTone, MenuDownTwoTone } from 'common/icons';
 import { Entities } from 'common/const';
 import { Category } from 'common/types';
-import { getCategoryById } from 'common/assets';
 import styles from './categoryPicker.module.css';
 
 type CategoryPickerProps = {

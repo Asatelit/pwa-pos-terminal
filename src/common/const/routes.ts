@@ -11,6 +11,9 @@ export enum Routes {
   AdminItemList = '/admin/items',
   AdminItemEdit = '/admin/item/:id/edit',
   AdminItemCreate = '/admin/item/create',
+  AdminTaxList = '/admin/taxes',
+  AdminTaxEdit = '/admin/tax/:id/edit',
+  AdminTaxCreate = '/admin/tax/create',
   // Misc
   PageBadRequest = '/400',
   PageNotFound = '/404',

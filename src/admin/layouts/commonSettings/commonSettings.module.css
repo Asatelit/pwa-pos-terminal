@@ -1,0 +1,33 @@
+.title {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0 2rem;
+  user-select: none;
+}
+
+.body {
+  padding: 2rem;
+}
+
+.control {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.controlGroup {
+  flex: 1 1 auto;
+}
+
+.controlLabel {
+  padding: .375rem 0;
+  min-width: 150px;
+}
+
+.controlInput {
+  composes: input from '../../../common/styles/button.module.css';
+  flex: 1 1 auto;
+}

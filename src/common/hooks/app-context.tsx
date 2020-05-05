@@ -26,9 +26,12 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async function updateState() {
-      const demoData = await fetch('./demo.json')
+      let demoData = {};
+      if (process.env.REACT_APP_DEMO_DATA) {
+        demoData = await fetch(process.env.REACT_APP_DEMO_DATA)
         .then((response) => response.json())
         .then((data) => data || {});
+      }
       const state = await readContextFromLocalStorage(AppInitialState[0]);
       setState({ ...state, ...demoData, isLoading: false });
     })();

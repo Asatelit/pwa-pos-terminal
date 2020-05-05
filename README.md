@@ -4,6 +4,8 @@
 
 Asatelit Point of Sale Terminal is a simple browser-based progressive web application built using common web technologies including HTML, CSS and TypeScript on top of Facebook's [React][react] library.
 
+See live demo here: [https://pos-terminal.herokuapp.com](https://pos-terminal.herokuapp.com)
+
 ### Tech Stack
 
 * [Node.js][node], [Yarn][yarn], [TypeScript][ts], [Babel][babel], [Prettier][prettier] — core platform and dev tools

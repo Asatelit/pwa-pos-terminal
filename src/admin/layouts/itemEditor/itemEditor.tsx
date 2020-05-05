@@ -11,7 +11,7 @@ import styles from './itemEditor.module.css';
 type ItemEditorProps = {
   items: Item[];
   categories: Category[];
-  taxes: Tax[],
+  taxes: Tax[];
   actions: AppActions;
 };
 
@@ -24,7 +24,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
   const [isPickerShown, togglePicker] = useState(false);
 
   // Helpers
-  const selectedCategoryName = categories.find(entity => entity.id === item.parentId)?.name || 'Home Screen';
+  const selectedCategoryName = categories.find((entity) => entity.id === item.parentId)?.name || 'Home Screen';
   const updateItem = (data: Partial<Item>) => setItem({ ...item, ...data });
   const isInvalid = !item.name;
 
@@ -37,18 +37,32 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
 
   if (redirect) return <Redirect to={redirect} />;
 
-  const renderTaxList = taxes.filter(tax => tax.isEnabled).map(tax => (
-    <div key={`ItemEditorTax_${tax.id}`} className={styles.switch}>
-      <div className={styles.controlLabel} />
-      <input
-        type="checkbox"
-        id={`ItemEditorTax_${tax.id}`}
-        checked={item.taxes.includes(tax.id)}
-        onChange={(evt) => updateItem({ taxes: evt.target.checked ? [ ...item.taxes, tax.id ] : [ ...item.taxes.filter(item => item !== tax.id) ] })}
-      />
-      <label htmlFor={`ItemEditorTax_${tax.id}`}>{`${tax.name} (${tax.precentage}%)`}</label>
-    </div>
-  ));
+  const renderTaxList = () => {
+    const taxList = taxes.filter((tax) => tax.isEnabled);
+    if (!taxList.length) return null;
+    return (
+      <div className={styles.control}>
+        <div className={styles.controlLabel}>Taxes</div>
+        {taxList.map((tax) => (
+          <div key={`ItemEditorTax_${tax.id}`} className={styles.switch}>
+            <input
+              type="checkbox"
+              id={`ItemEditorTax_${tax.id}`}
+              checked={item.taxes.includes(tax.id)}
+              onChange={(evt) =>
+                updateItem({
+                  taxes: evt.target.checked
+                    ? [...item.taxes, tax.id]
+                    : [...item.taxes.filter((item) => item !== tax.id)],
+                })
+              }
+            />
+            <label htmlFor={`ItemEditorTax_${tax.id}`}>{`${tax.name} (${tax.precentage}%)`}</label>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.root}>
@@ -70,7 +84,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             type="text"
             className={styles.controlInput}
             value={item.name}
-            onChange={evt => updateItem({ name: evt.target.value })}
+            onChange={(evt) => updateItem({ name: evt.target.value })}
           />
         </div>
         <div className={styles.control}>
@@ -108,7 +122,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             id="ItemEditorPrice"
             placeholder="Price"
             value={item.price}
-            onChange={evt => updateItem({ price: parseFloat(evt.target.value) })}
+            onChange={(evt) => updateItem({ price: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>
@@ -121,7 +135,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             id="ItemEditorCostPrice"
             placeholder="Cost Price"
             value={item.costPrice}
-            onChange={evt => updateItem({ costPrice: parseFloat(evt.target.value) })}
+            onChange={(evt) => updateItem({ costPrice: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>
@@ -132,7 +146,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
             id="ItemEditorColor"
             className={styles.controlInput}
             value={item.color || 'transparent'}
-            onChange={evt => updateItem({ color: evt.target.value })}
+            onChange={(evt) => updateItem({ color: evt.target.value })}
           >
             <optgroup label="Please specify the color">
               <option value="transparent">Default</option>
@@ -149,19 +163,20 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
           <label className={styles.controlLabel} htmlFor="ItemEditorColor">
             Image
           </label>
-          {!item.picture && <input
-            type="file"
-            className={styles.controlInput}
-            onChange={evt => encodeImage(evt, (picture) => updateItem({ picture }))}
-          />}
+          {!item.picture && (
+            <input
+              type="file"
+              className={styles.controlInput}
+              onChange={(evt) => encodeImage(evt, (picture) => updateItem({ picture }))}
+            />
+          )}
           {!!item.picture && (
             <button className={styles.secondaryAction} onClick={() => updateItem({ picture: '' })}>
               Remove
             </button>
           )}
         </div>
-        <div>Taxes</div>
-        {renderTaxList}
+        {renderTaxList()}
         <div className={styles.control}>
           <div className={styles.controlLabel} />
           <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>

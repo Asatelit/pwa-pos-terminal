@@ -1,9 +1,5 @@
 @value moduleHeight: 4rem;
 
-.root {
-
-}
-
 .head {
   display: flex;
   flex-direction: row;
@@ -82,5 +78,8 @@
 .switch {
   composes: switch from '../../../common/styles/switch.module.css';
   display: flex;
+  align-items: center;
+  min-height: 2rem;
   margin-bottom: 1rem;
 }
+

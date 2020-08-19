@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Hello @${{ github.actor }}! :wave: We welcome all kinds of contributions, please feel free to ask questions or make suggesstions. Someone will attend to your issue soon. :relaxed:'
+        pr-message: 'Hello @${{ github.actor }}! :wave: Thank you for submitting a pull request. Please make sure you have followed the guidelines and your build is passing. Someone will attend to your PR soon. :relaxed:'

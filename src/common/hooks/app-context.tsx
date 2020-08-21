@@ -30,7 +30,8 @@ export const AppContextProvider: React.FC = ({ children }) => {
       if (process.env.REACT_APP_DEMO_DATA) {
         demoData = await fetch(process.env.REACT_APP_DEMO_DATA)
         .then((response) => response.json())
-        .then((data) => data || {});
+        .then((data) => data || {})
+        .catch(() => {});
       }
       const state = await readContextFromLocalStorage(AppInitialState[0]);
       setState({ ...state, ...demoData, isLoading: false });

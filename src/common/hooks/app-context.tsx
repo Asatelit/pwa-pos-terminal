@@ -1,8 +1,9 @@
 import localForage from 'localforage';
 import React, { createContext, useState, useEffect } from 'react';
-import { Context, AppState, AppActions } from 'common/types';
+import { Context, AppState, AppActions, AppViews } from 'common/types';
 import { AppInitialState } from 'common/assets';
 import * as A from '../actions';
+import * as W from '../views';
 
 const store = localForage.createInstance({
   driver: localForage.INDEXEDDB,
@@ -29,9 +30,9 @@ export const AppContextProvider: React.FC = ({ children }) => {
       let demoData = {};
       if (process.env.REACT_APP_DEMO_DATA) {
         demoData = await fetch(process.env.REACT_APP_DEMO_DATA)
-        .then((response) => response.json())
-        .then((data) => data || {})
-        .catch(() => {});
+          .then((response) => response.json())
+          .then((data) => data || {})
+          .catch(() => {});
       }
       const state = await readContextFromLocalStorage(AppInitialState[0]);
       setState({ ...state, ...demoData, isLoading: false });
@@ -56,5 +57,9 @@ export const AppContextProvider: React.FC = ({ children }) => {
     taxes: A.taxAction(state, updateContext),
   };
 
-  return <AppContext.Provider value={[state, actions]}>{children}</AppContext.Provider>;
+  const views: AppViews = {
+    closedOrders: W.closedOrdersViews(state),
+  };
+
+  return <AppContext.Provider value={[state, actions, views]}>{children}</AppContext.Provider>;
 };

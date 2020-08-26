@@ -3,16 +3,22 @@ import { MenuTwoTone } from 'common/icons';
 import styles from './menu.module.css';
 
 type MenuProps = {
-  onOpenDrawer: () => void;
-}
+  onOpenDrawer?: () => void;
+  onOpenReport?: () => void;
+};
 
-const Menu: React.FC<MenuProps> = ({ onOpenDrawer }) => {
-  const handleOnClickOnDrawerBtn = () => onOpenDrawer();
+const Menu: React.FC<MenuProps> = ({
+  onOpenDrawer = () => null,
+  onOpenReport = () => null,
+}) => {
   return (
     <div className={styles.root}>
       <div className={styles.left} />
       <div className={styles.right}>
-        <button className={styles.menuBtn} onClick={handleOnClickOnDrawerBtn}>
+        <button className={styles.menuBtn} onClick={() => onOpenReport()}>
+          Make a report
+        </button>
+        <button className={styles.menuBtn} onClick={() => onOpenDrawer()}>
           <MenuTwoTone />
         </button>
       </div>

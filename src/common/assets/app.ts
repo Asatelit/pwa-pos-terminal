@@ -1,4 +1,4 @@
-import { Context, AppState } from 'common/types';
+import { Context, AppState, AppViews, AppActions } from 'common/types';
 import { Entities } from 'common/const';
 
 export const AppInitialSettings = {
@@ -49,5 +49,6 @@ export const AppInitialState: Context<AppState> = [
     settings: AppInitialSettings,
     taxes: [],
   },
-  null as any,
+  {} as AppActions,
+  {} as AppViews,
 ];

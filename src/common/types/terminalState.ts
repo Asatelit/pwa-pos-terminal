@@ -1,4 +1,5 @@
 import { Category, Item, Order, ClosedOrder, Settings, Tax } from 'common/types';
+import { ClosedOrderViews } from '../views';
 
 export type AppState = {
   categories: Category[]; // Categories list
@@ -21,6 +22,10 @@ export type AppActions = {
   orders: OrdersActions;
   settings: SettingsActions;
   taxes: TaxActions;
+};
+
+export type AppViews = {
+  closedOrders: ClosedOrderViews;
 };
 
 export type CategoryActions = {

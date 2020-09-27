@@ -11,8 +11,7 @@ import {
   pluck,
   indexBy,
   mapObjIndexed,
-  Merge,
-  any,
+  Merge
 } from 'ramda';
 import { parseJSON, isWithinInterval } from 'date-fns';
 import { View, ClosedOrder, ClosedOrderItem, Item } from 'common/types';
@@ -86,8 +85,6 @@ export const closedOrdersViews: View<ClosedOrderViews> = (state) => ({
       roundedAmount: sumByProp('roundedAmount', orderItems),
       taxAmount: sumByProp('totalTaxAmount', orderItems),
     };
-
-    console.info(summary);
 
     return { summary, items: summaryItems };
   },

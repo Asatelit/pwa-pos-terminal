@@ -48,7 +48,6 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({
 
   const handleOnClickOnItem = (event: React.MouseEvent<HTMLDivElement>, categoryId: string) => {
     event.stopPropagation();
-    console.info(categoryId, selected);
     if (categoryId !== selected) onChange(categoryId);
     onClose();
   };

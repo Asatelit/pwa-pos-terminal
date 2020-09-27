@@ -26,6 +26,7 @@
   background-color: #e2e6ea;
   border-color: #dae0e5;
   box-shadow: 0 0 0 0.2rem rgba(216,217,219,.5);
+  outline: none;
 }
 
 .button:hover {
@@ -76,6 +77,10 @@
 
 .buttonTransparent:hover {
   text-decoration: none;
+}
+
+.buttonTransparent:focus {
+  outline: none;
 }
 
 .buttonTransparent:not(:disabled) {

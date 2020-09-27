@@ -16,7 +16,7 @@ type ItemEditorProps = {
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const initialState = id ? getItemById(items, id) : getItemEntity();
 
   const [item, setItem] = useState<Item>(initialState);

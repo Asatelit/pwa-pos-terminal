@@ -76,10 +76,8 @@ export type OrderItem = {
 
 export interface ClosedOrderItem extends OrderItem {
   costPrice: number;
-  amount: number;
   profit: number;
   roundedAmount: number;
-  taxAmount: number;
   isWeighing: boolean;
   isNonDiscounted: boolean;
 }

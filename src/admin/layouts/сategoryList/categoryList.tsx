@@ -16,7 +16,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   const [redirect, setRedirect] = useState('');
 
   // handle route params
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const selectedCategoryId = id || Entities.RootCategoryId;
 
   useEffect(() => {

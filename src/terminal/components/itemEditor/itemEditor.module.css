@@ -81,6 +81,7 @@
   composes: buttonPrimary from '../../../common/styles/button.module.css';
   border-radius: 0;
   padding: 0 2rem;
+  outline: none;
 }
 
 .itemInfo {

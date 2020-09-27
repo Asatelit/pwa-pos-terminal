@@ -107,8 +107,8 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
           </tbody>
         </table>
         ) : (
-          <div>
-            <div>There are no sales for the specified period.</div>
+          <div className="border-top">
+            <div className="mt-4">There are no sales for the specified period.</div>
           </div>
         )}
 

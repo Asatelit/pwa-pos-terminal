@@ -11,30 +11,25 @@ import {
   pluck,
   indexBy,
   mapObjIndexed,
-  Merge
+  Merge,
 } from 'ramda';
 import { parseJSON, isWithinInterval } from 'date-fns';
 import { View, ClosedOrder, ClosedOrderItem, Item } from 'common/types';
 
 type DateRange = { start: number | Date; end: number | Date };
-type ClosedOrderMergedItem = Item & ClosedOrderItem;
+type ItemData = {
+  quantity: number;
+  amount: number;
+  roundedAmount: number;
+  taxAmount: number;
+};
 
 export type ClosedOrderViews = {
-  getItemsByDateRange: ({ start, end }: DateRange) => {
-    items: {
-      [key: string]: {
-        quantity: number,
-        amount: number,
-        roundedAmount: number,
-        taxAmount: number,
-      }
-  };
-    summary: {
-      quantity: number,
-      amount: number,
-      roundedAmount: number,
-      taxAmount: number,
-    }
+  getItemsByDateRange: (
+    dataRange: DateRange,
+  ) => {
+    items: { [key: string]: ItemData };
+    summary: ItemData;
   };
 };
 
@@ -68,16 +63,9 @@ export const closedOrdersViews: View<ClosedOrderViews> = (state) => ({
       };
     }) as any;
 
-    const orderItems = pipe(
-      filterByDateRange(dateRange),
-      mapOrderItems,
-    )(state.closedOrders);
+    const orderItems = pipe(filterByDateRange(dateRange), mapOrderItems)(state.closedOrders);
 
-    const summaryItems = pipe(
-      joinInnerById(state.items),
-      groupByName,
-      getItemSummary,
-    )(orderItems) as any;
+    const summaryItems = pipe(joinInnerById(state.items), groupByName, getItemSummary)(orderItems) as any;
 
     const summary = {
       quantity: sumByProp('quantity', orderItems),

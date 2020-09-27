@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
-import { createHashHistory } from 'history';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { AppContextProvider } from 'common/hooks';
 import { Routes } from 'common/const';
 import Terminal from './terminal/terminal';
@@ -13,8 +12,6 @@ import 'react-date-range/dist/theme/default.css';
 import './colors.css';
 import './index.css';
 
-const hashHistory = createHashHistory();
-
 const NoMatch = () => (
   <div>
     <h1>404</h1>
@@ -24,7 +21,7 @@ const NoMatch = () => (
 
 ReactDOM.render(
   <AppContextProvider>
-    <Router history={hashHistory}>
+    <HashRouter>
       <Switch>
         <Route path={Routes.Terminal}>
           <Terminal />
@@ -33,9 +30,9 @@ ReactDOM.render(
           <Admin />
         </Route>
         <Redirect strict from="/" to={Routes.Terminal} />
-        <Route render={NoMatch} />
+        <Route path="*" render={NoMatch} />
       </Switch>
-    </Router>
+    </HashRouter>
   </AppContextProvider>,
   document.getElementById('root'),
 );

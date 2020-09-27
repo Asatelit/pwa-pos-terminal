@@ -1,5 +1,6 @@
 import localForage from 'localforage';
 import React, { createContext, useState, useEffect } from 'react';
+import { getTimestamp } from 'common/utils';
 import { Context, AppState, AppActions, AppViews } from 'common/types';
 import { AppInitialState } from 'common/assets';
 import * as A from '../actions';
@@ -27,7 +28,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async function updateState() {
-      let demoData = {};
+      let demoData: Partial<AppState> = {};
       if (process.env.REACT_APP_DEMO_DATA) {
         demoData = await fetch(process.env.REACT_APP_DEMO_DATA)
           .then((response) => response.json())
@@ -35,6 +36,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
           .catch(() => {});
       }
       const state = await readContextFromLocalStorage(AppInitialState[0]);
+      demoData = JSON.parse(JSON.stringify(demoData).replaceAll('"@{currentdate}"', `${getTimestamp()}`));
       setState({ ...state, ...demoData, isLoading: false });
     })();
   }, []);

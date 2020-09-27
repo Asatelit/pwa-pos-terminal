@@ -1,7 +1,7 @@
 import { AppState, Order, OrderItem, OrderStatuses } from 'common/types';
 import { getTimestamp, generateId } from 'common/utils';
 
-export function getOrderEntity(state: AppState, order?: Order, ): Order {
+export function getOrderEntity(state: AppState): Order {
   return {
     cardPaymentAmount: 0,
     cashPaymentAmount: 0,

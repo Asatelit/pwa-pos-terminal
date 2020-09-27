@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
@@ -14,6 +14,10 @@ type TerminalState = {
 };
 
 const Terminal: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Terminal';
+  }, []);
+
   const [context, services, views] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({
     isOpenReceiptsDialog: false,
@@ -26,7 +30,8 @@ const Terminal: React.FC = () => {
   const currentOrder = orders.find((order) => currentOrderId === order.id) || null;
   const hasEditItemRequest = !!currentItemId;
 
-  const handlePrintReceipt = (orderId: string | null) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
+  const handlePrintReceipt = (orderId: string | null) =>
+    printComponent(<PrintReceipt orderId={orderId} state={context} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
@@ -48,11 +53,7 @@ const Terminal: React.FC = () => {
 
   // Report Dialog
   const renderReportDialog = state.isOpenReportDialog && (
-    <ReportDialog
-      views={views}
-      onClose={() => updateState({ isOpenReportDialog: false })}
-      onPrint={printComponent}
-    />
+    <ReportDialog views={views} onClose={() => updateState({ isOpenReportDialog: false })} onPrint={printComponent} />
   );
 
   if (isLoading) return <LoadScreen />;

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { getTaxEntity, getTaxById } from 'common/assets';
@@ -13,6 +13,10 @@ type TaxEditorProps = {
 };
 
 const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin | Tax Editor';
+  }, []);
+
   const { id } = useParams<{id: string}>();
   const currentTaxRecord = id ? getTaxById(taxes, id) : null;
   const initialTaxRecord: Tax = currentTaxRecord ? currentTaxRecord : getTaxEntity();

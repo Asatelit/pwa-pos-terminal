@@ -13,6 +13,10 @@ type CreateItemFormProps = {
 };
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin | Category List';
+  }, []);
+
   const [redirect, setRedirect] = useState('');
 
   // handle route params

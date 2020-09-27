@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
@@ -14,6 +14,10 @@ type ItemListProps = {
 };
 
 const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin | Item List';
+  }, []);
+
   const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: string) => {
     event.preventDefault();
     event.stopPropagation();

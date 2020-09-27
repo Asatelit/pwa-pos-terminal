@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { encodeImage } from 'common/utils';
@@ -16,6 +16,10 @@ type ItemEditorProps = {
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin | Item Editor';
+  }, []);
+
   const { id } = useParams<{id: string}>();
   const initialState = id ? getItemById(items, id) : getItemEntity();
 

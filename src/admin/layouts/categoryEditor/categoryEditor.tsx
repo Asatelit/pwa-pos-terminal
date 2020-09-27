@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
@@ -15,6 +15,10 @@ type CategoryEditorProps = {
 };
 
 const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, createMode = false }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin | Category Editor';
+  }, []);
+
   const defaultCategory: Category = getCategoryEntity();
   const { id: contextCategoryId } = useParams<{id: string}>();
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
 import { Routes as R } from 'common/const';
@@ -17,6 +17,11 @@ import {
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
+
+  useEffect(() => {
+    document.title = 'Asatelit POS | Admin';
+  }, []);
+
   const [context, actions] = useContext(AppContext);
   const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
 

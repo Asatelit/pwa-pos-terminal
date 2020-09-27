@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import {
   Order,
@@ -24,6 +24,10 @@ type ChargeDialogProps = {
 };
 
 const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
+  useEffect(() => {
+    document.title = 'Asatelit POS | Terminal | Daily Report';
+  }, []);
+
   const { id } = useParams<{id: string}>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });

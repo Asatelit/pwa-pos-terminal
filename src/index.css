@@ -17,6 +17,11 @@ body {
   height: 100%;
 }
 
+dt {
+  font-weight: 500;
+}
+
 #root {
   height: 100%;
 }
+

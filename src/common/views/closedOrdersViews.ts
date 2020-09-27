@@ -12,6 +12,7 @@ import {
   indexBy,
   mapObjIndexed,
   Merge,
+  any,
 } from 'ramda';
 import { parseJSON, isWithinInterval } from 'date-fns';
 import { View, ClosedOrder, ClosedOrderItem, Item } from 'common/types';
@@ -20,12 +21,27 @@ type DateRange = { start: number | Date; end: number | Date };
 type ClosedOrderMergedItem = Item & ClosedOrderItem;
 
 export type ClosedOrderViews = {
-  getItemsByDateRange: ({ start, end }: DateRange) => any;
+  getItemsByDateRange: ({ start, end }: DateRange) => {
+    items: {
+      [key: string]: {
+        quantity: number,
+        amount: number,
+        roundedAmount: number,
+        taxAmount: number,
+      }
+  };
+    summary: {
+      quantity: number,
+      amount: number,
+      roundedAmount: number,
+      taxAmount: number,
+    }
+  };
 };
 
 // Helpers
 const groupByName = groupBy(prop('name'));
-const sumByProp = (prop: string, list: ClosedOrderMergedItem[]) => sum(pluck(prop, list));
+const sumByProp = <T>(prop: string, list: T[]) => sum(pluck(prop, list));
 const mapOrderItems = reduce((acc: ClosedOrderItem[], { items }) => acc.concat(items), []);
 const filterByDateRange = ({ start, end }: DateRange) =>
   filter<ClosedOrder>(({ dateClose }) => isWithinInterval(parseJSON(dateClose), { start, end }));
@@ -43,7 +59,7 @@ const joinInnerById = (target: Item[]) =>
 // Main
 export const closedOrdersViews: View<ClosedOrderViews> = (state) => ({
   getItemsByDateRange: (dateRange: DateRange) => {
-    const getSummary = mapObjIndexed((num: number, key: string, obj: any) => {
+    const getItemSummary = mapObjIndexed((num: number, key: string, obj: any) => {
       const data = obj[key];
       return {
         quantity: sumByProp('quantity', data),
@@ -53,12 +69,26 @@ export const closedOrdersViews: View<ClosedOrderViews> = (state) => ({
       };
     }) as any;
 
-    return pipe(
+    const orderItems = pipe(
       filterByDateRange(dateRange),
       mapOrderItems,
+    )(state.closedOrders);
+
+    const summaryItems = pipe(
       joinInnerById(state.items),
       groupByName,
-      getSummary,
-    )(state.closedOrders);
+      getItemSummary,
+    )(orderItems) as any;
+
+    const summary = {
+      quantity: sumByProp('quantity', orderItems),
+      amount: sumByProp('amount', orderItems),
+      roundedAmount: sumByProp('roundedAmount', orderItems),
+      taxAmount: sumByProp('totalTaxAmount', orderItems),
+    };
+
+    console.info(summary);
+
+    return { summary, items: summaryItems };
   },
 });

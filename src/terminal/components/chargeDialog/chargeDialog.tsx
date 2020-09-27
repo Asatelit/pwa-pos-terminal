@@ -24,7 +24,7 @@ type ChargeDialogProps = {
 };
 
 const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');

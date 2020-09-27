@@ -13,7 +13,7 @@ type TaxEditorProps = {
 };
 
 const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const currentTaxRecord = id ? getTaxById(taxes, id) : null;
   const initialTaxRecord: Tax = currentTaxRecord ? currentTaxRecord : getTaxEntity();
 

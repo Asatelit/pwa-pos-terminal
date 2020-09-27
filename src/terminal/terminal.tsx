@@ -20,13 +20,13 @@ const Terminal: React.FC = () => {
     isOpenReportDialog: false,
     isOpenDrawer: false,
   });
-  const { isLoading, categories, currentCategoryId, currentOrderId, currentItemId, orders, closedOrders, items } = context;
+  const { isLoading, categories, currentCategoryId, currentOrderId, currentItemId, orders, items } = context;
 
   const updateState = (data: Partial<TerminalState>) => setState({ ...state, ...data });
   const currentOrder = orders.find((order) => currentOrderId === order.id) || null;
   const hasEditItemRequest = !!currentItemId;
 
-  const handlePrint = (orderId: string | null) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
+  const handlePrintReceipt = (orderId: string | null) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
@@ -49,10 +49,9 @@ const Terminal: React.FC = () => {
   // Report Dialog
   const renderReportDialog = state.isOpenReportDialog && (
     <ReportDialog
-      orders={closedOrders}
-      items={items}
       views={views}
       onClose={() => updateState({ isOpenReportDialog: false })}
+      onPrint={printComponent}
     />
   );
 
@@ -62,7 +61,7 @@ const Terminal: React.FC = () => {
     <Switch>
       <Fragment>
         <Route path={Routes.TerminalOrderCharge}>
-          <ChargeDialog items={items} orders={orders} services={services} onPrintReceit={handlePrint} />
+          <ChargeDialog items={items} orders={orders} services={services} onPrintReceit={handlePrintReceipt} />
         </Route>
         {renderReceiptsDialog}
         {renderReportDialog}
@@ -76,7 +75,7 @@ const Terminal: React.FC = () => {
               orderId={currentOrderId}
               services={services}
               onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
-              onPrintCheck={handlePrint}
+              onPrintCheck={handlePrintReceipt}
             />
             <div className={styles.items}>
               <Menu

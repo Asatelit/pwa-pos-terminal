@@ -16,7 +16,7 @@ const Menu: React.FC<MenuProps> = ({
       <div className={styles.left} />
       <div className={styles.right}>
         <button className={styles.menuBtn} onClick={() => onOpenReport()}>
-          Make a report
+          Daily Report
         </button>
         <button className={styles.menuBtn} onClick={() => onOpenDrawer()}>
           <MenuTwoTone />

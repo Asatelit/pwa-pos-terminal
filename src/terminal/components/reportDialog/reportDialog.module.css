@@ -89,7 +89,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  opacity: .85;
+  opacity: .75;
 }
 .btnSecondary:hover {
   opacity: 1;
@@ -103,5 +103,17 @@
 }
 
 .dateRange {
+  width: 100%;
+}
+
+.report {
+  display: block;
+  padding: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
   width: 100%;
 }

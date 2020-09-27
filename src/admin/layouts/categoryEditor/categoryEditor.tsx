@@ -16,7 +16,7 @@ type CategoryEditorProps = {
 
 const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, createMode = false }) => {
   const defaultCategory: Category = getCategoryEntity();
-  const { id: contextCategoryId } = useParams();
+  const { id: contextCategoryId } = useParams<{id: string}>();
 
   const [isPickerShown, togglePicker] = useState(false);
   const [redirect, setRedirect] = useState('');

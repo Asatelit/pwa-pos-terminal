@@ -5,6 +5,7 @@ import { Category, AppActions } from 'common/types';
 import { Routes } from 'common/const';
 import { encodeImage } from 'common/utils';
 import { getCategoryEntity, getCategoryById } from 'common/assets';
+import { APP_NAME } from 'config';
 import CategoryPicker from '../../components/categoryPicker/categoryPicker';
 import styles from './categoryEditor.module.css';
 
@@ -16,7 +17,7 @@ type CategoryEditorProps = {
 
 const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, createMode = false }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Category Editor';
+    document.title = `${APP_NAME} | Admin | Category Editor`;
   }, []);
 
   const defaultCategory: Category = getCategoryEntity();

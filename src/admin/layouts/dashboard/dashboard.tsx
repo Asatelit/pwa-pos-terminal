@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import moment from 'moment';
 import { ClosedOrder } from 'common/types';
 import { calcSum, average, financial } from 'common/utils';
+import { APP_NAME } from 'config';
 import { CommonLayout } from '../index';
 import styles from './dashboard.module.css';
 
@@ -11,7 +12,7 @@ type DashboardProps = {
 
 const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Dashboard';
+    document.title = `${APP_NAME} | Admin | Dashboard`;
   }, []);
 
   const filteredData = closedOrders.filter(entity => moment(entity.dateClose).isSame(new Date(), 'day'));

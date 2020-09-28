@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
 import { Routes } from 'common/const';
 import { LoadScreen, PrintReceipt } from 'common/components';
+import { APP_NAME } from 'config';
 import { Menu, Receipt, ItemList, ItemEditor, ChargeDialog, ReceiptsDialog, ReportDialog, Drawer } from './components';
 import styles from './terminal.module.css';
 
@@ -15,7 +16,7 @@ type TerminalState = {
 
 const Terminal: React.FC = () => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Terminal';
+    document.title = `${APP_NAME} | Terminal`;
   }, []);
 
   const [context, services, views] = useContext(AppContext);

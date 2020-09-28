@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
 import { Routes as R } from 'common/const';
 import { LoadScreen } from 'common/components';
+import { APP_NAME } from 'config';
 import { Drawer } from './components';
 import {
   Dashboard,
@@ -19,7 +20,7 @@ import styles from './admin.module.css';
 const Admin: React.FC = () => {
 
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin';
+    document.title = `${APP_NAME} | Admin`;
   }, []);
 
   const [context, actions] = useContext(AppContext);

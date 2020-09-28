@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { getTimestamp } from 'common/utils';
 import { Context, AppState, AppActions, AppViews } from 'common/types';
 import { AppInitialState } from 'common/assets';
+import { DEMO_DATA_PATH } from 'config';
 import * as A from '../actions';
 import * as W from '../views';
 
@@ -29,8 +30,8 @@ export const AppContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     (async function updateState() {
       let demoData: Partial<AppState> = {};
-      if (process.env.REACT_APP_DEMO_DATA) {
-        demoData = await fetch(process.env.REACT_APP_DEMO_DATA)
+      if (DEMO_DATA_PATH) {
+        demoData = await fetch(DEMO_DATA_PATH)
           .then((response) => response.json())
           .then((data) => data || {})
           .catch(() => {});

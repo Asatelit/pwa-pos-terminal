@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { Settings, AppActions } from 'common/types';
+import { APP_NAME } from 'config';
 import { CommonLayout } from '../index';
 import styles from './commonSettings.module.css';
 
@@ -10,7 +11,7 @@ type CommonSettingsProps = {
 
 const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Settings';
+    document.title = `${APP_NAME} | Admin | Settings`;
   }, []);
 
   const renderHead = (

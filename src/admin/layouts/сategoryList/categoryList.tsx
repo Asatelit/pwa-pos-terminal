@@ -5,6 +5,7 @@ import { Category, AppActions } from 'common/types';
 import { getTextIdentifier } from 'common/utils';
 import { Routes, Entities } from 'common/const';
 import { Breadcrumbs } from 'common/components';
+import { APP_NAME } from 'config';
 import styles from './categoryList.module.css';
 
 type CreateItemFormProps = {
@@ -14,7 +15,7 @@ type CreateItemFormProps = {
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Category List';
+    document.title = `${APP_NAME} | Admin | Category List`;
   }, []);
 
   const [redirect, setRedirect] = useState('');

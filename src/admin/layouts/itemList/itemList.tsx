@@ -5,6 +5,7 @@ import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { getCategoryById } from 'common/assets';
 import { Category, Item, AppActions } from 'common/types';
 import { getTextIdentifier, financial } from 'common/utils';
+import { APP_NAME } from 'config';
 import styles from './itemList.module.css';
 
 type ItemListProps = {
@@ -15,7 +16,7 @@ type ItemListProps = {
 
 const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Item List';
+    document.title = `${APP_NAME} | Admin | Item List`;
   }, []);
 
   const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: string) => {

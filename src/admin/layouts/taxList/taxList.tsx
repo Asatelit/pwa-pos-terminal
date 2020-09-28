@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
+import { APP_NAME } from 'config';
 import { CommonLayout } from '..';
 import styles from './taxList.module.css';
 
@@ -13,7 +14,7 @@ type TaxListProps = {
 
 const TaxList: React.FC<TaxListProps> = ({ taxes, actions }) => {
   useEffect(() => {
-    document.title = 'Asatelit POS | Admin | Tax List';
+    document.title = `${APP_NAME} | Admin | Tax List`;
   }, []);
 
   const list = taxes.filter((item) => !item.isDeleted);

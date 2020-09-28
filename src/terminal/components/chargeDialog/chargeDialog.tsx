@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import {
   Order,
@@ -13,6 +13,7 @@ import { ArrowLeftTwoTone } from 'common/icons';
 import { financial, round, calcSum } from 'common/utils';
 import { getOrderById } from 'common/assets';
 import { Routes } from 'common/const';
+import { APP_NAME } from 'config';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
 
@@ -24,6 +25,10 @@ type ChargeDialogProps = {
 };
 
 const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Terminal | Daily Report`;
+  }, []);
+
   const { id } = useParams<{id: string}>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });

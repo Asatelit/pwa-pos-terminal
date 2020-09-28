@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { encodeImage } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, Item, Tax, AppActions } from 'common/types';
 import { getItemEntity, getItemById } from 'common/assets';
+import { APP_NAME } from 'config';
 import { CategoryPicker } from '../../components';
 import styles from './itemEditor.module.css';
 
@@ -16,6 +17,10 @@ type ItemEditorProps = {
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Admin | Item Editor`;
+  }, []);
+
   const { id } = useParams<{id: string}>();
   const initialState = id ? getItemById(items, id) : getItemEntity();
 

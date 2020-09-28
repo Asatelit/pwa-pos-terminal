@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Settings, AppActions } from 'common/types';
+import { APP_NAME } from 'config';
 import { CommonLayout } from '../index';
 import styles from './commonSettings.module.css';
 
@@ -9,11 +10,13 @@ type CommonSettingsProps = {
 };
 
 const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Admin | Settings`;
+  }, []);
+
   const renderHead = (
     <Fragment>
-      <div className={styles.title}>
-        Settings
-      </div>
+      <div className={styles.title}>Settings</div>
     </Fragment>
   );
 
@@ -29,7 +32,7 @@ const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) =>
             id="CommonSettingsName"
             className={styles.controlInput}
             value={settings.name}
-            onChange={evt => actions.settings.update({ name: evt.target.value })}
+            onChange={(evt) => actions.settings.update({ name: evt.target.value })}
           />
         </div>
       </div>

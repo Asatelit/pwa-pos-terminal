@@ -1,9 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
 import { Routes } from 'common/const';
 import { LoadScreen, PrintReceipt } from 'common/components';
+import { APP_NAME } from 'config';
 import { Menu, Receipt, ItemList, ItemEditor, ChargeDialog, ReceiptsDialog, ReportDialog, Drawer } from './components';
 import styles from './terminal.module.css';
 
@@ -14,6 +15,10 @@ type TerminalState = {
 };
 
 const Terminal: React.FC = () => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Terminal`;
+  }, []);
+
   const [context, services, views] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({
     isOpenReceiptsDialog: false,
@@ -26,7 +31,8 @@ const Terminal: React.FC = () => {
   const currentOrder = orders.find((order) => currentOrderId === order.id) || null;
   const hasEditItemRequest = !!currentItemId;
 
-  const handlePrintReceipt = (orderId: string | null) => printComponent(<PrintReceipt orderId={orderId} state={context} />);
+  const handlePrintReceipt = (orderId: string | null) =>
+    printComponent(<PrintReceipt orderId={orderId} state={context} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
@@ -48,11 +54,7 @@ const Terminal: React.FC = () => {
 
   // Report Dialog
   const renderReportDialog = state.isOpenReportDialog && (
-    <ReportDialog
-      views={views}
-      onClose={() => updateState({ isOpenReportDialog: false })}
-      onPrint={printComponent}
-    />
+    <ReportDialog views={views} onClose={() => updateState({ isOpenReportDialog: false })} onPrint={printComponent} />
   );
 
   if (isLoading) return <LoadScreen />;

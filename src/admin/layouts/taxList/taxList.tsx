@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from 'common/const';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
+import { APP_NAME } from 'config';
 import { CommonLayout } from '..';
 import styles from './taxList.module.css';
 
@@ -12,6 +13,10 @@ type TaxListProps = {
 };
 
 const TaxList: React.FC<TaxListProps> = ({ taxes, actions }) => {
+  useEffect(() => {
+    document.title = `${APP_NAME} | Admin | Tax List`;
+  }, []);
+
   const list = taxes.filter((item) => !item.isDeleted);
 
   // Delete selected tax record

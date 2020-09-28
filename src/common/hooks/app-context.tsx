@@ -1,5 +1,6 @@
 import localForage from 'localforage';
 import React, { createContext, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getTimestamp } from 'common/utils';
 import { Context, AppState, AppActions, AppViews } from 'common/types';
 import { AppInitialState } from 'common/assets';
@@ -26,18 +27,25 @@ export const AppContext = createContext<Context<AppState>>(AppInitialState);
 
 export const AppContextProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<AppState>(AppInitialState[0]);
+  const [t, i18n] = useTranslation();
 
   useEffect(() => {
     (async function updateState() {
       let demoData: Partial<AppState> = {};
+      // Load data to display the application in demo mode
       if (DEMO_DATA_PATH) {
         demoData = await fetch(DEMO_DATA_PATH)
           .then((response) => response.json())
           .then((data) => data || {})
           .catch(() => {});
       }
-      const state = await readContextFromLocalStorage(AppInitialState[0]);
+      // Demo mode data parsing
       demoData = JSON.parse(JSON.stringify(demoData).replaceAll('"@{currentdate}"', `${getTimestamp()}`));
+      // Rehydrate the app state
+      const state = await readContextFromLocalStorage(AppInitialState[0]);
+      // Setting up user preference settings
+      if (state.settings.lang !== 'default') i18n.changeLanguage(state.settings.lang);
+      // Update the app state
       setState({ ...state, ...demoData, isLoading: false });
     })();
   }, []);

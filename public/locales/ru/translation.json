@@ -1,0 +1,17 @@
+{
+  "common": {
+    "default": "По умолчанию"
+  },
+  "terminal": {
+    "dailyReport": "Составить отчет"
+  },
+  "admin": {
+    "settings": {
+      "title": "Настройки",
+      "businessNameLabel": "Название заведения",
+      "businessNameDescription": "Это название будет отображено в квитанциях и выписках ваших клиентов:",
+      "languagePreferenceLabel": "Языковые настройки",
+      "languagePreferenceDescription": "Я буду использовать {{name}} на этом языке:"
+    }
+  }
+}

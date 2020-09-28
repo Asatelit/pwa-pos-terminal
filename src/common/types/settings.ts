@@ -22,7 +22,7 @@ export type Settings = {
   printReceiptByDefault: boolean;
   printWifi: boolean;
   printReceiptComment: boolean;
-  lang: string;
+  lang: 'default' | string;
   timezone: string;
   currencyCodeIso: string;
   currency: string;

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { AppContextProvider } from 'common/hooks';
 import { Routes } from 'common/const';
+import { LoadScreen } from 'common/components';
 import Terminal from './terminal/terminal';
 import Admin from './admin/admin';
 import * as serviceWorker from './serviceWorker';
+import './common/locales/i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -20,20 +22,22 @@ const NoMatch = () => (
 );
 
 ReactDOM.render(
-  <AppContextProvider>
-    <HashRouter>
-      <Switch>
-        <Route path={Routes.Terminal}>
-          <Terminal />
-        </Route>
-        <Route path={Routes.AdminDashboard}>
-          <Admin />
-        </Route>
-        <Redirect strict from="/" to={Routes.Terminal} />
-        <Route path="*" render={NoMatch} />
-      </Switch>
-    </HashRouter>
-  </AppContextProvider>,
+  <Suspense fallback={<LoadScreen />}>
+    <AppContextProvider>
+      <HashRouter>
+        <Switch>
+          <Route path={Routes.Terminal}>
+            <Terminal />
+          </Route>
+          <Route path={Routes.AdminDashboard}>
+            <Admin />
+          </Route>
+          <Redirect strict from="/" to={Routes.Terminal} />
+          <Route path="*" render={NoMatch} />
+        </Switch>
+      </HashRouter>
+    </AppContextProvider>
+  </Suspense>,
   document.getElementById('root'),
 );
 

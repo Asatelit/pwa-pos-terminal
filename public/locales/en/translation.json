@@ -1,0 +1,17 @@
+{
+  "common": {
+    "default": "Default"
+  },
+  "terminal": {
+    "dailyReport": "Daily Report"
+  },
+  "admin": {
+    "settings": {
+      "title": "Settings",
+      "businessNameLabel": "Business Name",
+      "businessNameDescription": "Your business name appears on your customers’ receipts and credit card statements",
+      "languagePreferenceLabel": "Language Preference",
+      "languagePreferenceDescription": "I prefer to view {{name}} in"
+    }
+  }
+}

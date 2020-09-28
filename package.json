@@ -16,18 +16,21 @@
     "bootstrap": "^5.0.0-alpha1",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
+    "i18next": "^19.7.0",
+    "i18next-browser-languagedetector": "^6.0.1",
+    "i18next-xhr-backend": "^3.2.2",
+    "iso-639-1": "^2.1.4",
     "localforage": "1.9.0",
     "moment": "2.29.0",
     "ramda": "0.27.1",
     "react": "16.13.1",
     "react-date-range": "1.0.3",
     "react-dom": "16.13.1",
+    "react-i18next": "^11.7.3",
     "react-print-tool": "3.0.0",
     "react-router-dom": "5.2.0"
   },
   "devDependencies": {
-    "react-scripts": "^3.4.3",
-    "typescript": "^3.9.7",
     "@testing-library/dom": "^7.24.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
@@ -42,10 +45,12 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "prettier": "^2.1.2",
+    "react-scripts": "^3.4.3",
     "tslint": "^6.1.2",
     "tslint-config-airbnb": "^5.11.2",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^5.0.0"
+    "tslint-react": "^5.0.0",
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start": "react-scripts start",

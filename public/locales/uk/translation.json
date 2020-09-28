@@ -1,0 +1,17 @@
+{
+  "common": {
+    "default": "За налаштуванням"
+  },
+  "terminal": {
+    "dailyReport": "Скласти звіт"
+  },
+  "admin": {
+    "settings": {
+      "title": "Налаштування",
+      "businessNameLabel": "Назва закладу",
+      "businessNameDescription": "Ця назва буде відображена в квитанціях і виписках ваших клієнтів:",
+      "languagePreferenceLabel": "Параметри мови",
+      "languagePreferenceDescription": "Мова інтерфейсу {{name}}:"
+    }
+  }
+}

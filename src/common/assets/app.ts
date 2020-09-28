@@ -6,7 +6,7 @@ export const AppInitialSettings = {
   currencyCodeIso: 'USD',
   currencySymbol: '$',
   isAllowPrintCheck: false,
-  lang: window.navigator.language,
+  lang: 'default',
   logo: '',
   logoUrl: '',
   name: '',

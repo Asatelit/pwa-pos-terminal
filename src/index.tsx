@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { AppContextProvider } from 'common/hooks';
+import { AppContextProvider, I18nContextProvider } from 'common/hooks';
 import { Routes } from 'common/const';
 import { LoadScreen } from 'common/components';
 import Terminal from './terminal/terminal';
@@ -23,20 +23,22 @@ const NoMatch = () => (
 
 ReactDOM.render(
   <Suspense fallback={<LoadScreen />}>
-    <AppContextProvider>
-      <HashRouter>
-        <Switch>
-          <Route path={Routes.Terminal}>
-            <Terminal />
-          </Route>
-          <Route path={Routes.AdminDashboard}>
-            <Admin />
-          </Route>
-          <Redirect strict from="/" to={Routes.Terminal} />
-          <Route path="*" render={NoMatch} />
-        </Switch>
-      </HashRouter>
-    </AppContextProvider>
+    <I18nContextProvider>
+      <AppContextProvider>
+        <HashRouter>
+          <Switch>
+            <Route path={Routes.Terminal}>
+              <Terminal />
+            </Route>
+            <Route path={Routes.AdminDashboard}>
+              <Admin />
+            </Route>
+            <Redirect strict from="/" to={Routes.Terminal} />
+            <Route path="*" render={NoMatch} />
+          </Switch>
+        </HashRouter>
+      </AppContextProvider>
+    </I18nContextProvider>
   </Suspense>,
   document.getElementById('root'),
 );

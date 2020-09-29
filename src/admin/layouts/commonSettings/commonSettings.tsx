@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import ISO6391 from 'iso-639-1';
+import React, { Fragment, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Settings, AppActions } from 'common/types';
+import { setDocumentTitle, languageList } from 'common/utils';
+import { I18nContext } from 'common/hooks';
 import { APP_NAME } from 'config';
 import { CommonLayout } from '../index';
 import styles from './commonSettings.module.css';
@@ -13,15 +14,12 @@ type CommonSettingsProps = {
 
 const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) => {
   const [t, i18n] = useTranslation();
-  const [supportedLocales, setSupportedLocales] = useState([]);
+  const { supportedLocales } = useContext(I18nContext);
 
   useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Settings`;
-    // Get the list of locales that this app has been localized for
-    fetch('./locales/index.json')
-      .then((response) => response.json())
-      .then((data) => setSupportedLocales(data));
-  }, []);
+    const title = [t('admin.title'), t('admin.settings.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   const handleOnChangeOfLanguagePreference = (isoCode: string) => {
     const lng = isoCode === 'default' ? '' : isoCode;
@@ -70,7 +68,7 @@ const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) =>
             <option value="default">{t('common.default')}</option>
             {supportedLocales.map((lng) => (
               <option key={lng} value={lng}>
-                {ISO6391.getNativeName(lng)}
+                {languageList[lng].nativeName}
               </option>
             ))}
           </select>

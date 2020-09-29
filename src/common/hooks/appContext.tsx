@@ -27,7 +27,7 @@ export const AppContext = createContext<Context<AppState>>(AppInitialState);
 
 export const AppContextProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<AppState>(AppInitialState[0]);
-  const [t, i18n] = useTranslation();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     (async function updateState() {
@@ -48,7 +48,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
       // Update the app state
       setState({ ...state, ...demoData, isLoading: false });
     })();
-  }, []);
+  }, [i18n]);
 
   const updateContext = (value: Partial<AppState>) => {
     try {

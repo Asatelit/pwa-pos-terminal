@@ -6,6 +6,30 @@
     "dailyReport": "Составить отчет"
   },
   "admin": {
+    "title": "Панель управления",
+    "menu": {
+      "dashboardLabel": "Статистика",
+      "categoriesLabel": "Категории",
+      "itemsLabel": "Товары",
+      "taxesLabel": "Налоги",
+      "settingsLabel": "Настройки",
+      "exitLabel": "Терминал"
+    },
+    "dashboard": {
+      "title": "Статистика продаж",
+      "salesWidget": {
+        "today": "Сегодня,",
+        "revenue": "выручка",
+        "profit": "прибыль",
+        "receipts": "чеки",
+        "average": "средний чек"
+      }
+    },
+    "categories": {
+      "title": "Категории товаров",
+      "addCategoryLabel": "Создать категорию",
+      "emptyListMessage": "Нет категорий, доступных для отображения."
+    },
     "settings": {
       "title": "Настройки",
       "businessNameLabel": "Название заведения",

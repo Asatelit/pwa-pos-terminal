@@ -6,6 +6,30 @@
     "dailyReport": "Скласти звіт"
   },
   "admin": {
+    "title": "Панель керування",
+    "menu": {
+      "dashboardLabel": "Статистика",
+      "categoriesLabel": "Категорії",
+      "itemsLabel": "Товари",
+      "taxesLabel": "Налоги",
+      "settingsLabel": "Налаштування",
+      "exitLabel": "Термінал"
+    },
+    "dashboard": {
+      "title": "Статистика продажів",
+      "salesWidget": {
+        "today": "Сьогодні,",
+        "revenue": "виручка",
+        "profit": "прибуток",
+        "receipts": "чеки",
+        "average": "середній чек"
+      }
+    },
+    "categories": {
+      "title": "Категорії товарів",
+      "addCategoryLabel": "Створити категорію",
+      "emptyListMessage": "Немає категорій, доступних для відображення."
+    },
     "settings": {
       "title": "Налаштування",
       "businessNameLabel": "Назва закладу",

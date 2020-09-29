@@ -1,4 +1,9 @@
 import { ChangeEvent } from 'react';
+import { APP_NAME } from 'config';
+
+export function setDocumentTitle(names: string[]): void {
+  document.title = `${APP_NAME} | ${names.join(' | ')}`;
+}
 
 export function getTextIdentifier(name: string): string {
   const segments = name.split(' ');

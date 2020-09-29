@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
-import { getTextIdentifier } from 'common/utils';
+import { getTextIdentifier, setDocumentTitle } from 'common/utils';
 import { Routes, Entities } from 'common/const';
 import { Breadcrumbs } from 'common/components';
-import { APP_NAME } from 'config';
 import styles from './categoryList.module.css';
 
 type CreateItemFormProps = {
@@ -14,14 +14,17 @@ type CreateItemFormProps = {
 };
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) => {
+  const [t] = useTranslation();
+
   useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Category List`;
-  }, []);
+    const title = [t('admin.title'), t('admin.categories.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   const [redirect, setRedirect] = useState('');
 
   // handle route params
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const selectedCategoryId = id || Entities.RootCategoryId;
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   };
 
   const visibleCategories = categories.filter(
-    entity => !entity.isDeleted && !entity.isHidden && entity.parentId === selectedCategoryId,
+    (entity) => !entity.isDeleted && !entity.isHidden && entity.parentId === selectedCategoryId,
   );
 
   const renderPresenter = (category: Category) => {
@@ -69,10 +72,10 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
     <div key={`${item.id}`} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
       {renderPresenter(item)}
       <div className={styles.name}>{item.name}</div>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
+      <button className={styles.iconBtn} onClick={(evt) => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
         <EditSquareOutlineTwoTone />
       </button>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
+      <button className={styles.iconBtn} onClick={(evt) => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
         <TrashCanOutlineTwoTone />
       </button>
     </div>
@@ -83,11 +86,14 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
     <div className={styles.root}>
       <div className={styles.head}>
         <div className={styles.itemInfo}>
-          <span className={styles.itemName}>Category</span>
+          <span className={styles.itemName}>{t('admin.categories.title')}</span>
         </div>
-        <Link className={styles.primaryBtn} to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}>
+        <Link
+          className={styles.primaryBtn}
+          to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
+        >
           <PlusTwoTone />
-          <span>New Category</span>
+          <span>{t('admin.categories.addCategoryLabel')}</span>
         </Link>
       </div>
       <div className={styles.body}>
@@ -98,9 +104,9 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
           onChange={handleOnChangeBreadCrumbs}
         />
         {visibleCategories.length ? (
-          visibleCategories.map(item => renderCategory(item))
+          visibleCategories.map((item) => renderCategory(item))
         ) : (
-          <div className={styles.empty}>There are no items here.</div>
+          <div className={styles.empty}>{t('admin.categories.emptyListMessage')}</div>
         )}
       </div>
     </div>

@@ -6,6 +6,30 @@
     "dailyReport": "Daily Report"
   },
   "admin": {
+    "title": "Admin",
+    "menu": {
+      "dashboardLabel": "Dashboard",
+      "categoriesLabel": "Categories",
+      "itemsLabel": "Items",
+      "taxesLabel": "Taxes",
+      "settingsLabel": "Settings",
+      "exitLabel": "Back to terminal"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "salesWidget": {
+        "today": "Today,",
+        "revenue": "revenue",
+        "profit": "profit",
+        "receipts": "receipts",
+        "average": "average"
+      }
+    },
+    "categories": {
+      "title": "Category",
+      "addCategoryLabel": "New Category",
+      "emptyListMessage": "There are no items here."
+    },
     "settings": {
       "title": "Settings",
       "businessNameLabel": "Business Name",

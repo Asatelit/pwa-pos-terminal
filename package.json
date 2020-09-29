@@ -1,7 +1,7 @@
 {
   "name": "pwa-pos-terminal",
-  "description": "Point of Sale (POS) Terminal designed to help small coffee shops and eateries efficiently manage counter",
-  "version": "0.2.2-alpha",
+  "description": "Asatelit Point of Sale (POS) Terminal is progressive web application (PWA) that designed to help small business owners efficiently manage the day's sales and inventory turns.",
+  "version": "0.2.3-alpha",
   "private": true,
   "license": "Apache-2.0",
   "repository": {
@@ -13,20 +13,19 @@
     "yarn": ">=1.10"
   },
   "dependencies": {
-    "bootstrap": "^5.0.0-alpha1",
+    "bootstrap": "5.0.0-alpha1",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
-    "i18next": "^19.7.0",
-    "i18next-browser-languagedetector": "^6.0.1",
-    "i18next-xhr-backend": "^3.2.2",
-    "iso-639-1": "^2.1.4",
+    "i18next": "19.7.0",
+    "i18next-browser-languagedetector": "6.0.1",
+    "i18next-xhr-backend": "3.2.2",
     "localforage": "1.9.0",
     "moment": "2.29.0",
     "ramda": "0.27.1",
     "react": "16.13.1",
     "react-date-range": "1.0.3",
     "react-dom": "16.13.1",
-    "react-i18next": "^11.7.3",
+    "react-i18next": "11.7.3",
     "react-print-tool": "3.0.0",
     "react-router-dom": "5.2.0"
   },

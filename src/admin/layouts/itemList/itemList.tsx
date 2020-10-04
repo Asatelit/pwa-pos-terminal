@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Routes } from 'common/const';
-import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { getCategoryById } from 'common/assets';
 import { Category, Item, AppActions } from 'common/types';
-import { getTextIdentifier, financial } from 'common/utils';
-import { APP_NAME } from 'config';
+import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
+import { getTextIdentifier, financial, setDocumentTitle } from 'common/utils';
+
 import styles from './itemList.module.css';
 
 type ItemListProps = {
@@ -15,9 +16,12 @@ type ItemListProps = {
 };
 
 const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
+  const [t] = useTranslation();
+
   useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Item List`;
-  }, []);
+    const title = [t('admin.title'), t('admin.items.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   const handleOnClickOnDeleteBtn = (event: React.MouseEvent, itemId: string) => {
     event.preventDefault();
@@ -42,30 +46,28 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
       <div className={`${styles.td} ${styles.tdCategory}`}>{getCategoryById(categories, data.parentId).name}</div>
       <div className={`${styles.td}`}>{financial(data.costPrice)}</div>
       <div className={`${styles.td}`}>{financial(data.price)}</div>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnDeleteBtn(evt, data.id)}>
+      <button className="btn btn-link" onClick={(evt) => handleOnClickOnDeleteBtn(evt, data.id)}>
         <TrashCanOutlineTwoTone />
       </button>
     </Link>
   );
 
-  const itemList = items.filter(item => !item.isDeleted);
+  const itemList = items.filter((item) => !item.isDeleted);
 
   return (
     <div className={styles.root}>
       <div className={styles.head}>
-        <div className={styles.itemInfo}>
-          <span className={styles.itemName}>Items</span>
-        </div>
-        <Link className={styles.primaryBtn} to={Routes.AdminItemCreate}>
+        <div className={styles.title}>{t('admin.items.title')}</div>
+        <Link className="btn btn-primary ml-2 mr-4" to={Routes.AdminItemCreate}>
           <PlusTwoTone />
-          <span>New Item</span>
+          <span>{t('admin.items.addItemLabel')}</span>
         </Link>
       </div>
       <div className={styles.body}>
         {itemList.length ? (
-          itemList.map(item => renderItem(item))
+          itemList.map((item) => renderItem(item))
         ) : (
-          <div className={styles.empty}>There are no items here.</div>
+          <div className={styles.empty}>{t('admin.items.emptyListMessage')}</div>
         )}
       </div>
     </div>

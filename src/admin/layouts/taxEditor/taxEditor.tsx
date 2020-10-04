@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
-import { Routes } from 'common/const';
+import { useTranslation } from 'react-i18next';
 import { getTaxEntity, getTaxById } from 'common/assets';
+import { setDocumentTitle } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
-import { APP_NAME } from 'config';
+import { Routes } from 'common/const';
 import { CommonLayout } from '../../layouts';
 import styles from './taxEditor.module.css';
 
@@ -14,11 +15,14 @@ type TaxEditorProps = {
 };
 
 const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
-  useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Tax Editor`;
-  }, []);
+  const { id } = useParams<{ id: string }>();
+  const [t] = useTranslation();
 
-  const { id } = useParams<{id: string}>();
+  useEffect(() => {
+    const title = [t('admin.title'), t(id ? 'admin.taxEditor.editItemTitle' : 'admin.taxEditor.addItemTitle')];
+    setDocumentTitle(title);
+  }, [t, id]);
+
   const currentTaxRecord = id ? getTaxById(taxes, id) : null;
   const initialTaxRecord: Tax = currentTaxRecord ? currentTaxRecord : getTaxEntity();
 
@@ -44,82 +48,92 @@ const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
 
   const renderHead = (
     <Fragment>
-      <Link className={styles.closeBtn} to={Routes.AdminTaxList}>
+      <Link className="btn btn-link ml-2 mr-2" to={Routes.AdminTaxList}>
         <ArrowLeftTwoTone />
       </Link>
-      <div className={styles.itemInfo}>
-        <span className={styles.itemName}>{currentTaxRecord ? 'Edit Tax' : 'Create Tax'}</span>
+      <div className={styles.title}>
+        {currentTaxRecord ? t('admin.taxEditor.editItemTitle') : t('admin.taxEditor.addItemTitle')}
       </div>
     </Fragment>
   );
 
   const renderBody = (
     <div className={styles.body}>
-      <div className={styles.switch}>
-        <div className={styles.controlLabel} />
+      <div className="form-check form-switch mb-4">
         <input
+          className="form-check-input"
           type="checkbox"
           id="TaxEditorIsEnabled"
           checked={taxRecord.isEnabled}
           onChange={(evt) => updateTaxRecord({ isEnabled: evt.target.checked })}
         />
-        <label htmlFor="TaxEditorIsEnabled">Enabled</label>
+        <label className="form-check-label" htmlFor="TaxEditorIsEnabled">
+          {t('common.enabled')}
+        </label>
       </div>
-      <div className={styles.control}>
-        <label className={styles.controlLabel} htmlFor="taxEditorName">
-          Name
+
+      <div className="mb-4">
+        <label className="form-label" htmlFor="taxEditorName">
+          {t('admin.taxEditor.nameLabel')}
         </label>
         <input
           id="taxEditorName"
           type="text"
-          className={styles.controlInput}
+          className="form-control"
           value={taxRecord.name}
           onChange={(evt) => updateTaxRecord({ name: evt.target.value })}
         />
       </div>
-      <div className={styles.control}>
-        <label className={styles.controlLabel} htmlFor="TaxEditorPrice">
-          Precentage
+
+      <div className="mb-4">
+        <label className="form-label" htmlFor="TaxEditorPrice">
+          {t('admin.taxEditor.precentageLabel')}
         </label>
         <input
           type="number"
-          className={styles.controlInput}
+          className="form-control w-auto"
           id="TaxEditorPrecentage"
-          placeholder="Precentage"
+          placeholder={t('admin.taxEditor.precentageLabel')}
           value={taxRecord.precentage}
           onChange={(evt) => updateTaxRecord({ precentage: parseInt(evt.target.value, 10) })}
         />
       </div>
-      <div className={styles.control}>
-        <label className={styles.controlLabel} htmlFor="TaxEditorPrice">
-          Precentage
+
+      <div className="mb-4">
+        <label className="form-label" htmlFor="TaxEditorPrice">
+          {t('admin.taxEditor.itemPricingLabel')}
         </label>
         <select
-          className={styles.controlInput}
+          className="form-select w-auto pr-5"
           id="TaxEditorPrecentage"
           value={`${taxRecord.isIncludedInPrice}`}
           onChange={(evt) => updateTaxRecord({ isIncludedInPrice: evt.target?.value === 'true' })}
         >
-          <option value={'false'}>Add Tax to Price</option>
-          <option value={'true'}>Include Tax in Item Price</option>
+          <option value={'false'}>{t('admin.taxEditor.addTaxToItemPrice')}</option>
+          <option value={'true'}>{t('admin.taxEditor.includeTaxInItemPrice')}</option>
         </select>
       </div>
-      <div className={styles.switch}>
-        <div className={styles.controlLabel} />
+
+      <label className="form-label" htmlFor="TaxEditorPrice">
+        {t('admin.taxEditor.applyTaxToLabel')}
+      </label>
+
+      <div className="form-check form-switch mb-4">
         <input
+          className="form-check-input"
           type="checkbox"
           id="TaxEditorApplyToCustomAmounts"
           checked={taxRecord.applyToCustomAmounts}
           onChange={(evt) => updateTaxRecord({ applyToCustomAmounts: evt.target.checked })}
         />
-        <label htmlFor="TaxEditorApplyToCustomAmounts">Apply To Custom Amounts</label>
+        <label className="form-check-label" htmlFor="TaxEditorApplyToCustomAmounts">
+          {t('admin.taxEditor.applyToCustomAmounts')}
+        </label>
       </div>
-      <div className={styles.control}>
-        <div className={styles.controlLabel} />
-        <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
-          {currentTaxRecord ? 'Update' : 'Add'}
-        </button>
-      </div>
+
+      <button className="btn btn-primary" disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
+        {currentTaxRecord ? t('common.update') : t('common.add')}
+      </button>
     </div>
   );
 

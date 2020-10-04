@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Routes } from 'common/const';
-import { encodeImage } from 'common/utils';
+import { encodeImage, setDocumentTitle } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, Item, Tax, AppActions } from 'common/types';
 import { getItemEntity, getItemById } from 'common/assets';
-import { APP_NAME } from 'config';
 import { CategoryPicker } from '../../components';
 import styles from './itemEditor.module.css';
 
@@ -17,11 +17,15 @@ type ItemEditorProps = {
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
-  useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Item Editor`;
-  }, []);
+  const { id } = useParams<{ id: string }>();
+  const [t] = useTranslation();
 
-  const { id } = useParams<{id: string}>();
+  useEffect(() => {
+    const title = [t('admin.title'), t(id ? 'admin.itemEditor.editItemTitle' : 'admin.itemEditor.addItemTitle')];
+    setDocumentTitle(title);
+  }, [t, id]);
+
+
   const initialState = id ? getItemById(items, id) : getItemEntity();
 
   const [item, setItem] = useState<Item>(initialState);
@@ -47,7 +51,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
     if (!taxList.length) return null;
     return (
       <div className={styles.control}>
-        <div className={styles.controlLabel}>Taxes</div>
+        <div className={styles.controlLabel}>{t('admin.itemEditor.taxesLabel')}</div>
         {taxList.map((tax) => (
           <div key={`ItemEditorTax_${tax.id}`} className={styles.switch}>
             <input
@@ -76,13 +80,15 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
           <ArrowLeftTwoTone />
         </Link>
         <div className={styles.itemInfo}>
-          <span className={styles.itemName}>{id ? 'Edit Item' : 'Create Item'}</span>
+          <span className={styles.itemName}>
+            {id ? t('admin.itemEditor.editItemTitle') : t('admin.itemEditor.addItemTitle')}
+          </span>
         </div>
       </div>
       <div className={styles.form}>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorName">
-            Name
+            {t('admin.itemEditor.nameLabel')}
           </label>
           <input
             id="ItemEditorName"
@@ -94,7 +100,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
         </div>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorCategory">
-            Category
+            {t('admin.itemEditor.categoryLabel')}
           </label>
           <div className={styles.controlGroup}>
             <input
@@ -119,33 +125,33 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
         </div>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorPrice">
-            Price
+            {t('admin.itemEditor.priceLabel')}
           </label>
           <input
             type="number"
             className={styles.controlInput}
             id="ItemEditorPrice"
-            placeholder="Price"
+            placeholder={t('admin.itemEditor.priceLabel')}
             value={item.price}
             onChange={(evt) => updateItem({ price: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorCostPrice">
-            Cost Price
+            {t('admin.itemEditor.costPriceLabel')}
           </label>
           <input
             type="number"
             className={styles.controlInput}
             id="ItemEditorCostPrice"
-            placeholder="Cost Price"
+            placeholder={t('admin.itemEditor.costPriceLabel')}
             value={item.costPrice}
             onChange={(evt) => updateItem({ costPrice: parseFloat(evt.target.value) })}
           />
         </div>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorColor">
-            Color
+            {t('admin.itemEditor.colorLabel')}
           </label>
           <select
             id="ItemEditorColor"
@@ -166,7 +172,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
         </div>
         <div className={styles.control}>
           <label className={styles.controlLabel} htmlFor="ItemEditorColor">
-            Image
+            {t('admin.itemEditor.imageLabel')}
           </label>
           {!item.picture && (
             <input
@@ -177,7 +183,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
           )}
           {!!item.picture && (
             <button className={styles.secondaryAction} onClick={() => updateItem({ picture: '' })}>
-              Remove
+               {t('common.remove')}
             </button>
           )}
         </div>
@@ -185,7 +191,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
         <div className={styles.control}>
           <div className={styles.controlLabel} />
           <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
-            {id ? 'Update' : 'Add'}
+            {id ? t('common.update') : t('common.add')}
           </button>
         </div>
       </div>

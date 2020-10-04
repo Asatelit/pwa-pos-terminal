@@ -14,6 +14,8 @@ type CreateItemFormProps = {
 };
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) => {
+  const [redirect, setRedirect] = useState('');
+  const { id } = useParams<{ id: string }>();
   const [t] = useTranslation();
 
   useEffect(() => {
@@ -21,10 +23,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
     setDocumentTitle(title);
   }, [t]);
 
-  const [redirect, setRedirect] = useState('');
-
   // handle route params
-  const { id } = useParams<{ id: string }>();
   const selectedCategoryId = id || Entities.RootCategoryId;
 
   useEffect(() => {

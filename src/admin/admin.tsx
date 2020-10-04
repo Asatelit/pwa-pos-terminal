@@ -1,13 +1,14 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AppContext } from 'common/hooks';
 import { Routes as R } from 'common/const';
 import { LoadScreen } from 'common/components';
-import { APP_NAME } from 'config';
+import { setDocumentTitle } from 'common/utils';
 import { Drawer } from './components';
 import {
   Dashboard,
-  CommonSettings,
+  Settings,
   CategoryEditor,
   CategoryList,
   ItemList,
@@ -18,10 +19,12 @@ import {
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
+  const [t] = useTranslation();
 
   useEffect(() => {
-    document.title = `${APP_NAME} | Admin`;
-  }, []);
+    const title = [t('admin.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   const [context, actions] = useContext(AppContext);
   const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
@@ -36,7 +39,7 @@ const Admin: React.FC = () => {
     { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} /> },
     { path: R.AdminItemEdit, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminItemCreate, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
-    { path: R.AdminSettings, c: <CommonSettings settings={settings} actions={actions} /> },
+    { path: R.AdminSettings, c: <Settings settings={settings} actions={actions} /> },
     { path: R.AdminTaxList, c: <TaxList taxes={taxes} actions={actions} /> },
     { path: R.AdminTaxEdit, c: <TaxEditor taxes={taxes} actions={actions} /> },
     { path: R.AdminTaxCreate, c: <TaxEditor taxes={taxes} actions={actions} /> },

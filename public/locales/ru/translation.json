@@ -1,6 +1,28 @@
 {
   "common": {
-    "default": "По умолчанию"
+    "actions": "Действия",
+    "add": "Добавить",
+    "cancel": "Отменить",
+    "chooseAnOption": "Выбрать опцию",
+    "create": "Создать",
+    "default": "Default",
+    "delete": "Удалить",
+    "deleteSelected": "Удалить выбранное",
+    "details": "Подробности",
+    "edit": "Редактировать",
+    "enabled": "Включённый",
+    "new": "Новый",
+    "next": "Вперёд",
+    "no": "Нет",
+    "previous": "Назад",
+    "remove": "Удалить",
+    "restore": "Восстановить",
+    "somethingWentWrong": "Что-то пошло не так.",
+    "total": "Всего",
+    "update": "Сохранить",
+    "update&ContinueEditing": "Обновить и продолжить редактирование",
+    "view": "Посмотреть",
+    "yes": "Да"
   },
   "terminal": {
     "dailyReport": "Составить отчет"
@@ -27,8 +49,40 @@
     },
     "categories": {
       "title": "Категории товаров",
-      "addCategoryLabel": "Создать категорию",
+      "addCategoryLabel": "Добавить категорию",
       "emptyListMessage": "Нет категорий, доступных для отображения."
+    },
+    "items": {
+      "title": "Товары",
+      "addItemLabel": "Добавить товар",
+      "emptyListMessage": "Нет категорий, доступных для отображения."
+    },
+    "itemEditor": {
+      "addItemTitle": "Добавление товара",
+      "editItemTitle": "Редактирование товара",
+      "nameLabel": "Название",
+      "categoryLabel": "Категория",
+      "priceLabel": "Цена",
+      "costPriceLabel": "Себестоимость",
+      "colorLabel": "Цвет",
+      "imageLabel": "Изображение",
+      "taxesLabel": "Налог"
+    },
+    "taxes": {
+      "title": "Настройка налогов",
+      "addItemLabel": "Добавить налог",
+      "emptyListMessage": "Нет налогов, доступных для отображения."
+    },
+    "taxEditor": {
+      "addItemTitle": "Добавить новый налог",
+      "editItemTitle": "Редактировать налог",
+      "nameLabel": "Название налога",
+      "precentageLabel": "Процент",
+      "itemPricingLabel": "Тип",
+      "addTaxToItemPrice": "Отображать налог рядом с ценой",
+      "includeTaxInItemPrice": "Включить в стоимость товара",
+      "applyTaxToLabel": "Дополнительные настройки",
+      "applyToCustomAmounts": "Применять налог к индивидуальным чекам"
     },
     "settings": {
       "title": "Настройки",

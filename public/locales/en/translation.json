@@ -1,6 +1,28 @@
 {
   "common": {
-    "default": "Default"
+    "actions": "Actions",
+    "add": "Add",
+    "cancel": "Cancel",
+    "chooseAnOption": "Choose an option",
+    "create": "Create",
+    "default": "Default",
+    "delete": "Delete",
+    "deleteSelected": "Delete Selected",
+    "details": "Details",
+    "edit": "Edit",
+    "enabled": "Enabled",
+    "new": "New",
+    "next": "Next",
+    "no": "No",
+    "previous": "Previous",
+    "remove": "Remove",
+    "restore": "Restore",
+    "somethingWentWrong": "Something went wrong.",
+    "total": "Total",
+    "update": "Update",
+    "update&ContinueEditing": "Update & Continue Editing",
+    "view": "View",
+    "yes": "Yes"
   },
   "terminal": {
     "dailyReport": "Daily Report"
@@ -29,6 +51,38 @@
       "title": "Category",
       "addCategoryLabel": "New Category",
       "emptyListMessage": "There are no items here."
+    },
+    "items": {
+      "title": "Items",
+      "addItemLabel": "New Item",
+      "emptyListMessage": "There are no items here."
+    },
+    "itemEditor": {
+      "addItemTitle": "Add Item",
+      "editItemTitle": "Edit Item",
+      "nameLabel": "Name",
+      "categoryLabel": "Category",
+      "priceLabel": "Price",
+      "costPriceLabel": "Cost Price",
+      "colorLabel": "Color",
+      "imageLabel": "Image",
+      "taxesLabel": "Taxes"
+    },
+    "taxes": {
+      "title": "Taxes",
+      "addItemLabel": "New Tax",
+      "emptyListMessage": "There are no items here."
+    },
+    "taxEditor": {
+      "addItemTitle": "Add a New Tax",
+      "editItemTitle": "Edit Tax",
+      "nameLabel": "Name",
+      "precentageLabel": "Precentage",
+      "itemPricingLabel": "Item Pricing",
+      "addTaxToItemPrice": "Add Tax to Item Price",
+      "includeTaxInItemPrice": "Include Tax in Item Price",
+      "applyTaxToLabel": "Apply tax to",
+      "applyToCustomAmounts": "Custom Amounts"
     },
     "settings": {
       "title": "Settings",

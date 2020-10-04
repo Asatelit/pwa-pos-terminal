@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Settings, AppActions } from 'common/types';
+import { Settings as AppSettings, AppActions } from 'common/types';
 import { setDocumentTitle, languageList } from 'common/utils';
 import { I18nContext } from 'common/hooks';
 import { APP_NAME } from 'config';
 import { CommonLayout } from '../index';
-import styles from './commonSettings.module.css';
+import styles from './settings.module.css';
 
-type CommonSettingsProps = {
-  settings: Settings;
+type SettingsProps = {
+  settings: AppSettings;
   actions: AppActions;
 };
 
-const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) => {
+const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
   const [t, i18n] = useTranslation();
   const { supportedLocales } = useContext(I18nContext);
 
@@ -42,15 +42,13 @@ const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) =>
             {t('admin.settings.businessNameLabel')}
           </label>
           <div className="form-text text-muted mb-2">{t('admin.settings.businessNameDescription')}</div>
-          <div className={styles.controlGroup}>
-            <input
-              type="text"
-              id="CommonSettingsName"
-              className="form-control"
-              value={settings.name}
-              onChange={(evt) => actions.settings.update({ name: evt.target.value })}
-            />
-          </div>
+          <input
+            type="text"
+            id="CommonSettingsName"
+            className="form-control"
+            value={settings.name}
+            onChange={(evt) => actions.settings.update({ name: evt.target.value })}
+          />
         </div>
         <div className="mb-4">
           <label className="form-label" htmlFor="CommonSettingsLanguagePreference">
@@ -80,4 +78,4 @@ const CommonSettings: React.FC<CommonSettingsProps> = ({ settings, actions }) =>
   return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
-export default CommonSettings;
+export default Settings;

@@ -1,6 +1,28 @@
 {
   "common": {
-    "default": "За налаштуванням"
+    "actions": "Дії",
+    "add": "Додати",
+    "cancel": "Скасувати",
+    "chooseAnOption": "Вибрати опцію",
+    "create": "Створити",
+    "default": "Default",
+    "delete": "Видалити",
+    "deleteSelected": "Видалити вибране",
+    "details": "Подробиці",
+    "edit": "Редагувати",
+    "enabled": "Включений",
+    "new": "Новий",
+    "next": "Вперед",
+    "no": "Ні",
+    "previous": "Назад",
+    "remove": "Видалити",
+    "restore": "Відновити",
+    "somethingWentWrong": "Щось пішло не так.",
+    "total": "По умолчанию",
+    "update": "Зберегти",
+    "update&ContinueEditing": "Оновити та продовжити редагування",
+    "view": "Подивитися",
+    "yes": "Так"
   },
   "terminal": {
     "dailyReport": "Скласти звіт"
@@ -29,6 +51,38 @@
       "title": "Категорії товарів",
       "addCategoryLabel": "Створити категорію",
       "emptyListMessage": "Немає категорій, доступних для відображення."
+    },
+    "items": {
+      "title": "Товари",
+      "addItemLabel": "Додати товар",
+      "emptyListMessage": "Немає товарів, доступних для відображення."
+    },
+    "itemEditor": {
+      "addItemTitle": "Додавання товару",
+      "editItemTitle": "Редагування товару",
+      "nameLabel": "Назва",
+      "categoryLabel": "Категорія",
+      "priceLabel": "Ціна",
+      "costPriceLabel": "Собівартість",
+      "colorLabel": "Колір",
+      "imageLabel": "Зображення",
+      "taxesLabel": "Податок"
+    },
+    "taxes": {
+      "title": "Облік податків.",
+      "addItemLabel": "Додати новий податок",
+      "emptyListMessage": "Немає податків, доступних для відображення."
+    },
+    "taxEditor": {
+      "addItemTitle": "Додати новий податок",
+      "editItemTitle": "Редагувати податок",
+      "nameLabel": "Назва податку",
+      "precentageLabel": "Відсоток",
+      "itemPricingLabel": "Тип",
+      "addTaxToItemPrice": "Відображати податок поруч з ціною",
+      "includeTaxInItemPrice": "Включити у вартість товару",
+      "applyTaxToLabel": "Додаткові налаштування",
+      "applyToCustomAmounts": "Застосовувати податок до індивідуальних чеків"
     },
     "settings": {
       "title": "Налаштування",

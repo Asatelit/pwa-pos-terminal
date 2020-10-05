@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from 'react';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { isSameDay } from 'date-fns';
+import { calcSum, average, financial, setDocumentTitle } from 'common/utils';
 import { useDateTranslation } from 'common/hooks';
 import { ClosedOrder } from 'common/types';
-import { calcSum, average, financial, setDocumentTitle } from 'common/utils';
 import { CommonLayout } from '../index';
 import styles from './dashboard.module.css';
 
@@ -20,7 +20,7 @@ const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
     setDocumentTitle(title);
   }, [t]);
 
-  const filteredData = closedOrders.filter((entity) => moment(entity.dateClose).isSame(new Date(), 'day'));
+  const filteredData = closedOrders.filter((entity) => isSameDay(entity.dateClose, new Date()));
   const revenueAmount = calcSum<ClosedOrder>(filteredData, 'totalAmount');
   const averageAmount = average(filteredData.map((entity) => entity.totalAmount));
   const profitAmount = calcSum<ClosedOrder>(filteredData, 'profit');

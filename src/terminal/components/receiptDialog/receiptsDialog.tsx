@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import { useDateTranslation } from 'common/hooks';
 import { Order, AppActions, OrderStatuses } from 'common/types';
 import { ArrowLeftTwoTone, PlusTwoTone } from 'common/icons';
 import styles from './receiptsDialog.module.css';
@@ -12,7 +13,9 @@ type ReceiptsDialogProps = {
 };
 
 const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, services, onClose }) => {
-  const openOrders = orders.filter(entity => entity.status === OrderStatuses.Open);
+  const [t] = useTranslation();
+  const { format } = useDateTranslation();
+  const openOrders = orders.filter((entity) => entity.status === OrderStatuses.Open);
 
   const selectOrder = (id: string) => {
     services.orders.select(id);
@@ -26,14 +29,14 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
 
   const closeDialog = () => onClose();
 
-  const renderOrdersList = openOrders.map(order => (
+  const renderOrdersList = openOrders.map((order) => (
     <div
       key={order.id}
       className={`${styles.order} ${orderId === order.id ? styles.active : ''}`}
       onClick={() => selectOrder(order.id)}
     >
-      <div className={styles.orderName}>Receipt #{order.orderName}</div>
-      <div className={styles.orderDate}>{moment(order.dateStart).calendar()}</div>
+      <div className={styles.orderName}>{`${t('terminal.receipt#')}${order.orderName}`}</div>
+      <div className={styles.orderDate}>{format(order.dateStart, 'd MMMM')}</div>
     </div>
   ));
 
@@ -45,20 +48,20 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
             <div className={styles.head}>
               <button className={styles.closeBtn} onClick={closeDialog}>
                 <ArrowLeftTwoTone />
-                <span>Back</span>
+                <span>{t('common.back')}</span>
               </button>
               <div className={styles.itemInfo}>
-                <span className={styles.itemName}>Receipts</span>
+                <span className={styles.itemName}>{t('terminal.receipts')}</span>
               </div>
               <button className={styles.createPrimaryBtn} onClick={createOrder}>
                 <PlusTwoTone />
-                <span>Create new</span>
+                <span>{t('terminal.createNewReceipt')}</span>
               </button>
             </div>
             <div className={styles.body}>
               {renderOrdersList}
               <button className={styles.createBtn} onClick={createOrder}>
-                Create new
+                {t('terminal.createNewReceipt')}
               </button>
             </div>
           </div>

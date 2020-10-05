@@ -39,18 +39,23 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
     );
   };
 
-  const renderItem = (data: Item) => (
-    <Link key={data.id} className={styles.entity} to={Routes.AdminItemEdit.replace(':id', `${data.id}`)}>
-      {renderPresenter(data)}
-      <div className={`${styles.td} ${styles.tdName}`}>{data.name}</div>
-      <div className={`${styles.td} ${styles.tdCategory}`}>{getCategoryById(categories, data.parentId).name}</div>
-      <div className={`${styles.td}`}>{financial(data.costPrice)}</div>
-      <div className={`${styles.td}`}>{financial(data.price)}</div>
-      <button className="btn btn-link" onClick={(evt) => handleOnClickOnDeleteBtn(evt, data.id)}>
-        <TrashCanOutlineTwoTone />
-      </button>
-    </Link>
-  );
+  const renderItem = (data: Item) => {
+    const categoryName = getCategoryById(categories, data.parentId).name;
+    return (
+      <Link key={data.id} className={styles.entity} to={Routes.AdminItemEdit.replace(':id', `${data.id}`)}>
+        {renderPresenter(data)}
+        <div className={`${styles.td} ${styles.tdName}`}>{data.name}</div>
+        <div className={`${styles.td} ${styles.tdCategory}`}>
+          {categoryName.replace('Home Screen', t('common.homeScreen'))}
+        </div>
+        <div className={`${styles.td}`}>{financial(data.costPrice)}</div>
+        <div className={`${styles.td}`}>{financial(data.price)}</div>
+        <button className="btn btn-link" onClick={(evt) => handleOnClickOnDeleteBtn(evt, data.id)}>
+          <TrashCanOutlineTwoTone />
+        </button>
+      </Link>
+    );
+  };
 
   const itemList = items.filter((item) => !item.isDeleted);
 

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CloseTwoTone } from 'common/icons';
 import styles from './search.module.css';
 
@@ -12,11 +13,12 @@ type SearchState = {
 };
 
 const Search: React.FC<SearchProps> = ({ onChange }) => {
+  const [t] = useTranslation();
   const [state, setState] = useState<SearchState>({ isExpanded: false, searchTerm: '' });
   const { searchTerm, isExpanded } = state;
 
   const expandSearch = () => {
-    setState({isExpanded: true, searchTerm: ''});
+    setState({ isExpanded: true, searchTerm: '' });
     onChange('');
   };
 
@@ -33,7 +35,7 @@ const Search: React.FC<SearchProps> = ({ onChange }) => {
 
   const renderCollapsed = (
     <button className={styles.button} onClick={expandSearch}>
-      Search
+      {t('common.search')}
     </button>
   );
 

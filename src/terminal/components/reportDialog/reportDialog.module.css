@@ -58,8 +58,9 @@
 .head {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
   height: moduleHeight;
+  align-items: center;
+  padding: 0 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -70,7 +71,7 @@
   overflow: auto;
 }
 
-.caption {
+.title {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
@@ -78,28 +79,6 @@
   justify-content: center;
   font-size: 1.25rem;
   font-weight: 600;
-}
-
-.btnSecondary {
-  composes: buttonTransparent from '../../../common/styles/button.module.css';
-  color: inherit;
-  height: moduleHeight;
-  width: moduleHeight;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  opacity: .75;
-}
-.btnSecondary:hover {
-  opacity: 1;
-}
-
-.btnPrimary {
-  composes: buttonPrimary from '../../../common/styles/button.module.css';
-  border-radius: 0;
-  padding: 0 2rem;
-  outline: none;
 }
 
 .dateRange {

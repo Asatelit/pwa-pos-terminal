@@ -33,7 +33,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
   const [isPickerShown, togglePicker] = useState(false);
 
   // Helpers
-  const selectedCategoryName = categories.find((entity) => entity.id === item.parentId)?.name || 'Home Screen';
+  const selectedCategoryName = categories.find((entity) => entity.id === item.parentId)?.name || t('common.homeScreen');
   const updateItem = (data: Partial<Item>) => setItem({ ...item, ...data });
   const isInvalid = !item.name;
 

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { startOfToday, endOfToday, lightFormat, differenceInCalendarDays } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
 import { AppViews } from 'common/types';
@@ -13,6 +14,7 @@ type ReportDialogProps = {
 };
 
 const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) => {
+  const [t] = useTranslation();
   const [isReporting, setIsReporting] = useState(true);
   const [selectionRange, setSelectionRange] = useState({
     startDate: startOfToday(),
@@ -27,31 +29,27 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
 
   const renderRangesHead = () => (
     <Fragment>
-      <button className={styles.btnSecondary} onClick={() => onClose()}>
-        <CloseTwoTone fontSize="large" />
+      <button className="btn btn-icon mr-1" aria-label={t('common.close')} onClick={() => onClose()}>
+        <CloseTwoTone color="inherit" />
       </button>
-      <div className={styles.caption}>
-        <span className={styles.itemName}>Create a sales report</span>
-      </div>
-      <button className={styles.btnPrimary} onClick={() => setIsReporting(true)}>
-        Open
+      <div className={styles.title}>{t('terminal.dailyReport.editingTitle')}</div>
+      <button className="btn btn-primary" onClick={() => setIsReporting(true)}>
+        {t('common.open')}
       </button>
     </Fragment>
   );
 
   const renderReportingHead = () => (
     <Fragment>
-      <button className={styles.btnSecondary} onClick={() => onClose()}>
-        <CloseTwoTone />
+      <button type="button" className="btn btn-icon" aria-label={t('common.close')} onClick={() => onClose()}>
+        <CloseTwoTone color="inherit" />
       </button>
-      <div className={styles.caption}>
-        <span className={styles.itemName}>Daily report</span>
-      </div>
-      <button className={styles.btnSecondary} onClick={() => setIsReporting(false)}>
-        <CalendarRangeTwoTone />
+      <div className={styles.title}>{t('terminal.dailyReport.openingTitle')}</div>
+      <button className="btn btn-icon mr-1" onClick={() => setIsReporting(false)}>
+        <CalendarRangeTwoTone color="inherit" />
       </button>
-      <button className={styles.btnPrimary} onClick={handleOnClickOnPrint}>
-        Print
+      <button className="btn btn-primary" onClick={handleOnClickOnPrint}>
+        {t('common.print')}
       </button>
     </Fragment>
   );
@@ -74,44 +72,47 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
 
     return (
       <div className={styles.report}>
-        <h3 className="mt-2 mb-4">Sales Report</h3>
+        <h3 className="mt-2 mb-4">{t('terminal.dailyReport.reportTitle')}</h3>
 
         <dl className="row mb-4">
-          <dt className="col-sm-3">Days included</dt>
+          <dt className="col-sm-3">{t('terminal.dailyReport.daysIncluded')}</dt>
           <dd className="col-sm-9">{differenceInCalendarDays(end, start) + 1}</dd>
-          <dt className="col-sm-3">Business Date</dt>
+          <dt className="col-sm-3">{t('terminal.dailyReport.businessDate')}</dt>
           <dd className="col-sm-9">
             {lightFormat(start, 'yyyy-MM-dd HH:mm')} - {lightFormat(end, 'yyyy-MM-dd HH:mm')}
           </dd>
-          <dt className="col-sm-3">Total</dt>
+          <dt className="col-sm-3">{t('terminal.dailyReport.total')}</dt>
           <dd className="col-sm-9">{financial(summary.amount)}</dd>
         </dl>
 
         {reportItems.length ? (
           <table className="table">
-          <thead>
-            <tr>
-              <th scope="col w-100">Item</th>
-              <th scope="col" className="text-right ">Qty</th>
-              <th scope="col" className="text-right">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportItems.map((group) => (
-              <tr key={group}>
-                <td className="w-100">{group}</td>
-                <td className="text-right">{items[group].quantity}</td>
-                <td className="text-right">{financial(items[group].amount)}</td>
+            <thead>
+              <tr>
+                <th scope="col" className="w-auto">{t('common.item')}</th>
+                <th scope="col" className="w-auto text-right">
+                  {t('common.qty')}{' '}
+                </th>
+                <th scope="col" className="w-auto text-right">
+                  {t('common.amount')}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {reportItems.map((group) => (
+                <tr key={group}>
+                  <td className="w-auto">{group}</td>
+                  <td className="w-auto text-right">{items[group].quantity}</td>
+                  <td className="w-auto text-right">{financial(items[group].amount)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <div className="border-top">
-            <div className="mt-4">There are no sales for the specified period.</div>
+            <div className="mt-4">{t('terminal.dailyReport.emptyText')}</div>
           </div>
         )}
-
       </div>
     );
   };

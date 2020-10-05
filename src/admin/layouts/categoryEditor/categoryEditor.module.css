@@ -1,9 +1,5 @@
 @value moduleHeight: 4rem;
 
-.root {
-
-}
-
 .head {
   display: flex;
   flex-direction: row;
@@ -13,18 +9,13 @@
   margin-bottom: 2rem;
 }
 
-.itemInfo {
+.title {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   font-size: 1.25rem;
   font-weight: 600;
-}
-
-.form {
-  padding: 0 2rem;
 }
 
 .control {
@@ -32,17 +23,7 @@
   margin-bottom: 1rem;
 }
 
-.controlLabel {
-  padding: .375rem 0;
-  min-width: 150px;
-}
-
 .controlGroup {
-  flex: 1 1 auto;
-}
-
-.controlInput {
-  composes: input from '../../../common/styles/button.module.css';
   flex: 1 1 auto;
 }
 
@@ -51,22 +32,4 @@
   border: 1px solid #80bdff;
   border-top: transparent;
   border-radius: 0 0 .25rem .25rem;
-}
-
-.primaryAction {
-  composes: buttonPrimary from '../../../common/styles/button.module.css';
-}
-
-.secondaryAction {
-  composes: buttonLink from '../../../common/styles/button.module.css';
-}
-
-.closeBtn {
-  composes: buttonTransparent from '../../../common/styles/button.module.css';
-  height: moduleHeight;
-  color: inherit;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }

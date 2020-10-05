@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronRightTwoTone } from 'common/icons';
 import { Category } from 'common/types';
 import { Entities } from 'common/const';
@@ -12,6 +13,7 @@ export type BreadcrumbsProps = {
 };
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ categories, currentCategoryId, onChange, className = '' }) => {
+  const [t] = useTranslation();
   const currentCategory = categories.find(category => currentCategoryId === category.id);
   const middleCategory = currentCategory
     ? categories.find(category => currentCategory.parentId === category.id)
@@ -22,7 +24,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ categories, currentCategoryId
 
   const renderRootSegment = (
     <div className={styles.segment} onClick={resetCurrentCategory}>
-      Home Screen
+      {t('common.homeScreen')}
     </div>
   );
 

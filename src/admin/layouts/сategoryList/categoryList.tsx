@@ -70,11 +70,11 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   const renderCategory = (item: Category) => (
     <div key={`${item.id}`} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
       {renderPresenter(item)}
-      <div className={styles.name}>{item.name}</div>
-      <button className={styles.iconBtn} onClick={(evt) => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
+      <div className={styles.name}>{item.name.replace('Home Screen', t('common.homeScreen'))}</div>
+      <button className="btn btn-link" onClick={(evt) => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
         <EditSquareOutlineTwoTone />
       </button>
-      <button className={styles.iconBtn} onClick={(evt) => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
+      <button className="btn btn-link" onClick={(evt) => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
         <TrashCanOutlineTwoTone />
       </button>
     </div>
@@ -84,11 +84,9 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   return (
     <div className={styles.root}>
       <div className={styles.head}>
-        <div className={styles.itemInfo}>
-          <span className={styles.itemName}>{t('admin.categories.title')}</span>
-        </div>
+        <div className={styles.title}>{t('admin.categories.title')}</div>
         <Link
-          className={styles.primaryBtn}
+          className="btn btn-primary ml-2 mr-4"
           to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
         >
           <PlusTwoTone />

@@ -1,10 +1,11 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
 import { Routes } from 'common/const';
+import { setDocumentTitle } from 'common/utils';
 import { LoadScreen, PrintReceipt } from 'common/components';
-import { APP_NAME } from 'config';
 import { Menu, Receipt, ItemList, ItemEditor, ChargeDialog, ReceiptsDialog, ReportDialog, Drawer } from './components';
 import styles from './terminal.module.css';
 
@@ -15,9 +16,12 @@ type TerminalState = {
 };
 
 const Terminal: React.FC = () => {
+  const [t] = useTranslation();
+
   useEffect(() => {
-    document.title = `${APP_NAME} | Terminal`;
-  }, []);
+    const title = [t('terminal.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   const [context, services, views] = useContext(AppContext);
   const [state, setState] = useState<TerminalState>({

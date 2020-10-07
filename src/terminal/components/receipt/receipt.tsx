@@ -58,7 +58,7 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
     <div className={styles.root}>
       <div className={styles.actions}>
         <button className={styles.receiptsBtn} onClick={handleShowReceipts}>
-          {order?.orderName ? `${t('terminal.receipt#')}${order?.orderName}` : t('terminal.receipts')}
+          {order?.orderName ? t('common.receipt#', { val: order?.orderName }) : t('common.receipts')}
           <MenuSwapTwoTone className={styles.receiptsIcon} />
         </button>
       </div>

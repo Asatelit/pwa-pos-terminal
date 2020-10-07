@@ -35,7 +35,7 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
       className={`${styles.order} ${orderId === order.id ? styles.active : ''}`}
       onClick={() => selectOrder(order.id)}
     >
-      <div className={styles.orderName}>{`${t('terminal.receipt#')}${order.orderName}`}</div>
+      <div className={styles.orderName}>{t('common.receipt#', { val: order.orderName })}</div>
       <div className={styles.orderDate}>{format(order.dateStart, 'd MMMM')}</div>
     </div>
   ));
@@ -51,7 +51,7 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
                 <span>{t('common.back')}</span>
               </button>
               <div className={styles.itemInfo}>
-                <span className={styles.itemName}>{t('terminal.receipts')}</span>
+                <span className={styles.itemName}>{t('common.receipts')}</span>
               </div>
               <button className={styles.createPrimaryBtn} onClick={createOrder}>
                 <PlusTwoTone />

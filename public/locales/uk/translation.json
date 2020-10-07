@@ -6,17 +6,37 @@
     "back": "Back",
     "cancel": "Скасувати",
     "cash": "Готівка",
+    "change": "Решта",
+    "changeOutOf": "{{change}} change out of {{amount}}",
     "chooseAnOption": "Вибрати опцію",
-    "closeWithoutPayment": "Закрити без оплати",
     "close": "Зачинити",
+    "closeWithoutPayment": {
+      "label": "Закрити без оплати",
+      "hint": "Будь ласка, вкажіть причину",
+      "reasons": {
+        "customerIsGone": "Клієнт пішов",
+        "waitersMistake": "Помилка офіціанта",
+        "onTheHouse": "За рахунок закладу"
+      }
+    },
     "confirm": "Підтвердити",
     "create": "Створити",
-    "creditCard": "Кредитна картка",
-    "customerIsGone": "Клієнт пішов",
+    "creditCard": "Банківська картка",
+    "dateRanges": {
+      "today": "Сьогодні",
+      "yesterday": "Вчора",
+      "thisWeek": "Текущая неделя",
+      "lastWeek": "Поточний тиждень",
+      "thisMonth": "Поточний місяць",
+      "lastMonth": "Попередній місяць",
+      "daysUpToToday": "днів до поточної дати",
+      "daysStartingToday": "днів від поточної дати"
+    },
     "default": "Default",
     "delete": "Видалити",
     "deleteSelected": "Видалити вибране",
     "details": "Подробиці",
+    "each": "за одну од.",
     "edit": "Редагувати",
     "enabled": "Включений",
     "homeScreen": "Головний екран",
@@ -24,12 +44,14 @@
     "new": "Новий",
     "next": "Вперед",
     "no": "Ні",
-    "onTheHouse": "За рахунок закладу",
     "open": "Відкрити",
     "previous": "Назад",
     "print": "Друк",
-    "printTheReceipt": "Друк чека",
+    "printTheReceipt": "Час роздрукування",
+    "purchaseSubtotal": "Проміжний підсумок",
     "qty": "Кіл-сть",
+    "receipt#": "Чек №{{val}}",
+    "receipts": "Чеки",
     "remove": "Видалити",
     "restore": "Відновити",
     "search": "Пошук",
@@ -40,7 +62,6 @@
     "update": "Зберегти",
     "update&ContinueEditing": "Оновити та продовжити редагування",
     "view": "Подивитися",
-    "waitersMistake": "Помилка офіціанта",
     "yes": "Так"
   },
   "terminal": {
@@ -49,19 +70,18 @@
     "dailyReport": {
       "menuLabel": "Щоденний звіт",
       "openingTitle": "Щоденний звіт",
-      "editingTitle": "Відкрити звіт",
+      "editingTitle": "Оберіть період",
       "emptyText": "Продажів за вказаний період немає.",
       "reportTitle": "Звіт про продажі",
       "daysIncluded": "Кількість днів",
       "businessDate": "Період часу",
       "total": "Разом"
     },
-    "receipt#": "Чек №",
-    "receipts": "Чеки",
     "title": "Термінал"
   },
   "admin": {
     "title": "Панель керування",
+    "menuLabel": "Панель керування",
     "menu": {
       "dashboardLabel": "Статистика",
       "categoriesLabel": "Категорії",

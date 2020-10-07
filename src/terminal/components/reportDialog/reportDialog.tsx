@@ -4,7 +4,9 @@ import { startOfToday, endOfToday, lightFormat, differenceInCalendarDays } from 
 import { DateRangePicker } from 'react-date-range';
 import { AppViews } from 'common/types';
 import { financial } from 'common/utils';
+import { useDateTranslation } from 'common/hooks';
 import { CloseTwoTone, CalendarRangeTwoTone } from 'common/icons';
+import { getStaticRanges, getInputRanges } from './predefinedDateRanges';
 import styles from './reportDialog.module.css';
 
 type ReportDialogProps = {
@@ -15,6 +17,7 @@ type ReportDialogProps = {
 
 const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) => {
   const [t] = useTranslation();
+  const { locale } = useDateTranslation();
   const [isReporting, setIsReporting] = useState(true);
   const [selectionRange, setSelectionRange] = useState({
     startDate: startOfToday(),
@@ -29,7 +32,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
 
   const renderRangesHead = () => (
     <Fragment>
-      <button className="btn btn-icon mr-1" aria-label={t('common.close')} onClick={() => onClose()}>
+      <button className="btn btn-icon" aria-label={t('common.close')} onClick={() => onClose()}>
         <CloseTwoTone color="inherit" />
       </button>
       <div className={styles.title}>{t('terminal.dailyReport.editingTitle')}</div>
@@ -41,7 +44,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
 
   const renderReportingHead = () => (
     <Fragment>
-      <button type="button" className="btn btn-icon" aria-label={t('common.close')} onClick={() => onClose()}>
+      <button className="btn btn-icon" aria-label={t('common.close')} onClick={() => onClose()}>
         <CloseTwoTone color="inherit" />
       </button>
       <div className={styles.title}>{t('terminal.dailyReport.openingTitle')}</div>
@@ -58,9 +61,12 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
     <DateRangePicker
       className={styles.dateRange}
       direction="horizontal"
-      showSelectionPreview={false}
-      ranges={[selectionRange]}
+      inputRanges={getInputRanges(t)}
+      locale={locale}
       months={2}
+      ranges={[selectionRange]}
+      showSelectionPreview={false}
+      staticRanges={getStaticRanges(t)}
       onChange={(e: any) => setSelectionRange(e.selection)}
     />
   );
@@ -72,24 +78,27 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
 
     return (
       <div className={styles.report}>
-        <h3 className="mt-2 mb-4">{t('terminal.dailyReport.reportTitle')}</h3>
-
-        <dl className="row mb-4">
-          <dt className="col-sm-3">{t('terminal.dailyReport.daysIncluded')}</dt>
-          <dd className="col-sm-9">{differenceInCalendarDays(end, start) + 1}</dd>
-          <dt className="col-sm-3">{t('terminal.dailyReport.businessDate')}</dt>
-          <dd className="col-sm-9">
-            {lightFormat(start, 'yyyy-MM-dd HH:mm')} - {lightFormat(end, 'yyyy-MM-dd HH:mm')}
-          </dd>
-          <dt className="col-sm-3">{t('terminal.dailyReport.total')}</dt>
-          <dd className="col-sm-9">{financial(summary.amount)}</dd>
-        </dl>
+        <div className="ml-2 mr-2">
+          <h3 className="mt-2 mb-4">{t('terminal.dailyReport.reportTitle')}</h3>
+          <dl className="row mb-4">
+            <dt className="col-sm-3">{t('terminal.dailyReport.daysIncluded')}</dt>
+            <dd className="col-sm-9">{differenceInCalendarDays(end, start) + 1}</dd>
+            <dt className="col-sm-3">{t('terminal.dailyReport.businessDate')}</dt>
+            <dd className="col-sm-9">
+              {lightFormat(start, 'yyyy-MM-dd HH:mm')} - {lightFormat(end, 'yyyy-MM-dd HH:mm')}
+            </dd>
+            <dt className="col-sm-3">{t('terminal.dailyReport.total')}</dt>
+            <dd className="col-sm-9">{financial(summary.amount)}</dd>
+          </dl>
+        </div>
 
         {reportItems.length ? (
           <table className="table">
             <thead>
               <tr>
-                <th scope="col" className="w-auto">{t('common.item')}</th>
+                <th scope="col" className="w-auto">
+                  {t('common.item')}
+                </th>
                 <th scope="col" className="w-auto text-right">
                   {t('common.qty')}{' '}
                 </th>

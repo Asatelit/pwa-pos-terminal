@@ -16,6 +16,9 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
   const [t, i18n] = useTranslation();
   const { supportedLocales } = useContext(I18nContext);
 
+  console.info(supportedLocales);
+
+
   useEffect(() => {
     const title = [t('admin.title'), t('admin.settings.title')];
     setDocumentTitle(title);
@@ -24,6 +27,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
   const handleOnChangeOfLanguagePreference = (isoCode: string) => {
     const lng = isoCode === 'default' ? '' : isoCode;
     i18n.changeLanguage(lng).then(() => {
+      console.info('lng', lng);
       actions.settings.update({ lang: isoCode });
     });
   };

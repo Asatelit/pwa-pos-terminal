@@ -6,17 +6,37 @@
     "back": "Назад",
     "cancel": "Отменить",
     "cash": "Наличные",
+    "change": "Сдача",
+    "changeOutOf": "{{change}} решти з {{amount}}",
     "chooseAnOption": "Выбрать опцию",
-    "closeWithoutPayment": "Закрыть без оплаты",
     "close": "Закрыть",
+    "closeWithoutPayment": {
+      "label": "Закрыть без оплаты",
+      "hint": "Пожалуйста, укажите причину",
+      "reasons": {
+        "customerIsGone": "Клиент ушел",
+        "waitersMistake": "Ошибка официанта",
+        "onTheHouse": "За счет заведения"
+      }
+    },
     "confirm": "Подтвердить",
     "create": "Создать",
-    "creditCard": "Кредитная карта",
-    "customerIsGone": "Клиент ушел",
+    "creditCard": "Банковская карта",
+    "dateRanges": {
+      "today": "Сегодня",
+      "yesterday": "Вчера",
+      "thisWeek": "Текущая неделя",
+      "lastWeek": "Предыдущая неделя",
+      "thisMonth": "Текущий месяц",
+      "lastMonth": "Предыдущий месяц",
+      "daysUpToToday": "дней до текущей даты",
+      "daysStartingToday": "дней от текущей даты"
+    },
     "default": "Default",
     "delete": "Удалить",
     "deleteSelected": "Удалить выбранное",
     "details": "Подробности",
+    "each": "за 1 ед.",
     "edit": "Редактировать",
     "enabled": "Включённый",
     "homeScreen": "Главный экран",
@@ -24,12 +44,15 @@
     "new": "Новый",
     "next": "Вперёд",
     "no": "Нет",
-    "onTheHouse": "За счет заведения",
     "open": "Открыть",
     "previous": "Назад",
     "print": "Печать",
     "printTheReceipt": "Печать чека",
+    "printedAt": "Чек напечатан",
+    "purchaseSubtotal": "Промежуточный итог",
     "qty": "Кол-во",
+    "receipt#": "Чек №{{val}}",
+    "receipts": "Чеки",
     "remove": "Удалить",
     "restore": "Восстановить",
     "search": "Поиск",
@@ -40,7 +63,6 @@
     "update": "Сохранить",
     "update&ContinueEditing": "Обновить и продолжить редактирование",
     "view": "Посмотреть",
-    "waitersMistake": "Ошибка официанта",
     "yes": "Да"
   },
   "terminal": {
@@ -49,19 +71,18 @@
     "dailyReport": {
       "menuLabel": "Ежедневный отчет",
       "openingTitle": "Ежедневный отчет",
-      "editingTitle": "Открыть отчет",
+      "editingTitle": "Выберите период",
       "emptyText": "Нет продаж за указанный период.",
       "reportTitle": "Отчёт о продажах",
       "daysIncluded": "Количество дней",
       "businessDate": "Период времени",
       "total": "Итого"
     },
-    "receipt#": "Чек №",
-    "receipts": "Чеки",
     "title": "Терминал"
   },
   "admin": {
     "title": "Панель управления",
+    "menuLabel": "Панель управления",
     "menu": {
       "dashboardLabel": "Статистика",
       "categoriesLabel": "Категории",

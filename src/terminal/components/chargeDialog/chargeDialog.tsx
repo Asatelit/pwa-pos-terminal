@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Order,
   AppActions,
@@ -13,7 +14,6 @@ import { ArrowLeftTwoTone } from 'common/icons';
 import { financial, round, calcSum } from 'common/utils';
 import { getOrderById } from 'common/assets';
 import { Routes } from 'common/const';
-import { APP_NAME } from 'config';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
 
@@ -25,11 +25,8 @@ type ChargeDialogProps = {
 };
 
 const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
-  useEffect(() => {
-    document.title = `${APP_NAME} | Terminal | Daily Report`;
-  }, []);
-
-  const { id } = useParams<{id: string}>();
+  const [t] = useTranslation();
+  const { id } = useParams<{ id: string }>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
@@ -53,7 +50,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
   const hasChange = changeAmount > 0;
 
   const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
-    const costPrice = items.find(item => item.id === entity.id)?.costPrice || 0;
+    const costPrice = items.find((item) => item.id === entity.id)?.costPrice || 0;
     const amount = entity.quantity * entity.price;
     const item: ClosedOrderItem = {
       ...entity,
@@ -105,28 +102,33 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
             <div className={styles.head}>
               <Link className={styles.closeBtn} to={Routes.Terminal}>
                 <ArrowLeftTwoTone />
-                <span>Back</span>
+                <span>{t('common.back')}</span>
               </Link>
               <div className={styles.itemInfo}>
-                <span className={styles.itemName}>Receipt #{order.orderName}</span>
+                <span className={styles.itemName}>{t('common.receipt#', { val: order.orderName })}</span>
               </div>
             </div>
             <div className={styles.body}>
               <div className={styles.helper}>
                 <div className={styles.numpad}>
-                  <Numpad inputId={ref} onChange={value => setState({ ...state, ...value })} />
+                  <Numpad inputId={ref} onChange={(value) => setState({ ...state, ...value })} />
                 </div>
               </div>
               <div className={styles.order}>
                 <div className={styles.orderHead}>
-                  <div>Total {financial(order.totalAmount)}</div>
+                  <div>{`${t('common.total')} ${financial(order.totalAmount)}`}</div>
                   <div className={styles.changeInfo}>
-                    {hasChange ? `${financial(changeAmount)} change out of ${financial(order.totalAmount)}` : ''}
+                    {hasChange
+                      ? t('common.changeOutOf', {
+                          change: financial(changeAmount),
+                          amount: financial(order.totalAmount),
+                        })
+                      : ''}
                   </div>
                 </div>
                 <div className={styles.orderBody}>
                   <div tabIndex={0} className={styles.control}>
-                    <div className={styles.controlLabel}>Cash</div>
+                    <div className={styles.controlLabel}>{t('common.cash')}</div>
                     <input
                       id="cashPaymentAmount"
                       type="text"
@@ -134,19 +136,19 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
                       autoFocus
                       className={styles.controlInput}
                       onFocus={setActiveInput}
-                      onChange={evt => setCashPaymentAmount(evt.target.value)}
+                      onChange={(evt) => setCashPaymentAmount(evt.target.value)}
                       value={state.cashPaymentAmount || 0}
                     />
                   </div>
                   <div tabIndex={0} className={styles.control}>
-                    <div className={styles.controlLabel}>Credit Card</div>
+                    <div className={styles.controlLabel}>{t('common.creditCard')}</div>
                     <input
                       id="cardPaymentAmount"
                       type="text"
                       min={0}
                       className={styles.controlInput}
                       onFocus={setActiveInput}
-                      onChange={evt => setCardPaymentAmount(evt.target.value)}
+                      onChange={(evt) => setCardPaymentAmount(evt.target.value)}
                       value={state.cardPaymentAmount || 0}
                     />
                   </div>
@@ -155,15 +157,21 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
                   <select
                     className={styles.btnSecondary}
                     value={OrderClosingReasons.Default}
-                    onChange={evt => handleCloseWithoutPayment(parseInt(evt.target.value, 10))}
+                    onChange={(evt) => handleCloseWithoutPayment(parseInt(evt.target.value, 10))}
                   >
-                    <optgroup label="Please specify the reason">
+                    <optgroup label={t('common.closeWithoutPayment.hint')}>
                       <option hidden value={OrderClosingReasons.Default}>
-                        Close without payment
+                        {t('common.closeWithoutPayment.label')}
                       </option>
-                      <option value={OrderClosingReasons.OnTheHouse}>On the house</option>
-                      <option value={OrderClosingReasons.CustomerIsGone}>Customer is gone</option>
-                      <option value={OrderClosingReasons.Mistake}>Waiter's mistake</option>
+                      <option value={OrderClosingReasons.OnTheHouse}>
+                        {t('common.closeWithoutPayment.reasons.onTheHouse')}
+                      </option>
+                      <option value={OrderClosingReasons.CustomerIsGone}>
+                        {t('common.closeWithoutPayment.reasons.customerIsGone')}
+                      </option>
+                      <option value={OrderClosingReasons.Mistake}>
+                        {t('common.closeWithoutPayment.reasons.waitersMistake')}
+                      </option>
                     </optgroup>
                   </select>
                   <button
@@ -171,7 +179,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
                     disabled={totalPaymentAmount < order.totalAmount}
                     onClick={handleChargeOrder}
                   >
-                    Confirm
+                    {t('common.confirm')}
                   </button>
                 </div>
               </div>

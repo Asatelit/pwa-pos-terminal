@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDateTranslation } from 'common/hooks';
 import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from 'common/hooks';
@@ -17,6 +18,7 @@ type TerminalState = {
 
 const Terminal: React.FC = () => {
   const [t] = useTranslation();
+  const { format } = useDateTranslation();
 
   useEffect(() => {
     const title = [t('terminal.title')];
@@ -36,7 +38,7 @@ const Terminal: React.FC = () => {
   const hasEditItemRequest = !!currentItemId;
 
   const handlePrintReceipt = (orderId: string | null) =>
-    printComponent(<PrintReceipt orderId={orderId} state={context} />);
+    printComponent(<PrintReceipt orderId={orderId} state={context} format={format} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;

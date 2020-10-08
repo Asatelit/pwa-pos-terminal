@@ -1,8 +1,13 @@
-import { getTaxes} from 'common/assets/tax';
-import { getOrderEntity, createOrder, getOrderIndexById, getOrderItemIndexById } from 'common/assets/order';
+import { getTaxes } from 'common/assets/tax';
 import { isExist, getTimestamp, calcSum, round } from 'common/utils';
 import { OrdersActions, Action, ClosedOrder, Order, OrderStatuses, AppState, OrderItem, TaxRecord } from 'common/types';
-import { createNewOrderItem  } from '../helpers';
+import {
+  getOrderEntity,
+  getOrderItemEntity,
+  createOrder,
+  getOrderIndexById,
+  getOrderItemIndexById,
+} from 'common/assets/order';
 
 function update(order: Order, state: AppState): Order {
   const updOrder = { ...order };
@@ -78,7 +83,7 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
       const currentItem = updOrder.items[currentItemIndex];
       currentItem.quantity = currentItem.quantity + 1;
     } else {
-      updOrder.items.push(createNewOrderItem(orderItem));
+      updOrder.items.push(getOrderItemEntity(orderItem));
     }
 
     // recalculate order's data

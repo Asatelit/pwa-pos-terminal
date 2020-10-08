@@ -1,4 +1,4 @@
-import { getTextIdentifier, isExist, capitalizeFirstLetter, average, calcSum, mergeAndSum } from './helpers';
+import { getTextIdentifier, isExist, capitalizeFirstLetter, average, calcSum, mergeAndSum } from './misc';
 
 describe('Test "getTextIdentifier" helper:', () => {
   test.each([

@@ -1,5 +1,6 @@
 import { Category, Item, Order, ClosedOrder, Settings, Tax } from 'common/types';
 import { ClosedOrderViews } from '../views';
+import { Helpers } from '../helpers';
 
 export type AppState = {
   categories: Category[]; // Categories list
@@ -27,6 +28,8 @@ export type AppActions = {
 export type AppViews = {
   closedOrders: ClosedOrderViews;
 };
+
+export type AppHelpers = Helpers;
 
 export type CategoryActions = {
   add: (category?: Partial<Category>) => void;

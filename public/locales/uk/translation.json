@@ -149,6 +149,8 @@
       "title": "Налаштування",
       "businessNameLabel": "Назва закладу",
       "businessNameDescription": "Ця назва буде відображена в квитанціях і виписках ваших клієнтів:",
+      "currencyLabel": "Символ валюти",
+      "currencyPositionLabel": "Розташування знака валюти",
       "languagePreferenceLabel": "Параметри мови",
       "languagePreferenceDescription": "Мова інтерфейсу {{name}}:"
     }

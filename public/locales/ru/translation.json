@@ -150,6 +150,8 @@
       "title": "Настройки",
       "businessNameLabel": "Название заведения",
       "businessNameDescription": "Это название будет отображено в квитанциях и выписках ваших клиентов:",
+      "currencyLabel": "Знак валюты",
+      "currencyPositionLabel": "Расположение знака валюты",
       "languagePreferenceLabel": "Языковые настройки",
       "languagePreferenceDescription": "Я буду использовать {{name}} на этом языке:"
     }

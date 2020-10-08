@@ -1,13 +1,13 @@
 import React, { Fragment, useContext } from 'react';
-import { AppContext } from 'common/hooks';
-import { AppInitialState } from 'common/assets';
+import { appContext } from 'common/hooks';
+import { INIT_STATE } from 'common/assets';
 import { ChevronRightTwoTone } from 'common/icons';
 import styles from './breadcrumbs.module.css';
 
 const Breadcrumbs: React.FC = () => {
-  const [terminalState, service] = useContext(AppContext);
+  const [terminalState, service] = useContext(appContext);
   const { categories, currentCategoryId } = terminalState;
-  const rootCategory = AppInitialState[0].currentCategoryId;
+  const rootCategory = INIT_STATE.currentCategoryId;
   const currentCategory = categories.find(category => currentCategoryId === category.id);
   const middleCategory = currentCategory
     ? categories.find(category => currentCategory.parentId === category.id)

@@ -1,9 +1,9 @@
 import { AppState } from 'common/types';
-import { AppInitialState } from '../assets';
+import { INIT_CONTEXT } from '../assets';
 import taxActions from './tax';
 
 describe('Test Tax Actions', () => {
-  const initialState = AppInitialState[0];
+  const initialState = INIT_CONTEXT[0];
   const state: AppState = { ...initialState };
 
   const updateState = (value: Partial<AppState>) => {

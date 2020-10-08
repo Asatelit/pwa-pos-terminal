@@ -1,10 +1,10 @@
 import { AppState } from 'common/types';
 import { Entities } from 'common/const';
-import { AppInitialState } from '../assets';
+import { INIT_CONTEXT } from '../assets';
 import itemActions from './item';
 
 describe('Test Item Actions', () => {
-  const initialState = AppInitialState[0];
+  const initialState = INIT_CONTEXT[0];
   const state: AppState = { ...initialState };
 
   const updateState = (value: Partial<AppState>) => {

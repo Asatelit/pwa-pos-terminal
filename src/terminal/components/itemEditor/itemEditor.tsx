@@ -1,17 +1,18 @@
 import React, { Fragment, useState } from 'react';
-import { Order, Item, AppActions } from 'common/types';
-import { isExist, financial } from 'common/utils';
+import { Order, Item, AppActions, AppHelpers } from 'common/types';
+import { isExist } from 'common/utils';
 import { CloseTwoTone, PlusTwoTone, MinusTwoTone } from 'common/icons';
 import styles from './itemEditor.module.css';
 
 type EditorProps = {
-  orderItemId: string | null;
+  helpers: AppHelpers;
   order: Order | null;
+  orderItemId: string | null;
   products: Item[];
   services: AppActions;
 };
 
-const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, services }) => {
+const ItemEditor: React.FC<EditorProps> = ({ helpers, orderItemId, order, products, services }) => {
   const getCurrentItem = () => {
     const index = orderItemId && order ? order.items.findIndex(items => orderItemId === items.id) : -1;
     return order && isExist(index)
@@ -33,6 +34,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
     return null;
   }
 
+  const { formatFinancial } = helpers;
   const { item, instance, index } = state;
 
   // Helper that returns an updated order
@@ -66,7 +68,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
               </button>
               <div className={styles.itemInfo}>
                 <span className={styles.itemName}>{instance.name}</span>
-                <span className={styles.itemAmount}>{financial(item.quantity * item.price)}</span>
+                <span className={styles.itemAmount}>{formatFinancial(item.quantity * item.price)}</span>
               </div>
               <button className={styles.saveBtn} onClick={handleApply}>
                 Save

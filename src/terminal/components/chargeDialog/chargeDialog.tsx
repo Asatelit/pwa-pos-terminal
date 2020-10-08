@@ -2,34 +2,37 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Order,
   AppActions,
-  OrderClosingReasons,
-  OrderStatuses,
+  AppHelpers,
   ClosedOrder,
   ClosedOrderItem,
   Item,
+  Order,
+  OrderClosingReasons,
+  OrderStatuses,
 } from 'common/types';
 import { ArrowLeftTwoTone } from 'common/icons';
-import { financial, round, calcSum } from 'common/utils';
+import { round, calcSum } from 'common/utils';
 import { getOrderById } from 'common/assets';
 import { Routes } from 'common/const';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
 
 type ChargeDialogProps = {
+  helpers: AppHelpers;
   items: Item[];
+  onPrintReceit: (orderId: string) => void;
   orders: Order[];
   services: AppActions;
-  onPrintReceit: (orderId: string) => void;
 };
 
-const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, onPrintReceit }) => {
+const ChargeDialog: React.FC<ChargeDialogProps> = ({ helpers, orders, items, services, onPrintReceit }) => {
   const [t] = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
+  const { formatFinancial } = helpers;
 
   // handle redirect
   if (redirect) return <Redirect to={redirect} />;
@@ -116,12 +119,12 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ orders, items, services, on
               </div>
               <div className={styles.order}>
                 <div className={styles.orderHead}>
-                  <div>{`${t('common.total')} ${financial(order.totalAmount)}`}</div>
+                  <div>{`${t('common.total')} ${formatFinancial(order.totalAmount)}`}</div>
                   <div className={styles.changeInfo}>
                     {hasChange
                       ? t('common.changeOutOf', {
-                          change: financial(changeAmount),
-                          amount: financial(order.totalAmount),
+                          change: formatFinancial(changeAmount),
+                          amount: formatFinancial(order.totalAmount),
                         })
                       : ''}
                   </div>

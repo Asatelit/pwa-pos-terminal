@@ -33,11 +33,6 @@ export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Formats a number using fixed-point notation.
-export function financial(num: number = 0): string {
-  return `${num.toFixed(2)} $`;
-}
-
 // Calculate the values in an array of objects
 export function calcSum<T>(items: T[], propName: keyof T): number {
   return items.reduce((prev, current) => {

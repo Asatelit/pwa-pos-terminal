@@ -1,19 +1,21 @@
 import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isSameDay } from 'date-fns';
-import { calcSum, average, financial, setDocumentTitle } from 'common/utils';
+import { calcSum, average, setDocumentTitle } from 'common/utils';
 import { useDateTranslation } from 'common/hooks';
-import { ClosedOrder } from 'common/types';
+import { AppHelpers, ClosedOrder } from 'common/types';
 import { CommonLayout } from '../index';
 import styles from './dashboard.module.css';
 
 type DashboardProps = {
   closedOrders: ClosedOrder[];
+  helpers: AppHelpers;
 };
 
-const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
+const Dashboard: React.FC<DashboardProps> = ({ helpers, closedOrders }) => {
   const [t] = useTranslation();
   const { format } = useDateTranslation();
+  const { formatFinancial } = helpers;
 
   useEffect(() => {
     const title = [t('admin.title'), t('admin.dashboard.title')];
@@ -33,11 +35,11 @@ const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
         <div>{format(new Date(), 'd MMMM')}</div>
       </div>
       <div className={styles.widgetSection}>
-        <div className={styles.widgetAccent}>{financial(revenueAmount)}</div>
+        <div className={styles.widgetAccent}>{formatFinancial(revenueAmount)}</div>
         <div>{t('admin.dashboard.salesWidget.revenue')}</div>
       </div>
       <div className={styles.widgetSection}>
-        <div className={styles.widgetAccent}>{financial(profitAmount)}</div>
+        <div className={styles.widgetAccent}>{formatFinancial(profitAmount)}</div>
         <div>{t('admin.dashboard.salesWidget.profit')}</div>
       </div>
       <div className={styles.widgetSection}>
@@ -45,7 +47,7 @@ const Dashboard: React.FC<DashboardProps> = ({ closedOrders }) => {
         <div>{t('admin.dashboard.salesWidget.receipts')}</div>
       </div>
       <div className={styles.widgetSection}>
-        <div className={styles.widgetAccent}>{financial(averageAmount)}</div>
+        <div className={styles.widgetAccent}>{formatFinancial(averageAmount)}</div>
         <div>{t('admin.dashboard.salesWidget.average')}</div>
       </div>
     </div>

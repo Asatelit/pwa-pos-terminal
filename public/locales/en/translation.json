@@ -150,6 +150,8 @@
       "title": "Settings",
       "businessNameLabel": "Business Name",
       "businessNameDescription": "Your business name appears on your customers’ receipts and credit card statements",
+      "currencyLabel": "Currency Displayed As",
+      "currencyPositionLabel": "Currency Position",
       "languagePreferenceLabel": "Language Preference",
       "languagePreferenceDescription": "I prefer to view {{name}} in"
     }

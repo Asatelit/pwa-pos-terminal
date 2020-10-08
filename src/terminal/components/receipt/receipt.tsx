@@ -1,25 +1,33 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Order, Item, AppActions } from 'common/types';
-import { financial } from 'common/utils';
+import { Order, Item, AppActions, AppHelpers } from 'common/types';
 import { MenuSwapTwoTone, PrinterPosTwoTone } from 'common/icons';
 import { Routes } from 'common/const';
 import styles from './receipt.module.css';
 
 type ReceiptProps = {
+  helpers: AppHelpers;
   items: Item[];
+  onPrintCheck: (orderId: string | null) => void;
+  onShowReceipts: () => void;
   order: Order | null;
   orderId: string | null;
   services: AppActions;
-  onShowReceipts: () => void;
-  onPrintCheck: (orderId: string | null) => void;
 };
 
-const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onShowReceipts, onPrintCheck }) => {
-  const [t] = useTranslation();
-
+const Receipt: React.FC<ReceiptProps> = ({
+  helpers,
+  orderId,
+  order,
+  items,
+  services,
+  onShowReceipts,
+  onPrintCheck,
+}) => {
   // helpers
+  const [t] = useTranslation();
+  const { formatFinancial } = helpers;
   const getItemName = (id: string) => items.find((item) => item.id === id)?.name || id;
 
   // handlers
@@ -38,13 +46,13 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
               <td className={`${styles.cell} ${styles.cellName}`}>
                 {getItemName(item.id)} <span className={styles.ghostly}> x {item.quantity}</span>
               </td>
-              <td className={`${styles.cell} ${styles.cellPrice}`}>{financial(item.quantity * item.price)}</td>
+              <td className={`${styles.cell} ${styles.cellPrice}`}>{formatFinancial(item.quantity * item.price)}</td>
             </tr>
           ))}
           {!!order.taxAmount && (
             <tr>
               <td className={`${styles.cell} ${styles.cellName}`}>{t('common.tax')}</td>
-              <td className={`${styles.cell} ${styles.cellPrice}`}>{financial(order.taxAmount)}</td>
+              <td className={`${styles.cell} ${styles.cellPrice}`}>{formatFinancial(order.taxAmount)}</td>
             </tr>
           )}
         </tbody>
@@ -52,7 +60,7 @@ const Receipt: React.FC<ReceiptProps> = ({ orderId, order, items, services, onSh
     );
   };
 
-  const chargeText = `${t('terminal.charge')} ${order && order.totalAmount ? financial(order.totalAmount) : ''}`;
+  const chargeText = `${t('terminal.charge')} ${order && order.totalAmount ? formatFinancial(order.totalAmount) : ''}`;
 
   return (
     <div className={styles.root}>

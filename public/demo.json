@@ -392,8 +392,7 @@
   ],
   "settings": {
     "currency": "$",
-    "currencyCodeIso": "USD",
-    "currencySymbol": "$",
+    "currencyPosition": 2,
     "isAllowPrintCheck": false,
     "lang": "",
     "logo": "",

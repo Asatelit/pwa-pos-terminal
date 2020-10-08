@@ -2,11 +2,12 @@ import localForage from 'localforage';
 import React, { createContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getTimestamp } from 'common/utils';
-import { Context, AppState, AppActions, AppViews } from 'common/types';
-import { AppInitialState } from 'common/assets';
+import { AppContext, AppState, AppActions, AppViews, AppHelpers } from 'common/types';
+import { INIT_CONTEXT, INIT_STATE } from 'common/assets';
 import { DEMO_DATA_PATH } from 'config';
 import * as A from '../actions';
-import * as W from '../views';
+import { closedOrdersViews } from '../views';
+import { helpers as contextHelpers } from '../helpers';
 
 const store = localForage.createInstance({
   driver: localForage.INDEXEDDB,
@@ -23,11 +24,11 @@ const readContextFromLocalStorage = (initState: AppState): Promise<AppState> => 
     });
 };
 
-export const AppContext = createContext<Context<AppState>>(AppInitialState);
+export const appContext = createContext<AppContext>(INIT_CONTEXT);
 
 export const AppContextProvider: React.FC = ({ children }) => {
-  const [state, setState] = useState<AppState>(AppInitialState[0]);
   const { i18n } = useTranslation();
+  const [state, setState] = useState<AppState>(INIT_STATE);
 
   useEffect(() => {
     (async function updateState() {
@@ -42,11 +43,11 @@ export const AppContextProvider: React.FC = ({ children }) => {
       // Demo mode data parsing
       demoData = JSON.parse(JSON.stringify(demoData).replaceAll('"@{currentdate}"', `${getTimestamp()}`));
       // Rehydrate the app state
-      const state = await readContextFromLocalStorage(AppInitialState[0]);
+      const state = await readContextFromLocalStorage(INIT_CONTEXT[0]);
       // Setting up user preference settings
       if (state.settings.lang !== 'default') i18n.changeLanguage(state.settings.lang);
       // Update the app state
-      setState({ ...state, ...demoData, isLoading: false });
+      setState({ ...demoData, ...state, isLoading: false });
     })();
   }, [i18n]);
 
@@ -69,8 +70,13 @@ export const AppContextProvider: React.FC = ({ children }) => {
   };
 
   const views: AppViews = {
-    closedOrders: W.closedOrdersViews(state),
+    closedOrders: closedOrdersViews(state),
   };
 
-  return <AppContext.Provider value={[state, actions, views]}>{children}</AppContext.Provider>;
+  const helpers: AppHelpers = contextHelpers(state);
+
+  const argsArr: [AppState, AppActions, AppViews, AppHelpers] = [state, actions, views, helpers];
+  const value: AppContext = Object.assign(argsArr, { state, actions, views, helpers });
+
+  return <appContext.Provider value={value}>{children}</appContext.Provider>;
 };

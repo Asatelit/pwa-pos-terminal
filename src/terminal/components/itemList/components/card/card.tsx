@@ -1,16 +1,19 @@
 import React from 'react';
-import { getTextIdentifier, financial } from 'common/utils';
+import { AppHelpers } from 'common/types';
+import { getTextIdentifier } from 'common/utils';
 import styles from './card.module.css';
 
 type CardProps = {
-  label: string;
   color: string | null;
+  helpers: AppHelpers;
+  label: string;
+  onClick?: (e: React.MouseEvent) => void;
   picture: string | null;
   price?: number;
-  onClick?: (e: React.MouseEvent) => void
 };
 
-const Card: React.FC<CardProps> = ({ label, children, picture, color, price, onClick }) => {
+const Card: React.FC<CardProps> = ({ helpers, label, picture, color, price, onClick }) => {
+  const { formatFinancial } = helpers;
   const presentation = picture ? (
     <div className={styles.presentation} style={{ backgroundImage: `url(${picture})` }} />
   ) : (
@@ -24,7 +27,7 @@ const Card: React.FC<CardProps> = ({ label, children, picture, color, price, onC
       {presentation}
       <div className={styles.info}>
         <div className={styles.name}>{label}</div>
-        {price !== undefined && <div className={styles.price}>{financial(price)}</div>}
+        {price !== undefined && <div className={styles.price}>{formatFinancial(price)}</div>}
       </div>
     </div>
   );

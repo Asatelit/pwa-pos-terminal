@@ -1,3 +1,8 @@
+export enum SettingsCurrencyPosition {
+  Left = 1,
+  Right = 2,
+}
+
 export type Settings = {
   logo: string;
   logoUrl: string;
@@ -24,9 +29,8 @@ export type Settings = {
   printReceiptComment: boolean;
   lang: 'default' | string;
   timezone: string;
-  currencyCodeIso: string;
   currency: string;
-  currencySymbol: string;
+  currencyPosition: SettingsCurrencyPosition,
   paymentMethods: PaymentMethod[];
 };
 

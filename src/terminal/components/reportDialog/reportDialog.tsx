@@ -2,22 +2,23 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { startOfToday, endOfToday, lightFormat, differenceInCalendarDays } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
-import { AppViews } from 'common/types';
-import { financial } from 'common/utils';
+import { AppViews, AppHelpers } from 'common/types';
 import { useDateTranslation } from 'common/hooks';
 import { CloseTwoTone, CalendarRangeTwoTone } from 'common/icons';
 import { getStaticRanges, getInputRanges } from './predefinedDateRanges';
 import styles from './reportDialog.module.css';
 
 type ReportDialogProps = {
-  views: AppViews;
+  helpers: AppHelpers;
   onClose: () => void;
   onPrint: (report: JSX.Element) => void;
+  views: AppViews;
 };
 
-const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) => {
+const ReportDialog: React.FC<ReportDialogProps> = ({ helpers, views, onClose, onPrint }) => {
   const [t] = useTranslation();
   const { locale } = useDateTranslation();
+  const { formatFinancial } = helpers;
   const [isReporting, setIsReporting] = useState(true);
   const [selectionRange, setSelectionRange] = useState({
     startDate: startOfToday(),
@@ -88,7 +89,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
               {lightFormat(start, 'yyyy-MM-dd HH:mm')} - {lightFormat(end, 'yyyy-MM-dd HH:mm')}
             </dd>
             <dt className="col-sm-3">{t('terminal.dailyReport.total')}</dt>
-            <dd className="col-sm-9">{financial(summary.amount)}</dd>
+            <dd className="col-sm-9">{formatFinancial(summary.amount)}</dd>
           </dl>
         </div>
 
@@ -112,7 +113,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ views, onClose, onPrint }) 
                 <tr key={group}>
                   <td className="w-auto">{group}</td>
                   <td className="w-auto text-right">{items[group].quantity}</td>
-                  <td className="w-auto text-right">{financial(items[group].amount)}</td>
+                  <td className="w-auto text-right">{formatFinancial(items[group].amount)}</td>
                 </tr>
               ))}
             </tbody>

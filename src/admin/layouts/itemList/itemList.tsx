@@ -3,20 +3,22 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Routes } from 'common/const';
 import { getCategoryById } from 'common/assets';
-import { Category, Item, AppActions } from 'common/types';
+import { Category, Item, AppActions, AppHelpers } from 'common/types';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
-import { getTextIdentifier, financial, setDocumentTitle } from 'common/utils';
+import { getTextIdentifier, setDocumentTitle } from 'common/utils';
 
 import styles from './itemList.module.css';
 
 type ItemListProps = {
-  items: Item[];
-  categories: Category[];
   actions: AppActions;
+  categories: Category[];
+  helpers: AppHelpers;
+  items: Item[];
 };
 
-const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
+const ItemList: React.FC<ItemListProps> = ({ categories, items, actions, helpers }) => {
   const [t] = useTranslation();
+  const { formatFinancial } = helpers;
 
   useEffect(() => {
     const title = [t('admin.title'), t('admin.items.title')];
@@ -48,8 +50,8 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, actions }) => {
         <div className={`${styles.td} ${styles.tdCategory}`}>
           {categoryName.replace('Home Screen', t('common.homeScreen'))}
         </div>
-        <div className={`${styles.td}`}>{financial(data.costPrice)}</div>
-        <div className={`${styles.td}`}>{financial(data.price)}</div>
+        <div className={`${styles.td}`}>{formatFinancial(data.costPrice)}</div>
+        <div className={`${styles.td}`}>{formatFinancial(data.price)}</div>
         <button className="btn btn-link" onClick={(evt) => handleOnClickOnDeleteBtn(evt, data.id)}>
           <TrashCanOutlineTwoTone />
         </button>

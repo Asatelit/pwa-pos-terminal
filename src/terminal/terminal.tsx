@@ -1,9 +1,8 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDateTranslation } from 'common/hooks';
 import { printComponent } from 'react-print-tool';
 import { Switch, Route } from 'react-router-dom';
-import { AppContext } from 'common/hooks';
+import { appContext, useDateTranslation } from 'common/hooks';
 import { Routes } from 'common/const';
 import { setDocumentTitle } from 'common/utils';
 import { LoadScreen, PrintReceipt } from 'common/components';
@@ -25,7 +24,7 @@ const Terminal: React.FC = () => {
     setDocumentTitle(title);
   }, [t]);
 
-  const [context, services, views] = useContext(AppContext);
+  const [context, services, views, helpers] = useContext(appContext);
   const [state, setState] = useState<TerminalState>({
     isOpenReceiptsDialog: false,
     isOpenReportDialog: false,
@@ -38,14 +37,14 @@ const Terminal: React.FC = () => {
   const hasEditItemRequest = !!currentItemId;
 
   const handlePrintReceipt = (orderId: string | null) =>
-    printComponent(<PrintReceipt orderId={orderId} state={context} format={format} />);
+    printComponent(<PrintReceipt orderId={orderId} state={context} format={format} helpers={helpers} />);
 
   // Drawer
   const renderDrawer = state.isOpenDrawer && <Drawer onClose={() => updateState({ isOpenDrawer: false })} />;
 
   // Item Editor
   const renderItemEditor = hasEditItemRequest && (
-    <ItemEditor order={currentOrder} orderItemId={currentItemId} products={items} services={services} />
+    <ItemEditor order={currentOrder} orderItemId={currentItemId} products={items} services={services} helpers={helpers} />
   );
 
   // Receipts Dialog
@@ -60,7 +59,7 @@ const Terminal: React.FC = () => {
 
   // Report Dialog
   const renderReportDialog = state.isOpenReportDialog && (
-    <ReportDialog views={views} onClose={() => updateState({ isOpenReportDialog: false })} onPrint={printComponent} />
+    <ReportDialog views={views} onClose={() => updateState({ isOpenReportDialog: false })} onPrint={printComponent} helpers={helpers} />
   );
 
   if (isLoading) return <LoadScreen />;
@@ -69,7 +68,7 @@ const Terminal: React.FC = () => {
     <Switch>
       <Fragment>
         <Route path={Routes.TerminalOrderCharge}>
-          <ChargeDialog items={items} orders={orders} services={services} onPrintReceit={handlePrintReceipt} />
+          <ChargeDialog items={items} orders={orders} services={services} onPrintReceit={handlePrintReceipt} helpers={helpers} />
         </Route>
         {renderReceiptsDialog}
         {renderReportDialog}
@@ -78,12 +77,13 @@ const Terminal: React.FC = () => {
         <div className={styles.root}>
           <div className={styles.content}>
             <Receipt
+              helpers={helpers}
               items={items}
+              onPrintCheck={handlePrintReceipt}
+              onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
               order={currentOrder}
               orderId={currentOrderId}
               services={services}
-              onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
-              onPrintCheck={handlePrintReceipt}
             />
             <div className={styles.items}>
               <Menu
@@ -92,8 +92,9 @@ const Terminal: React.FC = () => {
               />
               <ItemList
                 categories={categories}
-                items={items}
                 currentCategoryId={currentCategoryId}
+                helpers={helpers}
+                items={items}
                 services={services}
               />
             </div>

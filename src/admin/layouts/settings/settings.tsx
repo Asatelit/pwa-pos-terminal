@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Settings as AppSettings, AppActions } from 'common/types';
+import { Settings as AppSettings, SettingsCurrencyPosition, AppActions } from 'common/types';
 import { setDocumentTitle, languageList } from 'common/utils';
 import { I18nContext } from 'common/hooks';
 import { APP_NAME } from 'config';
@@ -16,9 +16,6 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
   const [t, i18n] = useTranslation();
   const { supportedLocales } = useContext(I18nContext);
 
-  console.info(supportedLocales);
-
-
   useEffect(() => {
     const title = [t('admin.title'), t('admin.settings.title')];
     setDocumentTitle(title);
@@ -27,7 +24,6 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
   const handleOnChangeOfLanguagePreference = (isoCode: string) => {
     const lng = isoCode === 'default' ? '' : isoCode;
     i18n.changeLanguage(lng).then(() => {
-      console.info('lng', lng);
       actions.settings.update({ lang: isoCode });
     });
   };
@@ -42,27 +38,27 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
     <div className={styles.body}>
       <form className="container">
         <div className="mb-4">
-          <label className="form-label" htmlFor="CommonSettingsName">
+          <label className="form-label" htmlFor="SettingsName">
             {t('admin.settings.businessNameLabel')}
           </label>
           <div className="form-text text-muted mb-2">{t('admin.settings.businessNameDescription')}</div>
           <input
             type="text"
-            id="CommonSettingsName"
+            id="SettingsName"
             className="form-control"
             value={settings.name}
             onChange={(evt) => actions.settings.update({ name: evt.target.value })}
           />
         </div>
         <div className="mb-4">
-          <label className="form-label" htmlFor="CommonSettingsLanguagePreference">
+          <label className="form-label" htmlFor="SettingsLanguagePreference">
             {t('admin.settings.languagePreferenceLabel')}
           </label>
           <div className="form-text text-muted mb-2">
             {t('admin.settings.languagePreferenceDescription', { name: APP_NAME })}
           </div>
           <select
-            id="CommonSettingsLanguagePreference"
+            id="SettingsLanguagePreference"
             className="form-select w-auto pr-5"
             value={settings.lang}
             onChange={(evt) => handleOnChangeOfLanguagePreference(evt.target.value)}
@@ -73,6 +69,32 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
                 {languageList[lng].nativeName}
               </option>
             ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label className="form-label" htmlFor="SettingsCurrency">
+            {t('admin.settings.currencyLabel')}
+          </label>
+          <input
+            type="text"
+            id="SettingsCurrency"
+            className="form-control w-auto pr-5"
+            value={settings.currency}
+            onChange={(evt) => actions.settings.update({ currency: evt.target.value })}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="form-label" htmlFor="SettingsCurrencyPosition">
+            {t('admin.settings.currencyPositionLabel')}
+          </label>
+          <select
+            id="SettingsCurrencyPosition"
+            className="form-select w-auto pr-5"
+            value={settings.currencyPosition}
+            onChange={(evt) => actions.settings.update({ currencyPosition: parseInt(evt.target.value, 10) })}
+          >
+            <option value={SettingsCurrencyPosition.Left}>{`${settings.currency} 123.00`}</option>
+            <option value={SettingsCurrencyPosition.Right}>{`123.00 ${settings.currency}`}</option>
           </select>
         </div>
       </form>

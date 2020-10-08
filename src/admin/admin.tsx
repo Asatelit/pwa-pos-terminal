@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { AppContext } from 'common/hooks';
+import { appContext } from 'common/hooks';
 import { Routes as R } from 'common/const';
 import { LoadScreen } from 'common/components';
 import { setDocumentTitle } from 'common/utils';
@@ -26,17 +26,17 @@ const Admin: React.FC = () => {
     setDocumentTitle(title);
   }, [t]);
 
-  const [context, actions] = useContext(AppContext);
+  const {state: context, actions, helpers} = useContext(appContext);
   const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
 
   if (isLoading) return <LoadScreen />;
 
   const routes = [
-    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} /> },
+    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} helpers={helpers} /> },
     { path: R.AdminCategoryList, c: <CategoryList categories={categories} actions={actions} /> },
     { path: R.AdminCategoryEdit, c: <CategoryEditor categories={categories} actions={actions} /> },
     { path: R.AdminCategoryCreate, c: <CategoryEditor createMode categories={categories} actions={actions} /> },
-    { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} /> },
+    { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} helpers={helpers} /> },
     { path: R.AdminItemEdit, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminItemCreate, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminSettings, c: <Settings settings={settings} actions={actions} /> },

@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FolderTwoTone, MenuRightTwoTone, MenuDownTwoTone } from 'common/icons';
-import { Entities } from 'common/const';
+import { Entities } from 'common/enums';
 import { Category } from 'common/types';
 import styles from './categoryPicker.module.css';
 

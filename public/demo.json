@@ -391,9 +391,10 @@
     }
   ],
   "settings": {
+    "firstDayOfTheWeek": "sunday",
     "currency": "$",
-    "currencyPosition": 2,
-    "isAllowPrintCheck": false,
+    "currencyPosition": "right",
+    "isDeniedPrintingGuestChecks": false,
     "lang": "",
     "logo": "",
     "logoUrl": "",
@@ -401,9 +402,8 @@
     "paymentMethods": [],
     "predictions": [],
     "printAddress": false,
-    "printCheckDuplicate": false,
     "printPrediction": false,
-    "printReceipt": false,
+    "printReceipt": true,
     "printReceiptByDefault": false,
     "printReceiptComment": false,
     "printReceiptDuplicate": false,

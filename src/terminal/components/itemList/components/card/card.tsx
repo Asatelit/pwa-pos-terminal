@@ -1,19 +1,19 @@
 import React from 'react';
-import { AppHelpers } from 'common/types';
+import { AppTranslationHelper } from 'common/types';
 import { getTextIdentifier } from 'common/utils';
 import styles from './card.module.css';
 
 type CardProps = {
   color: string | null;
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   label: string;
   onClick?: (e: React.MouseEvent) => void;
   picture: string | null;
   price?: number;
 };
 
-const Card: React.FC<CardProps> = ({ helpers, label, picture, color, price, onClick }) => {
-  const { formatFinancial } = helpers;
+const Card: React.FC<CardProps> = ({ translation, label, picture, color, price, onClick }) => {
+  const { formatFinancial } = translation;
   const presentation = picture ? (
     <div className={styles.presentation} style={{ backgroundImage: `url(${picture})` }} />
   ) : (

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
 import { getTextIdentifier, setDocumentTitle } from 'common/utils';
-import { Routes, Entities } from 'common/const';
+import { Routes, Entities } from 'common/enums';
 import { Breadcrumbs } from 'common/components';
 import styles from './categoryList.module.css';
 

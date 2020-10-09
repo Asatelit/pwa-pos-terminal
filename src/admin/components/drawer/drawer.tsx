@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import {
   DashboardTwoTone,
   CardOutlineTwoTone,
@@ -9,13 +8,15 @@ import {
   SettingsTwoTone,
   TaxesTwoTone,
 } from 'common/icons';
-import { Routes as R } from 'common/const';
+import { AppTranslationHelper } from 'common/types';
+import { Routes as R } from 'common/enums';
 import styles from './drawer.module.css';
 
+type DrawerProps = { translation: AppTranslationHelper };
 type DrawerNavLink = { name: string; to: string; icon: JSX.Element };
 
-const Drawer: React.FC = () => {
-  const [t] = useTranslation();
+const Drawer: React.FC<DrawerProps> = ({ translation }) => {
+  const { t } = translation;
 
   const nav: DrawerNavLink[] = [
     { name: t('admin.menu.dashboardLabel'), to: R.AdminDashboard, icon: <DashboardTwoTone /> },

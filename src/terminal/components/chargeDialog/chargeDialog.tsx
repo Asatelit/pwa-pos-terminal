@@ -3,36 +3,45 @@ import { Link, Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   AppActions,
-  AppHelpers,
+  AppTranslationHelper,
   ClosedOrder,
   ClosedOrderItem,
   Item,
   Order,
   OrderClosingReasons,
   OrderStatuses,
+  Settings,
 } from 'common/types';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { round, calcSum } from 'common/utils';
 import { getOrderById } from 'common/assets';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { Numpad } from '../index';
 import styles from './chargeDialog.module.css';
 
 type ChargeDialogProps = {
-  helpers: AppHelpers;
   items: Item[];
   onPrintReceit: (orderId: string) => void;
   orders: Order[];
   services: AppActions;
+  settings: Settings;
+  translation: AppTranslationHelper;
 };
 
-const ChargeDialog: React.FC<ChargeDialogProps> = ({ helpers, orders, items, services, onPrintReceit }) => {
+const ChargeDialog: React.FC<ChargeDialogProps> = ({
+  translation,
+  orders,
+  items,
+  services,
+  onPrintReceit,
+  settings,
+}) => {
   const [t] = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
-  const { formatFinancial } = helpers;
+  const { formatFinancial } = translation;
 
   // handle redirect
   if (redirect) return <Redirect to={redirect} />;
@@ -88,7 +97,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({ helpers, orders, items, ser
 
   const handleChargeOrder = () => {
     services.orders.charge({ ...closedOrder, cashChange: hasChange ? changeAmount : 0 }, order.id);
-    onPrintReceit(order.id);
+    if (settings.printReceipt) onPrintReceit(order.id);
     closeDialog();
   };
 

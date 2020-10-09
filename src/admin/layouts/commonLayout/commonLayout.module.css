@@ -1,14 +1,21 @@
-@value moduleHeight: 4rem;
-
 .head {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: moduleHeight;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.form {
+.primary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.secondary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.body {
   margin-top: 40px;
   padding: 0;
 }

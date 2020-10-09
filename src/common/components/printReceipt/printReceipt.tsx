@@ -1,20 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { format as dateFnsFormat } from 'date-fns';
-import { AppState, AppHelpers } from 'common/types';
+import { AppState, AppTranslationHelper } from 'common/types';
 import { TaxName } from 'common/components';
 import styles from './printReceipt.module.css';
 
 type PrintReceiptProps = {
   format: typeof dateFnsFormat;
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   orderId: string | null;
   state: AppState;
 };
 
-const PrintReceipt: React.FC<PrintReceiptProps> = ({ orderId, state, format, helpers }) => {
+const PrintReceipt: React.FC<PrintReceiptProps> = ({ orderId, state, format, translation }) => {
   const [t] = useTranslation();
-  const { formatFinancial } = helpers;
+  const { formatFinancial } = translation;
   const { items: products, orders, settings } = state;
   const order = orders.find((order) => order.id === orderId);
   const getItemName = (id: string | null) => products.find((item) => item.id === id)?.name || id;

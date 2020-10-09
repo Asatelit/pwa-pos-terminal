@@ -1,26 +1,26 @@
 import React, { Fragment, useState } from 'react';
-import { Order, Item, AppActions, AppHelpers } from 'common/types';
+import { Order, Item, AppActions, AppTranslationHelper } from 'common/types';
 import { isExist } from 'common/utils';
 import { CloseTwoTone, PlusTwoTone, MinusTwoTone } from 'common/icons';
 import styles from './itemEditor.module.css';
 
 type EditorProps = {
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   order: Order | null;
   orderItemId: string | null;
   products: Item[];
   services: AppActions;
 };
 
-const ItemEditor: React.FC<EditorProps> = ({ helpers, orderItemId, order, products, services }) => {
+const ItemEditor: React.FC<EditorProps> = ({ translation, orderItemId, order, products, services }) => {
   const getCurrentItem = () => {
-    const index = orderItemId && order ? order.items.findIndex(items => orderItemId === items.id) : -1;
+    const index = orderItemId && order ? order.items.findIndex((items) => orderItemId === items.id) : -1;
     return order && isExist(index)
       ? {
           index,
           order,
           item: order.items[index],
-          instance: products.find(product => orderItemId === product.id) || null,
+          instance: products.find((product) => orderItemId === product.id) || null,
         }
       : null;
   };
@@ -34,7 +34,7 @@ const ItemEditor: React.FC<EditorProps> = ({ helpers, orderItemId, order, produc
     return null;
   }
 
-  const { formatFinancial } = helpers;
+  const { formatFinancial } = translation;
   const { item, instance, index } = state;
 
   // Helper that returns an updated order
@@ -84,7 +84,7 @@ const ItemEditor: React.FC<EditorProps> = ({ helpers, orderItemId, order, produc
                   type="number"
                   className={styles.qtyInput}
                   value={item.quantity}
-                  onChange={evt => handleQtyChange(parseInt(evt.target.value, 10) || 0)}
+                  onChange={(evt) => handleQtyChange(parseInt(evt.target.value, 10) || 0)}
                 />
                 <button className={styles.qtyBtn} onClick={handleQtyIncrement}>
                   <PlusTwoTone />
@@ -97,7 +97,7 @@ const ItemEditor: React.FC<EditorProps> = ({ helpers, orderItemId, order, produc
                   placeholder={'Add Note'}
                   className={styles.noteInput}
                   value={state.order.notes}
-                  onChange={evt => handleNotesChange(evt.target.value)}
+                  onChange={(evt) => handleNotesChange(evt.target.value)}
                 />
               </div>
               <button className={styles.removeBtn} onClick={handleRemove}>

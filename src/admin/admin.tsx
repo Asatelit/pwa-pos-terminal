@@ -1,42 +1,33 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { appContext } from 'common/hooks';
-import { Routes as R } from 'common/const';
+import { appContext } from 'common/contexts';
+import { Routes as R } from 'common/enums';
 import { LoadScreen } from 'common/components';
 import { setDocumentTitle } from 'common/utils';
 import { Drawer } from './components';
-import {
-  Dashboard,
-  Settings,
-  CategoryEditor,
-  CategoryList,
-  ItemList,
-  ItemEditor,
-  TaxList,
-  TaxEditor,
-} from './layouts';
+import { Dashboard, Settings, CategoryEditor, CategoryList, ItemList, ItemEditor, TaxList, TaxEditor } from './layouts';
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
-  const [t] = useTranslation();
+  const { state: context, actions, helpers } = useContext(appContext);
+  const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
+  const { translation } = helpers;
+  const { t } = translation;
 
   useEffect(() => {
     const title = [t('admin.title')];
     setDocumentTitle(title);
   }, [t]);
 
-  const {state: context, actions, helpers} = useContext(appContext);
-  const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
-
   if (isLoading) return <LoadScreen />;
 
+  // prettier-ignore
   const routes = [
-    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} helpers={helpers} /> },
+    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} translation={translation} /> },
     { path: R.AdminCategoryList, c: <CategoryList categories={categories} actions={actions} /> },
     { path: R.AdminCategoryEdit, c: <CategoryEditor categories={categories} actions={actions} /> },
     { path: R.AdminCategoryCreate, c: <CategoryEditor createMode categories={categories} actions={actions} /> },
-    { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} helpers={helpers} /> },
+    { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} translation={translation} /> },
     { path: R.AdminItemEdit, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminItemCreate, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminSettings, c: <Settings settings={settings} actions={actions} /> },
@@ -50,7 +41,7 @@ const Admin: React.FC = () => {
       <Switch>
         <Fragment>
           <div className={styles.nav}>
-            <Drawer />
+            <Drawer translation={translation} />
           </div>
           <div className={styles.content}>
             {routes.map((route) => (

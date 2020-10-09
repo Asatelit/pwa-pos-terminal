@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import { appContext } from 'common/hooks';
+import { appContext } from 'common/contexts';
 import { INIT_STATE } from 'common/assets';
 import { ChevronRightTwoTone } from 'common/icons';
 import styles from './breadcrumbs.module.css';

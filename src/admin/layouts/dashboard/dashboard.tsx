@@ -1,21 +1,17 @@
 import React, { Fragment, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { isSameDay } from 'date-fns';
 import { calcSum, average, setDocumentTitle } from 'common/utils';
-import { useDateTranslation } from 'common/hooks';
-import { AppHelpers, ClosedOrder } from 'common/types';
+import { AppTranslationHelper, ClosedOrder } from 'common/types';
 import { CommonLayout } from '../index';
 import styles from './dashboard.module.css';
 
 type DashboardProps = {
   closedOrders: ClosedOrder[];
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
 };
 
-const Dashboard: React.FC<DashboardProps> = ({ helpers, closedOrders }) => {
-  const [t] = useTranslation();
-  const { format } = useDateTranslation();
-  const { formatFinancial } = helpers;
+const Dashboard: React.FC<DashboardProps> = ({ translation, closedOrders }) => {
+  const { formatFinancial, formatDate, t } = translation;
 
   useEffect(() => {
     const title = [t('admin.title'), t('admin.dashboard.title')];
@@ -32,7 +28,7 @@ const Dashboard: React.FC<DashboardProps> = ({ helpers, closedOrders }) => {
     <div className={styles.widget}>
       <div className={styles.widgetSection}>
         <div className={styles.widgetAccent}>{t('admin.dashboard.salesWidget.today')}</div>
-        <div>{format(new Date(), 'd MMMM')}</div>
+        <div>{formatDate(new Date(), 'd MMMM')}</div>
       </div>
       <div className={styles.widgetSection}>
         <div className={styles.widgetAccent}>{formatFinancial(revenueAmount)}</div>

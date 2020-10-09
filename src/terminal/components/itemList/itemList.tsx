@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Item, Category, AppActions, AppHelpers } from 'common/types';
+import { Item, Category, AppActions, AppTranslationHelper } from 'common/types';
 import { Breadcrumbs } from 'common/components';
 import { getVisibleCategories, getVisibleItems } from 'common/assets';
 import { Card, Search } from './components';
@@ -8,12 +8,12 @@ import styles from './itemList.module.css';
 type ItemListProps = {
   categories: Category[];
   currentCategoryId: string;
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   items: Item[];
   services: AppActions;
 };
 
-const ItemList: React.FC<ItemListProps> = ({ helpers, categories, items, currentCategoryId, services }) => {
+const ItemList: React.FC<ItemListProps> = ({ translation, categories, items, currentCategoryId, services }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   // helpers
@@ -33,7 +33,7 @@ const ItemList: React.FC<ItemListProps> = ({ helpers, categories, items, current
         {items.map((product) => (
           <Card
             color={product.color}
-            helpers={helpers}
+            translation={translation}
             key={`product-${product.id}`}
             label={product.name}
             onClick={() => services.orders.addItem(product)}
@@ -54,7 +54,7 @@ const ItemList: React.FC<ItemListProps> = ({ helpers, categories, items, current
       {visibleCategories.map((category) => (
         <Card
           color={category.color}
-          helpers={helpers}
+          translation={translation}
           key={`category-${category.id}`}
           label={category.name}
           onClick={() => changeCurrentCategory(category.id)}

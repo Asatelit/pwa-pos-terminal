@@ -4,11 +4,13 @@
     "add": "Add",
     "amount": "Amount",
     "back": "Back",
+    "browserDefault": "Use browser settings",
     "cancel": "Cancel",
     "cash": "Cash",
     "change": "Change",
     "changeOutOf": "{{change}} change out of {{amount}}",
     "chooseAnOption": "Choose an option",
+    "clear": "Clear",
     "close": "Close",
     "closeWithoutPayment": {
       "label": "Close without payment",
@@ -56,6 +58,8 @@
     "remove": "Remove",
     "restore": "Restore",
     "search": "Search",
+    "searchProperyLabel": "Search for a property",
+    "searchProperyPlaceholder": "Enter property name here...",
     "somethingWentWrong": "Something went wrong.",
     "tax": "Tax",
     "total": "Total",
@@ -63,7 +67,12 @@
     "update": "Update",
     "update&ContinueEditing": "Update & Continue Editing",
     "view": "View",
-    "yes": "Yes"
+    "yes": "Yes",
+    "weekdays": {
+      "monday": "Monday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
   },
   "terminal": {
     "charge": "Charge",
@@ -148,12 +157,17 @@
     },
     "settings": {
       "title": "Settings",
-      "businessNameLabel": "Business Name",
+      "businessNameLabel": "Business name",
       "businessNameDescription": "Your business name appears on your customers’ receipts and credit card statements",
-      "currencyLabel": "Currency Displayed As",
-      "currencyPositionLabel": "Currency Position",
-      "languagePreferenceLabel": "Language Preference",
-      "languagePreferenceDescription": "I prefer to view {{name}} in"
+      "currencyLabel": "Currency displayed as",
+      "currencyPositionLabel": "Currency position",
+      "firstDayOfTheWeekLabel": "First day of the week",
+      "languagePreferenceLabel": "Language preference",
+      "languagePreferenceDescription": "I prefer to view {{name}} in",
+      "printReceiptLabel": "Print receipt after a purchase",
+      "printReceiptDescription": "Immediately print receipt after payment.",
+      "disablePrintingGuestChecksLabel": "Allow printing of guest checks",
+      "disablePrintingGuestChecksDescription": "Hide the guest check print button."
     }
   }
 }

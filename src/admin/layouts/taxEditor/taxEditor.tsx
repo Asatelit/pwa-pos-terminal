@@ -5,7 +5,7 @@ import { getTaxEntity, getTaxById } from 'common/assets';
 import { setDocumentTitle } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { CommonLayout } from '../../layouts';
 import styles from './taxEditor.module.css';
 

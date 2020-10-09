@@ -1,9 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Locale } from 'date-fns';
+import { Locales, SupportedLocales } from 'common/types';
 import { I18N_PATH } from 'config';
 
-type Locales = { [key: string]: Locale };
-type SupportedLocales = string[];
 
 export type I18nContextType = {
   supportedLocales: SupportedLocales;

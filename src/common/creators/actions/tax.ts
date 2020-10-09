@@ -2,7 +2,7 @@ import { isExist } from 'common/utils';
 import { TaxActions, Action } from 'common/types';
 import { getTaxEntity } from 'common/assets';
 
-const taxActions: Action<TaxActions> = (state, updateState) => ({
+export const createTaxActions: Action<TaxActions> = (state, updateState) => ({
   // add a tax
   add: (tax) => updateState({ taxes: [...state.taxes, getTaxEntity(tax)] }),
 
@@ -21,5 +21,3 @@ const taxActions: Action<TaxActions> = (state, updateState) => ({
     updateState({ taxes: updTaxes });
   },
 });
-
-export default taxActions;

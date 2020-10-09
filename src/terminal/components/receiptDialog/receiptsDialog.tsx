@@ -1,20 +1,20 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDateTranslation } from 'common/hooks';
-import { Order, AppActions, OrderStatuses } from 'common/types';
+import { Order, AppActions, AppTranslationHelper, OrderStatuses } from 'common/types';
 import { ArrowLeftTwoTone, PlusTwoTone } from 'common/icons';
 import styles from './receiptsDialog.module.css';
 
 type ReceiptsDialogProps = {
+  onClose: () => void;
   orderId: string | null;
   orders: Order[];
   services: AppActions;
-  onClose: () => void;
+  tranaslation: AppTranslationHelper,
 };
 
-const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, services, onClose }) => {
+const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, services, onClose, tranaslation }) => {
   const [t] = useTranslation();
-  const { format } = useDateTranslation();
+  const { formatDate } = tranaslation;
   const openOrders = orders.filter((entity) => entity.status === OrderStatuses.Open);
 
   const selectOrder = (id: string) => {
@@ -36,7 +36,7 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
       onClick={() => selectOrder(order.id)}
     >
       <div className={styles.orderName}>{t('common.receipt#', { val: order.orderName })}</div>
-      <div className={styles.orderDate}>{format(order.dateStart, 'd MMMM')}</div>
+      <div className={styles.orderDate}>{formatDate(order.dateStart, 'd MMMM')}</div>
     </div>
   ));
 

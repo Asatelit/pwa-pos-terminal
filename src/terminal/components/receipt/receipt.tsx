@@ -1,23 +1,25 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Order, Item, AppActions, AppHelpers } from 'common/types';
+import { Order, Item, AppActions, AppTranslationHelper } from 'common/types';
 import { MenuSwapTwoTone, PrinterPosTwoTone } from 'common/icons';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import styles from './receipt.module.css';
 
 type ReceiptProps = {
-  helpers: AppHelpers;
+  isPrintable: boolean;
   items: Item[];
   onPrintCheck: (orderId: string | null) => void;
   onShowReceipts: () => void;
   order: Order | null;
   orderId: string | null;
   services: AppActions;
+  translation: AppTranslationHelper;
 };
 
 const Receipt: React.FC<ReceiptProps> = ({
-  helpers,
+  isPrintable,
+  translation,
   orderId,
   order,
   items,
@@ -27,7 +29,7 @@ const Receipt: React.FC<ReceiptProps> = ({
 }) => {
   // helpers
   const [t] = useTranslation();
-  const { formatFinancial } = helpers;
+  const { formatFinancial } = translation;
   const getItemName = (id: string) => items.find((item) => item.id === id)?.name || id;
 
   // handlers
@@ -74,14 +76,16 @@ const Receipt: React.FC<ReceiptProps> = ({
         <table className={styles.listing}>{renderOrderItems()}</table>
       </div>
       <div className={styles.foot}>
-        <button
-          className={styles.secondaryBtn}
-          title={t('common.printTheReceipt')}
-          disabled={!order?.items.length}
-          onClick={() => handlePrint()}
-        >
-          <PrinterPosTwoTone />
-        </button>
+        {isPrintable && (
+          <button
+            className={styles.secondaryBtn}
+            title={t('common.printTheReceipt')}
+            disabled={!order?.items.length}
+            onClick={() => handlePrint()}
+          >
+            <PrinterPosTwoTone />
+          </button>
+        )}
         <Link
           className={`${styles.charge} ${!order || !order.totalAmount ? 'disabled' : ''}`}
           to={Routes.TerminalOrderCharge.replace(':id', `${orderId}`)}

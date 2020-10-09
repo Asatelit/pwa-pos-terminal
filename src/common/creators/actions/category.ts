@@ -2,7 +2,7 @@ import { getTimestamp } from 'common/utils';
 import { Category, CategoryActions, Action } from 'common/types';
 import { getCategoryEntity } from 'common/assets';
 
-const categoryActions: Action<CategoryActions> = (state, updateState) => ({
+export const createCategoryActions: Action<CategoryActions> = (state, updateState) => ({
   // add a category
   add: (category) => updateState({ categories: [...state.categories, getCategoryEntity(category)] }),
 
@@ -33,4 +33,3 @@ const categoryActions: Action<CategoryActions> = (state, updateState) => ({
   select: (categoryId) => updateState({ currentCategoryId: categoryId }),
 });
 
-export default categoryActions;

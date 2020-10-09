@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { AppContextProvider, I18nContextProvider } from 'common/hooks';
-import { Routes } from 'common/const';
+import { AppContextProvider, I18nContextProvider } from 'common/contexts';
+import { Routes } from 'common/enums';
 import { LoadScreen } from 'common/components';
 import Terminal from './terminal/terminal';
 import Admin from './admin/admin';

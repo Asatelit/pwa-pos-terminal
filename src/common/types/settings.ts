@@ -1,37 +1,34 @@
-export enum SettingsCurrencyPosition {
-  Left = 1,
-  Right = 2,
-}
+import { FirstDayOfTheWeek, CurrencyPosition } from 'common/enums';
 
 export type Settings = {
+  currency: string;
+  currencyPosition: CurrencyPosition;
+  firstDayOfTheWeek: FirstDayOfTheWeek;
+  isDeniedPrintingGuestChecks: boolean;
+  lang: 'default' | string;
   logo: string;
   logoUrl: string;
   name: string;
-  useTables: boolean;
-  useKitchen: boolean;
-  usePromotions: boolean;
-  useFiscalization: boolean;
-  isAllowPrintCheck: boolean;
-  useFastPay: boolean;
-  wifiName: string;
-  wifiPass: string;
-  tipAmount: number;
+  paymentMethods: PaymentMethod[];
   predictions: string[];
-  printReceiptNumber: boolean;
   printAddress: boolean;
   printPrediction: boolean;
-  printReceiptDuplicate: boolean;
-  printCheckDuplicate: boolean;
-  printSumWeightOnReceipt: boolean;
   printReceipt: boolean;
   printReceiptByDefault: boolean;
-  printWifi: boolean;
   printReceiptComment: boolean;
-  lang: 'default' | string;
+  printReceiptDuplicate: boolean;
+  printReceiptNumber: boolean;
+  printSumWeightOnReceipt: boolean;
+  printWifi: boolean;
   timezone: string;
-  currency: string;
-  currencyPosition: SettingsCurrencyPosition,
-  paymentMethods: PaymentMethod[];
+  tipAmount: number;
+  useFastPay: boolean;
+  useFiscalization: boolean;
+  useKitchen: boolean;
+  usePromotions: boolean;
+  useTables: boolean;
+  wifiName: string;
+  wifiPass: string;
 };
 
 export type PaymentMethod = {

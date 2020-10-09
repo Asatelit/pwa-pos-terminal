@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { Tax, AppActions } from 'common/types';
 import { setDocumentTitle } from 'common/utils';
-import { CommonLayout } from '..';
+import { CommonLayout } from '../index';
 import styles from './taxList.module.css';
 
 type TaxListProps = {

@@ -22,4 +22,6 @@ export type Action<S> = (state: AppState, setState: UpdateState) => S;
 
 export type View<S> = (state: AppState) => S;
 
-export type Helper<S> = (state: AppState) => S;
+export type Locales = { [key: string]: Locale };
+
+export type SupportedLocales = string[];

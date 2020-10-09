@@ -2,23 +2,21 @@ import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { startOfToday, endOfToday, lightFormat, differenceInCalendarDays } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
-import { AppViews, AppHelpers } from 'common/types';
-import { useDateTranslation } from 'common/hooks';
+import { AppViews, AppTranslationHelper } from 'common/types';
 import { CloseTwoTone, CalendarRangeTwoTone } from 'common/icons';
 import { getStaticRanges, getInputRanges } from './predefinedDateRanges';
 import styles from './reportDialog.module.css';
 
 type ReportDialogProps = {
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   onClose: () => void;
   onPrint: (report: JSX.Element) => void;
   views: AppViews;
 };
 
-const ReportDialog: React.FC<ReportDialogProps> = ({ helpers, views, onClose, onPrint }) => {
+const ReportDialog: React.FC<ReportDialogProps> = ({ translation, views, onClose, onPrint }) => {
   const [t] = useTranslation();
-  const { locale } = useDateTranslation();
-  const { formatFinancial } = helpers;
+  const { formatFinancial, locale } = translation;
   const [isReporting, setIsReporting] = useState(true);
   const [selectionRange, setSelectionRange] = useState({
     startDate: startOfToday(),

@@ -62,7 +62,7 @@ function update(order: Order, state: AppState): Order {
   return updOrder;
 }
 
-const ordersActions: Action<OrdersActions> = (state, updateState) => ({
+export const createOrdersActions: Action<OrdersActions> = (state, updateState) => ({
   // Adds the selected item to the current order
   addItem: (orderItem) => {
     const updOrders = [...state.orders];
@@ -131,5 +131,3 @@ const ordersActions: Action<OrdersActions> = (state, updateState) => ({
 
   select: (orderId: string | null) => updateState({ currentOrderId: orderId }),
 });
-
-export default ordersActions;

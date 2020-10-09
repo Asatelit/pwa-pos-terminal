@@ -8,7 +8,7 @@ function updateItem(item: Item): Item {
   return updItem;
 }
 
-const itemActions: Action<ItemActions> = (state, updateState) => ({
+export const createItemActions: Action<ItemActions> = (state, updateState) => ({
   select: (itemId) => updateState({ currentItemId: itemId }),
 
   add: (item) => updateState({ items: [...state.items, getItemEntity(item)] }),
@@ -28,5 +28,3 @@ const itemActions: Action<ItemActions> = (state, updateState) => ({
     updateState({ items: updItems });
   },
 });
-
-export default itemActions;

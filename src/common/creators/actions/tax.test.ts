@@ -1,6 +1,6 @@
 import { AppState } from 'common/types';
-import { INIT_CONTEXT } from '../assets';
-import taxActions from './tax';
+import { INIT_CONTEXT } from '../../assets';
+import createTaxActions from './tax';
 
 describe('Test Tax Actions', () => {
   const initialState = INIT_CONTEXT[0];
@@ -10,7 +10,7 @@ describe('Test Tax Actions', () => {
     Object.assign(state, value);
   };
 
-  const actions = taxActions(state, updateState);
+  const actions = createTaxActions(state, updateState);
 
   // сreate a default tax entry
   actions.add();

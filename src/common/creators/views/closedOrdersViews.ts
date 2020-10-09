@@ -51,7 +51,7 @@ const joinInnerById = (target: Item[]) =>
   });
 
 // Main
-export const closedOrdersViews: View<ClosedOrderViews> = (state) => ({
+export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
   getItemsByDateRange: (dateRange: DateRange) => {
     const getItemSummary = mapObjIndexed((num: number, key: string, obj: any) => {
       const data = obj[key];

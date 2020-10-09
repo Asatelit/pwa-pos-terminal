@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { getCategoryById } from 'common/assets';
-import { Category, Item, AppActions, AppHelpers } from 'common/types';
+import { Category, Item, AppActions, AppTranslationHelper } from 'common/types';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { getTextIdentifier, setDocumentTitle } from 'common/utils';
 
@@ -12,13 +11,12 @@ import styles from './itemList.module.css';
 type ItemListProps = {
   actions: AppActions;
   categories: Category[];
-  helpers: AppHelpers;
+  translation: AppTranslationHelper;
   items: Item[];
 };
 
-const ItemList: React.FC<ItemListProps> = ({ categories, items, actions, helpers }) => {
-  const [t] = useTranslation();
-  const { formatFinancial } = helpers;
+const ItemList: React.FC<ItemListProps> = ({ categories, items, actions, translation }) => {
+  const { formatFinancial, t } = translation;
 
   useEffect(() => {
     const title = [t('admin.title'), t('admin.items.title')];

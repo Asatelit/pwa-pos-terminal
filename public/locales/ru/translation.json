@@ -4,11 +4,13 @@
     "add": "Добавить",
     "amount": "Сумма",
     "back": "Назад",
+    "browserDefault": "Использовать настройки браузера",
     "cancel": "Отменить",
     "cash": "Наличные",
     "change": "Сдача",
     "changeOutOf": "{{change}} решти з {{amount}}",
     "chooseAnOption": "Выбрать опцию",
+    "clear": "Очистить",
     "close": "Закрыть",
     "closeWithoutPayment": {
       "label": "Закрыть без оплаты",
@@ -32,7 +34,7 @@
       "daysUpToToday": "дней до текущей даты",
       "daysStartingToday": "дней от текущей даты"
     },
-    "default": "Default",
+    "default": "По умолчанию",
     "delete": "Удалить",
     "deleteSelected": "Удалить выбранное",
     "details": "Подробности",
@@ -56,6 +58,8 @@
     "remove": "Удалить",
     "restore": "Восстановить",
     "search": "Поиск",
+    "searchProperyLabel": "Поиск по форме",
+    "searchProperyPlaceholder": "Введите название поля...",
     "somethingWentWrong": "Что-то пошло не так.",
     "tax": "Налог",
     "total": "Всего",
@@ -63,7 +67,12 @@
     "update": "Сохранить",
     "update&ContinueEditing": "Обновить и продолжить редактирование",
     "view": "Посмотреть",
-    "yes": "Да"
+    "yes": "Да",
+    "weekdays": {
+      "monday": "Понедельник",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
+    }
   },
   "terminal": {
     "charge": "Оплатить",
@@ -152,8 +161,13 @@
       "businessNameDescription": "Это название будет отображено в квитанциях и выписках ваших клиентов:",
       "currencyLabel": "Знак валюты",
       "currencyPositionLabel": "Расположение знака валюты",
+      "firstDayOfTheWeekLabel": "Первый день недели",
       "languagePreferenceLabel": "Языковые настройки",
-      "languagePreferenceDescription": "Я буду использовать {{name}} на этом языке:"
+      "languagePreferenceDescription": "Я буду использовать {{name}} на этом языке:",
+      "printReceiptLabel": "Печатать чек после оплаты",
+      "printReceiptDescription": "После оплаты заказа чек будет автоматически отправлен на печать.",
+      "disablePrintingGuestChecksLabel": "Запрет печати пречека",
+      "disablePrintingGuestChecksDescription": "Спрятать кнопку печати пречека в приложении."
     }
   }
 }

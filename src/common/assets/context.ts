@@ -1,4 +1,4 @@
-import { Entities } from 'common/const';
+import { Entities, CurrencyPosition, FirstDayOfTheWeek } from 'common/enums';
 import {
   AppContext,
   AppContextResponseArray,
@@ -7,13 +7,14 @@ import {
   AppViews,
   AppActions,
   AppHelpers,
-  SettingsCurrencyPosition,
+  Settings,
 } from 'common/types';
 
-export const INIT_SETTINGS = {
+export const INIT_SETTINGS: Settings = {
   currency: '$',
-  currencyPosition: SettingsCurrencyPosition.Right,
-  isAllowPrintCheck: false,
+  currencyPosition: CurrencyPosition.Right,
+  firstDayOfTheWeek: FirstDayOfTheWeek.Monday,
+  isDeniedPrintingGuestChecks: false,
   lang: 'default',
   logo: '',
   logoUrl: '',
@@ -21,9 +22,8 @@ export const INIT_SETTINGS = {
   paymentMethods: [],
   predictions: [],
   printAddress: false,
-  printCheckDuplicate: false,
   printPrediction: false,
-  printReceipt: false,
+  printReceipt: true,
   printReceiptByDefault: false,
   printReceiptComment: false,
   printReceiptDuplicate: false,

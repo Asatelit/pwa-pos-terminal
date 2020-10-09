@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { encodeImage, setDocumentTitle } from 'common/utils';
 import { getCategoryEntity, getCategoryById } from 'common/assets';
 import CategoryPicker from '../../components/categoryPicker/categoryPicker';

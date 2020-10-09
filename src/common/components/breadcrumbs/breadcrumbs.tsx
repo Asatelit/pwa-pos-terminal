@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRightTwoTone } from 'common/icons';
 import { Category } from 'common/types';
-import { Entities } from 'common/const';
+import { Entities } from 'common/enums';
 import styles from './breadcrumbs.module.css';
 
 export type BreadcrumbsProps = {

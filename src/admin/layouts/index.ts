@@ -1,6 +1,6 @@
+export * from './commonLayout/commonLayout';
 export { default as CategoryEditor } from './categoryEditor/categoryEditor';
 export { default as CategoryList } from './сategoryList/categoryList';
-export { default as CommonLayout } from './commonLayout/commonLayout';
 export { default as Settings } from './settings/settings';
 export { default as Dashboard } from './dashboard/dashboard';
 export { default as ItemEditor } from './itemEditor/itemEditor';

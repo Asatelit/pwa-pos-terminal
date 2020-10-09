@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Routes } from 'common/const';
+import { Routes } from 'common/enums';
 import { encodeImage, setDocumentTitle } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, Item, Tax, AppActions } from 'common/types';

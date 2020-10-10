@@ -1,6 +1,6 @@
 import { AppState } from 'common/types';
 import { INIT_CONTEXT } from '../../assets';
-import createTaxActions from './tax';
+import { createTaxActions } from './tax';
 
 describe('Test Tax Actions', () => {
   const initialState = INIT_CONTEXT[0];

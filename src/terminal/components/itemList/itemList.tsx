@@ -15,6 +15,7 @@ type ItemListProps = {
 
 const ItemList: React.FC<ItemListProps> = ({ translation, categories, items, currentCategoryId, services }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { t } = translation;
 
   // helpers
   const visibleCategories = getVisibleCategories(currentCategoryId, categories);
@@ -26,7 +27,7 @@ const ItemList: React.FC<ItemListProps> = ({ translation, categories, items, cur
   // render items
   const renderItems = (items: Item[]) => {
     if (!items.length) {
-      return <div className={styles.empty}>There are no items in this category</div>;
+      return <div className={styles.empty}>{t('admin.items.emptyListMessage')}</div>;
     }
     return (
       <Fragment>

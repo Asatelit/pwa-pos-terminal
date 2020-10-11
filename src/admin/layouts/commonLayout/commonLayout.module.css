@@ -1,13 +1,24 @@
-@value moduleHeight: 4rem;
-
 .head {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--palette-background-paper);
+}
+
+.primary {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: moduleHeight;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
 }
 
-.form {
+.secondary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.body {
+  margin-top: 40px;
   padding: 0;
 }

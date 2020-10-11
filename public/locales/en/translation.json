@@ -1,0 +1,173 @@
+{
+  "common": {
+    "actions": "Actions",
+    "add": "Add",
+    "amount": "Amount",
+    "back": "Back",
+    "browserDefault": "Use browser settings",
+    "cancel": "Cancel",
+    "cash": "Cash",
+    "change": "Change",
+    "changeOutOf": "{{change}} change out of {{amount}}",
+    "chooseAnOption": "Choose an option",
+    "clear": "Clear",
+    "close": "Close",
+    "closeWithoutPayment": {
+      "label": "Close without payment",
+      "hint": "Please specify the reason",
+      "reasons": {
+        "customerIsGone": "Customer is gone",
+        "waitersMistake": "Waiter's mistake",
+        "onTheHouse": "On the house"
+      }
+    },
+    "confirm": "Confirm",
+    "create": "Create",
+    "creditCard": "Bank card",
+    "dateRanges": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "thisWeek": "This Week",
+      "lastWeek": "Last Week",
+      "thisMonth": "This Month",
+      "lastMonth": "Last Month",
+      "daysUpToToday": "days up to today",
+      "daysStartingToday": "days starting today"
+    },
+    "default": "Default",
+    "delete": "Delete",
+    "deleteSelected": "Delete Selected",
+    "details": "Details",
+    "each": "ea.",
+    "edit": "Edit",
+    "enabled": "Enabled",
+    "homeScreen": "Home Screen",
+    "item": "Item",
+    "new": "New",
+    "next": "Next",
+    "no": "No",
+    "open": "Open",
+    "previous": "Previous",
+    "print": "Print",
+    "printTheReceipt": "Print the receipt",
+    "printedAt": "Printed at",
+    "purchaseSubtotal": "Purchase Subtotal",
+    "qty": "Qty",
+    "receipt#": "Receipt #{{val}}",
+    "receipts": "Receipts",
+    "remove": "Remove",
+    "restore": "Restore",
+    "search": "Search",
+    "searchProperyLabel": "Search for a property",
+    "searchProperyPlaceholder": "Enter property name here...",
+    "somethingWentWrong": "Something went wrong.",
+    "tax": "Tax",
+    "total": "Total",
+    "unnamedCategory": "Unnamed Category",
+    "update": "Update",
+    "update&ContinueEditing": "Update & Continue Editing",
+    "view": "View",
+    "yes": "Yes",
+    "weekdays": {
+      "monday": "Monday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "terminal": {
+    "charge": "Charge",
+    "createNewReceipt": "Create new",
+    "dailyReport": {
+      "menuLabel": "Daily Report",
+      "openingTitle": "Daily Report",
+      "editingTitle": "Choose a Period",
+      "emptyText": "There are no sales for the specified period.",
+      "reportTitle": "Sales Report",
+      "daysIncluded": "Days included",
+      "businessDate": "Business date",
+      "total": "Total"
+    },
+    "title": "Terminal"
+  },
+  "admin": {
+    "title": "Admin",
+    "menuLabel": "Admin",
+    "menu": {
+      "dashboardLabel": "Dashboard",
+      "categoriesLabel": "Categories",
+      "itemsLabel": "Items",
+      "taxesLabel": "Taxes",
+      "settingsLabel": "Settings",
+      "exitLabel": "Back to terminal"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "salesWidget": {
+        "today": "Today,",
+        "revenue": "revenue",
+        "profit": "profit",
+        "receipts": "receipts",
+        "average": "average"
+      }
+    },
+    "categories": {
+      "title": "Category",
+      "addCategoryLabel": "New Category",
+      "emptyListMessage": "There are no items here."
+    },
+    "categoryEditor": {
+      "addTitle": "Add Category",
+      "editTitle": "Edit Category",
+      "nameLabel": "Name",
+      "categoryLabel": "Parent Category",
+      "colorLabel": "Color",
+      "imageLabel": "Image"
+    },
+    "items": {
+      "title": "Items",
+      "addItemLabel": "New Item",
+      "emptyListMessage": "There are no items here."
+    },
+    "itemEditor": {
+      "addItemTitle": "Add Item",
+      "editItemTitle": "Edit Item",
+      "nameLabel": "Name",
+      "categoryLabel": "Category",
+      "priceLabel": "Price",
+      "costPriceLabel": "Cost Price",
+      "colorLabel": "Color",
+      "imageLabel": "Image",
+      "taxesLabel": "Taxes"
+    },
+    "taxes": {
+      "title": "Taxes",
+      "addItemLabel": "New Tax",
+      "emptyListMessage": "There are no items here."
+    },
+    "taxEditor": {
+      "addItemTitle": "Add a New Tax",
+      "editItemTitle": "Edit Tax",
+      "nameLabel": "Name",
+      "precentageLabel": "Precentage",
+      "itemPricingLabel": "Item Pricing",
+      "addTaxToItemPrice": "Add Tax to Item Price",
+      "includeTaxInItemPrice": "Include Tax in Item Price",
+      "applyTaxToLabel": "Apply tax to",
+      "applyToCustomAmounts": "Custom Amounts"
+    },
+    "settings": {
+      "title": "Settings",
+      "businessNameLabel": "Business name",
+      "businessNameDescription": "Your business name appears on your customers’ receipts and credit card statements",
+      "currencyLabel": "Currency displayed as",
+      "currencyPositionLabel": "Currency position",
+      "firstDayOfTheWeekLabel": "First day of the week",
+      "languagePreferenceLabel": "Language preference",
+      "languagePreferenceDescription": "I prefer to view {{name}} in",
+      "printReceiptLabel": "Print receipt after a purchase",
+      "printReceiptDescription": "Immediately print receipt after payment.",
+      "disablePrintingGuestChecksLabel": "Allow printing of guest checks",
+      "disablePrintingGuestChecksDescription": "Hide the guest check print button."
+    }
+  }
+}

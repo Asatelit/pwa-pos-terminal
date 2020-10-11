@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
-import { Routes } from 'common/const';
-import { encodeImage } from 'common/utils';
+import { useTranslation } from 'react-i18next';
+import { Routes } from 'common/enums';
+import { encodeImage, setDocumentTitle } from 'common/utils';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Category, Item, Tax, AppActions } from 'common/types';
 import { getItemEntity, getItemById } from 'common/assets';
-import { APP_NAME } from 'config';
 import { CategoryPicker } from '../../components';
+import { CommonLayout } from '../index';
 import styles from './itemEditor.module.css';
 
 type ItemEditorProps = {
@@ -17,11 +18,14 @@ type ItemEditorProps = {
 };
 
 const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actions }) => {
-  useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Item Editor`;
-  }, []);
+  const { id } = useParams<{ id: string }>();
+  const [t] = useTranslation();
 
-  const { id } = useParams<{id: string}>();
+  useEffect(() => {
+    const title = [t('admin.title'), t(id ? 'admin.itemEditor.editItemTitle' : 'admin.itemEditor.addItemTitle')];
+    setDocumentTitle(title);
+  }, [t, id]);
+
   const initialState = id ? getItemById(items, id) : getItemEntity();
 
   const [item, setItem] = useState<Item>(initialState);
@@ -29,7 +33,7 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
   const [isPickerShown, togglePicker] = useState(false);
 
   // Helpers
-  const selectedCategoryName = categories.find((entity) => entity.id === item.parentId)?.name || 'Home Screen';
+  const selectedCategoryName = categories.find((entity) => entity.id === item.parentId)?.name || t('common.homeScreen');
   const updateItem = (data: Partial<Item>) => setItem({ ...item, ...data });
   const isInvalid = !item.name;
 
@@ -46,8 +50,8 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
     const taxList = taxes.filter((tax) => tax.isEnabled);
     if (!taxList.length) return null;
     return (
-      <div className={styles.control}>
-        <div className={styles.controlLabel}>Taxes</div>
+      <div className="mb-4">
+        <div className="form-label">{t('admin.itemEditor.taxesLabel')}</div>
         {taxList.map((tax) => (
           <div key={`ItemEditorTax_${tax.id}`} className={styles.switch}>
             <input
@@ -69,128 +73,131 @@ const ItemEditor: React.FC<ItemEditorProps> = ({ items, categories, taxes, actio
     );
   };
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.head}>
-        <Link className={styles.closeBtn} to={Routes.AdminItemList}>
-          <ArrowLeftTwoTone />
-        </Link>
-        <div className={styles.itemInfo}>
-          <span className={styles.itemName}>{id ? 'Edit Item' : 'Create Item'}</span>
-        </div>
+  const renderHead = (
+    <Fragment>
+      <Link className="btn btn-link" to={Routes.AdminItemList}>
+        <ArrowLeftTwoTone />
+      </Link>
+      <div className={styles.title}>
+        {id ? t('admin.itemEditor.editItemTitle') : t('admin.itemEditor.addItemTitle')}
       </div>
-      <div className={styles.form}>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorName">
-            Name
-          </label>
-          <input
-            id="ItemEditorName"
-            type="text"
-            className={styles.controlInput}
-            value={item.name}
-            onChange={(evt) => updateItem({ name: evt.target.value })}
-          />
-        </div>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorCategory">
-            Category
-          </label>
-          <div className={styles.controlGroup}>
-            <input
-              readOnly
-              type="text"
-              id="ItemEditorCategory"
-              className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
-              value={selectedCategoryName}
-              onClick={() => togglePicker(true)}
-            />
-            {isPickerShown && (
-              <CategoryPicker
-                className={styles.picker}
-                categories={categories}
-                parent={item.parentId}
-                selected={item.id}
-                onChange={handleOnChangeCategoryPicker}
-                onClose={() => togglePicker(false)}
-              />
-            )}
-          </div>
-        </div>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorPrice">
-            Price
-          </label>
-          <input
-            type="number"
-            className={styles.controlInput}
-            id="ItemEditorPrice"
-            placeholder="Price"
-            value={item.price}
-            onChange={(evt) => updateItem({ price: parseFloat(evt.target.value) })}
-          />
-        </div>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorCostPrice">
-            Cost Price
-          </label>
-          <input
-            type="number"
-            className={styles.controlInput}
-            id="ItemEditorCostPrice"
-            placeholder="Cost Price"
-            value={item.costPrice}
-            onChange={(evt) => updateItem({ costPrice: parseFloat(evt.target.value) })}
-          />
-        </div>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorColor">
-            Color
-          </label>
-          <select
-            id="ItemEditorColor"
-            className={styles.controlInput}
-            value={item.color || 'transparent'}
-            onChange={(evt) => updateItem({ color: evt.target.value })}
-          >
-            <optgroup label="Please specify the color">
-              <option value="transparent">Default</option>
-              <option value="salmon">Salmon</option>
-              <option value="red">Red</option>
-              <option value="coral">Coral</option>
-              <option value="tomato">Tomato</option>
-              <option value="gold">Gold</option>
-              <option value="orange">Orange</option>
-            </optgroup>
-          </select>
-        </div>
-        <div className={styles.control}>
-          <label className={styles.controlLabel} htmlFor="ItemEditorColor">
-            Image
-          </label>
-          {!item.picture && (
-            <input
-              type="file"
-              className={styles.controlInput}
-              onChange={(evt) => encodeImage(evt, (picture) => updateItem({ picture }))}
-            />
-          )}
-          {!!item.picture && (
-            <button className={styles.secondaryAction} onClick={() => updateItem({ picture: '' })}>
-              Remove
-            </button>
-          )}
-        </div>
-        {renderTaxList()}
-        <div className={styles.control}>
-          <div className={styles.controlLabel} />
-          <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
-            {id ? 'Update' : 'Add'}
-          </button>
-        </div>
-      </div>
-    </div>
+    </Fragment>
   );
+
+  const renderBody = (
+    <form>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorName">
+          {t('admin.itemEditor.nameLabel')}
+        </label>
+        <input
+          id="ItemEditorName"
+          type="text"
+          className="form-control"
+          value={item.name}
+          onChange={(evt) => updateItem({ name: evt.target.value })}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorCategory">
+          {t('admin.itemEditor.categoryLabel')}
+        </label>
+        <div className={styles.controlGroup}>
+          <input
+            readOnly
+            type="text"
+            id="ItemEditorCategory"
+            className={`${styles.controlInput} ${isPickerShown ? 'focus' : ''}`}
+            value={selectedCategoryName}
+            onClick={() => togglePicker(true)}
+          />
+          {isPickerShown && (
+            <CategoryPicker
+              className={styles.picker}
+              categories={categories}
+              parent={item.parentId}
+              selected={item.id}
+              onChange={handleOnChangeCategoryPicker}
+              onClose={() => togglePicker(false)}
+            />
+          )}
+        </div>
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorPrice">
+          {t('admin.itemEditor.priceLabel')}
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          id="ItemEditorPrice"
+          placeholder={t('admin.itemEditor.priceLabel')}
+          value={item.price}
+          onChange={(evt) => updateItem({ price: parseFloat(evt.target.value) })}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorCostPrice">
+          {t('admin.itemEditor.costPriceLabel')}
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          id="ItemEditorCostPrice"
+          placeholder={t('admin.itemEditor.costPriceLabel')}
+          value={item.costPrice}
+          onChange={(evt) => updateItem({ costPrice: parseFloat(evt.target.value) })}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorColor">
+          {t('admin.itemEditor.colorLabel')}
+        </label>
+        <select
+          id="ItemEditorColor"
+          className="form-control"
+          value={item.color || 'transparent'}
+          onChange={(evt) => updateItem({ color: evt.target.value })}
+        >
+          <optgroup label="Please specify the color">
+            <option value="transparent">Default</option>
+            <option value="salmon">Salmon</option>
+            <option value="red">Red</option>
+            <option value="coral">Coral</option>
+            <option value="tomato">Tomato</option>
+            <option value="gold">Gold</option>
+            <option value="orange">Orange</option>
+          </optgroup>
+        </select>
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="ItemEditorColor">
+          {t('admin.itemEditor.imageLabel')}
+        </label>
+        {!item.picture && (
+          <input
+            type="file"
+            className="form-control"
+            onChange={(evt) => encodeImage(evt, (picture) => updateItem({ picture }))}
+          />
+        )}
+        {!!item.picture && (
+          <button className={styles.secondaryAction} onClick={() => updateItem({ picture: '' })}>
+            {t('common.remove')}
+          </button>
+        )}
+      </div>
+      {renderTaxList()}
+      <div className="mb-4">
+        <div className="form-label" />
+        <button className={styles.primaryAction} disabled={isInvalid} onClick={handleOnClickOnPrimaryBtn}>
+          {id ? t('common.update') : t('common.add')}
+        </button>
+      </div>
+    </form>
+  );
+
+  return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
 export default ItemEditor;

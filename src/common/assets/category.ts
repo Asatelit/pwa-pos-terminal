@@ -1,5 +1,5 @@
 import { Category } from 'common/types';
-import { Entities } from 'common/const';
+import { Entities } from 'common/enums';
 import { getTimestamp, generateId } from 'common/utils';
 
 export const categoryRootEntity: Category = {

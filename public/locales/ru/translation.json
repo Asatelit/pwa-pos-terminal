@@ -1,0 +1,173 @@
+{
+  "common": {
+    "actions": "Действия",
+    "add": "Добавить",
+    "amount": "Сумма",
+    "back": "Назад",
+    "browserDefault": "Использовать настройки браузера",
+    "cancel": "Отменить",
+    "cash": "Наличные",
+    "change": "Сдача",
+    "changeOutOf": "{{change}} решти з {{amount}}",
+    "chooseAnOption": "Выбрать опцию",
+    "clear": "Очистить",
+    "close": "Закрыть",
+    "closeWithoutPayment": {
+      "label": "Закрыть без оплаты",
+      "hint": "Пожалуйста, укажите причину",
+      "reasons": {
+        "customerIsGone": "Клиент ушел",
+        "waitersMistake": "Ошибка официанта",
+        "onTheHouse": "За счет заведения"
+      }
+    },
+    "confirm": "Подтвердить",
+    "create": "Создать",
+    "creditCard": "Банковская карта",
+    "dateRanges": {
+      "today": "Сегодня",
+      "yesterday": "Вчера",
+      "thisWeek": "Текущая неделя",
+      "lastWeek": "Предыдущая неделя",
+      "thisMonth": "Текущий месяц",
+      "lastMonth": "Предыдущий месяц",
+      "daysUpToToday": "дней до текущей даты",
+      "daysStartingToday": "дней от текущей даты"
+    },
+    "default": "По умолчанию",
+    "delete": "Удалить",
+    "deleteSelected": "Удалить выбранное",
+    "details": "Подробности",
+    "each": "за 1 ед.",
+    "edit": "Редактировать",
+    "enabled": "Включённый",
+    "homeScreen": "Главный экран",
+    "item": "Товар",
+    "new": "Новый",
+    "next": "Вперёд",
+    "no": "Нет",
+    "open": "Открыть",
+    "previous": "Назад",
+    "print": "Печать",
+    "printTheReceipt": "Печать чека",
+    "printedAt": "Чек напечатан",
+    "purchaseSubtotal": "Промежуточный итог",
+    "qty": "Кол-во",
+    "receipt#": "Чек №{{val}}",
+    "receipts": "Чеки",
+    "remove": "Удалить",
+    "restore": "Восстановить",
+    "search": "Поиск",
+    "searchProperyLabel": "Поиск по форме",
+    "searchProperyPlaceholder": "Введите название поля...",
+    "somethingWentWrong": "Что-то пошло не так.",
+    "tax": "Налог",
+    "total": "Всего",
+    "unnamedCategory": "Неназванная категория",
+    "update": "Сохранить",
+    "update&ContinueEditing": "Обновить и продолжить редактирование",
+    "view": "Посмотреть",
+    "yes": "Да",
+    "weekdays": {
+      "monday": "Понедельник",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
+    }
+  },
+  "terminal": {
+    "charge": "Оплатить",
+    "createNewReceipt": "Новый чек",
+    "dailyReport": {
+      "menuLabel": "Ежедневный отчет",
+      "openingTitle": "Ежедневный отчет",
+      "editingTitle": "Выберите период",
+      "emptyText": "Нет продаж за указанный период.",
+      "reportTitle": "Отчёт о продажах",
+      "daysIncluded": "Количество дней",
+      "businessDate": "Период времени",
+      "total": "Итого"
+    },
+    "title": "Терминал"
+  },
+  "admin": {
+    "title": "Панель управления",
+    "menuLabel": "Панель управления",
+    "menu": {
+      "dashboardLabel": "Статистика",
+      "categoriesLabel": "Категории",
+      "itemsLabel": "Товары",
+      "taxesLabel": "Налоги",
+      "settingsLabel": "Настройки",
+      "exitLabel": "Терминал"
+    },
+    "dashboard": {
+      "title": "Статистика продаж",
+      "salesWidget": {
+        "today": "Сегодня,",
+        "revenue": "выручка",
+        "profit": "прибыль",
+        "receipts": "чеки",
+        "average": "средний чек"
+      }
+    },
+    "categories": {
+      "title": "Категории товаров",
+      "addCategoryLabel": "Добавить категорию",
+      "emptyListMessage": "Нет категорий, доступных для отображения."
+    },
+    "categoryEditor": {
+      "addTitle": "Добавление категории товара",
+      "editTitle": "Редактирование категории товара",
+      "nameLabel": "Название категории",
+      "categoryLabel": "Родительская категория",
+      "colorLabel": "Цвет",
+      "imageLabel": "Фото категории"
+    },
+    "items": {
+      "title": "Товары",
+      "addItemLabel": "Добавить товар",
+      "emptyListMessage": "Нет категорий, доступных для отображения."
+    },
+    "itemEditor": {
+      "addItemTitle": "Добавление товара",
+      "editItemTitle": "Редактирование товара",
+      "nameLabel": "Название",
+      "categoryLabel": "Категория",
+      "priceLabel": "Цена",
+      "costPriceLabel": "Себестоимость",
+      "colorLabel": "Цвет",
+      "imageLabel": "Изображение",
+      "taxesLabel": "Налог"
+    },
+    "taxes": {
+      "title": "Настройка налогов",
+      "addItemLabel": "Добавить налог",
+      "emptyListMessage": "Нет налогов, доступных для отображения."
+    },
+    "taxEditor": {
+      "addItemTitle": "Добавить новый налог",
+      "editItemTitle": "Редактировать налог",
+      "nameLabel": "Название налога",
+      "precentageLabel": "Процент",
+      "itemPricingLabel": "Тип",
+      "addTaxToItemPrice": "Отображать налог рядом с ценой",
+      "includeTaxInItemPrice": "Включить в стоимость товара",
+      "applyTaxToLabel": "Дополнительные настройки",
+      "applyToCustomAmounts": "Применять налог к индивидуальным чекам"
+    },
+    "settings": {
+      "title": "Настройки",
+      "businessNameLabel": "Название заведения",
+      "businessNameDescription": "Это название будет отображено в квитанциях и выписках ваших клиентов:",
+      "currencyLabel": "Знак валюты",
+      "currencyPositionLabel": "Расположение знака валюты",
+      "firstDayOfTheWeekLabel": "Первый день недели",
+      "languagePreferenceLabel": "Языковые настройки",
+      "languagePreferenceDescription": "Я буду использовать {{name}} на этом языке:",
+      "printReceiptLabel": "Печатать чек после оплаты",
+      "printReceiptDescription": "После оплаты заказа чек будет автоматически отправлен на печать.",
+      "disablePrintingGuestChecksLabel": "Запрет печати пречека",
+      "disablePrintingGuestChecksDescription": "Спрятать кнопку печати пречека в приложении."
+    }
+  }
+}

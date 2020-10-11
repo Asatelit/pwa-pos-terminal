@@ -1,0 +1,172 @@
+{
+  "common": {
+    "actions": "Дії",
+    "add": "Додати",
+    "amount": "Сума",
+    "back": "Back",
+    "browserDefault": "Використовувати налаштування браузера",
+    "cancel": "Скасувати",
+    "cash": "Готівка",
+    "change": "Решта",
+    "changeOutOf": "{{change}} change out of {{amount}}",
+    "chooseAnOption": "Вибрати опцію",
+    "clear": "Очистити",
+    "close": "Зачинити",
+    "closeWithoutPayment": {
+      "label": "Закрити без оплати",
+      "hint": "Будь ласка, вкажіть причину",
+      "reasons": {
+        "customerIsGone": "Клієнт пішов",
+        "waitersMistake": "Помилка офіціанта",
+        "onTheHouse": "За рахунок закладу"
+      }
+    },
+    "confirm": "Підтвердити",
+    "create": "Створити",
+    "creditCard": "Банківська картка",
+    "dateRanges": {
+      "today": "Сьогодні",
+      "yesterday": "Вчора",
+      "thisWeek": "Текущая неделя",
+      "lastWeek": "Поточний тиждень",
+      "thisMonth": "Поточний місяць",
+      "lastMonth": "Попередній місяць",
+      "daysUpToToday": "днів до поточної дати",
+      "daysStartingToday": "днів від поточної дати"
+    },
+    "default": "За замовчуванням",
+    "delete": "Видалити",
+    "deleteSelected": "Видалити вибране",
+    "details": "Подробиці",
+    "each": "за одну од.",
+    "edit": "Редагувати",
+    "enabled": "Включений",
+    "homeScreen": "Головний екран",
+    "item": "Товар",
+    "new": "Новий",
+    "next": "Вперед",
+    "no": "Ні",
+    "open": "Відкрити",
+    "previous": "Назад",
+    "print": "Друк",
+    "printTheReceipt": "Час роздрукування",
+    "purchaseSubtotal": "Проміжний підсумок",
+    "qty": "Кіл-сть",
+    "receipt#": "Чек №{{val}}",
+    "receipts": "Чеки",
+    "remove": "Видалити",
+    "restore": "Відновити",
+    "search": "Пошук",
+    "searchProperyLabel": "Пошук поля в формі",
+    "searchProperyPlaceholder": "Введіть назву поля...",
+    "somethingWentWrong": "Щось пішло не так.",
+    "tax": "Податок",
+    "total": "За замовчуванням",
+    "unnamedCategory": "Неназвана категорія",
+    "update": "Зберегти",
+    "update&ContinueEditing": "Оновити та продовжити редагування",
+    "view": "Подивитися",
+    "yes": "Так",
+    "weekdays": {
+      "monday": "Понеділок",
+      "saturday": "Субота",
+      "sunday": "Неділя"
+    }
+  },
+  "terminal": {
+    "charge": "Оплатити",
+    "createNewReceipt": "Новий чек",
+    "dailyReport": {
+      "menuLabel": "Щоденний звіт",
+      "openingTitle": "Щоденний звіт",
+      "editingTitle": "Оберіть період",
+      "emptyText": "Продажів за вказаний період немає.",
+      "reportTitle": "Звіт про продажі",
+      "daysIncluded": "Кількість днів",
+      "businessDate": "Період часу",
+      "total": "Разом"
+    },
+    "title": "Термінал"
+  },
+  "admin": {
+    "title": "Панель керування",
+    "menuLabel": "Панель керування",
+    "menu": {
+      "dashboardLabel": "Статистика",
+      "categoriesLabel": "Категорії",
+      "itemsLabel": "Товари",
+      "taxesLabel": "Налоги",
+      "settingsLabel": "Налаштування",
+      "exitLabel": "Термінал"
+    },
+    "dashboard": {
+      "title": "Статистика продажів",
+      "salesWidget": {
+        "today": "Сьогодні,",
+        "revenue": "виручка",
+        "profit": "прибуток",
+        "receipts": "чеки",
+        "average": "середній чек"
+      }
+    },
+    "categories": {
+      "title": "Категорії товарів",
+      "addCategoryLabel": "Створити категорію",
+      "emptyListMessage": "Немає категорій, доступних для відображення."
+    },
+    "categoryEditor": {
+      "addTitle": "Додавання категорії товару",
+      "editTitle": "Редагування категорії товару",
+      "nameLabel": "Назва категорії",
+      "categoryLabel": "Батьківська категорія",
+      "colorLabel": "Колір",
+      "imageLabel": "Фото категории"
+    },
+    "items": {
+      "title": "Товари",
+      "addItemLabel": "Додати товар",
+      "emptyListMessage": "Немає товарів, доступних для відображення."
+    },
+    "itemEditor": {
+      "addItemTitle": "Додавання товару",
+      "editItemTitle": "Редагування товару",
+      "nameLabel": "Назва",
+      "categoryLabel": "Категорія",
+      "priceLabel": "Ціна",
+      "costPriceLabel": "Собівартість",
+      "colorLabel": "Колір",
+      "imageLabel": "Зображення",
+      "taxesLabel": "Податок"
+    },
+    "taxes": {
+      "title": "Облік податків.",
+      "addItemLabel": "Додати новий податок",
+      "emptyListMessage": "Немає податків, доступних для відображення."
+    },
+    "taxEditor": {
+      "addItemTitle": "Додати новий податок",
+      "editItemTitle": "Редагувати податок",
+      "nameLabel": "Назва податку",
+      "precentageLabel": "Відсоток",
+      "itemPricingLabel": "Тип",
+      "addTaxToItemPrice": "Відображати податок поруч з ціною",
+      "includeTaxInItemPrice": "Включити у вартість товару",
+      "applyTaxToLabel": "Додаткові налаштування",
+      "applyToCustomAmounts": "Застосовувати податок до індивідуальних чеків"
+    },
+    "settings": {
+      "title": "Налаштування",
+      "businessNameLabel": "Назва закладу",
+      "businessNameDescription": "Ця назва буде відображена в квитанціях і виписках ваших клієнтів:",
+      "currencyLabel": "Символ валюти",
+      "currencyPositionLabel": "Розташування знака валюти",
+      "firstDayOfTheWeekLabel": "Перший день тижня",
+      "languagePreferenceLabel": "Параметри мови",
+      "languagePreferenceDescription": "Мова інтерфейсу {{name}}:",
+      "printReceiptLabel": "Друкувати чек після оплати",
+      "printReceiptDescription": "Після оплати замовлення чек буде автоматично відправлений на друк.",
+      "disablePrintingGuestChecksLabel": "Заборона друку пречека",
+      "disablePrintingGuestChecksDescription": "Приховати кнопку друку пречека в додатку."
+    }
+  }
+}

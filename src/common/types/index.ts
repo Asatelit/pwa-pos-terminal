@@ -1,6 +1,6 @@
 export * from './items';
 export * from './category';
-export * from './terminalState';
+export * from './context';
 export * from './order';
 export * from './settings';
 export * from './taxes';

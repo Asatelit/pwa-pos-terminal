@@ -1,25 +1,26 @@
 import React, { Fragment, useState } from 'react';
-import { Order, Item, AppActions } from 'common/types';
-import { isExist, financial } from 'common/utils';
+import { Order, Item, AppActions, AppTranslationHelper } from 'common/types';
+import { isExist } from 'common/utils';
 import { CloseTwoTone, PlusTwoTone, MinusTwoTone } from 'common/icons';
 import styles from './itemEditor.module.css';
 
 type EditorProps = {
-  orderItemId: string | null;
+  translation: AppTranslationHelper;
   order: Order | null;
+  orderItemId: string | null;
   products: Item[];
   services: AppActions;
 };
 
-const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, services }) => {
+const ItemEditor: React.FC<EditorProps> = ({ translation, orderItemId, order, products, services }) => {
   const getCurrentItem = () => {
-    const index = orderItemId && order ? order.items.findIndex(items => orderItemId === items.id) : -1;
+    const index = orderItemId && order ? order.items.findIndex((items) => orderItemId === items.id) : -1;
     return order && isExist(index)
       ? {
           index,
           order,
           item: order.items[index],
-          instance: products.find(product => orderItemId === product.id) || null,
+          instance: products.find((product) => orderItemId === product.id) || null,
         }
       : null;
   };
@@ -33,6 +34,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
     return null;
   }
 
+  const { formatFinancial } = translation;
   const { item, instance, index } = state;
 
   // Helper that returns an updated order
@@ -66,7 +68,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
               </button>
               <div className={styles.itemInfo}>
                 <span className={styles.itemName}>{instance.name}</span>
-                <span className={styles.itemAmount}>{financial(item.quantity * item.price)}</span>
+                <span className={styles.itemAmount}>{formatFinancial(item.quantity * item.price)}</span>
               </div>
               <button className={styles.saveBtn} onClick={handleApply}>
                 Save
@@ -82,7 +84,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
                   type="number"
                   className={styles.qtyInput}
                   value={item.quantity}
-                  onChange={evt => handleQtyChange(parseInt(evt.target.value, 10) || 0)}
+                  onChange={(evt) => handleQtyChange(parseInt(evt.target.value, 10) || 0)}
                 />
                 <button className={styles.qtyBtn} onClick={handleQtyIncrement}>
                   <PlusTwoTone />
@@ -95,7 +97,7 @@ const ItemEditor: React.FC<EditorProps> = ({ orderItemId, order, products, servi
                   placeholder={'Add Note'}
                   className={styles.noteInput}
                   value={state.order.notes}
-                  onChange={evt => handleNotesChange(evt.target.value)}
+                  onChange={(evt) => handleNotesChange(evt.target.value)}
                 />
               </div>
               <button className={styles.removeBtn} onClick={handleRemove}>

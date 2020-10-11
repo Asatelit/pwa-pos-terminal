@@ -1,4 +1,4 @@
-import { AppState, Order, OrderItem, OrderStatuses } from 'common/types';
+import { AppState, Order, OrderItem, OrderStatuses, Item } from 'common/types';
 import { getTimestamp, generateId } from 'common/utils';
 
 export function getOrderEntity(state: AppState): Order {
@@ -18,7 +18,7 @@ export function getOrderEntity(state: AppState): Order {
     isTipIncluded: false,
     items: [],
     notes: '',
-    orderName: Math.max(...state.orders.map(order => order.orderName), 0) + 1,
+    orderName: Math.max(...state.orders.map((order) => order.orderName), 0) + 1,
     parentId: null,
     paymentMethodId: 0,
     rewardEarnedAmount: 0,
@@ -37,6 +37,20 @@ export function getOrderEntity(state: AppState): Order {
     totalRoundedAmount: 0,
     userId: state.currentUserId,
     appliedTaxes: [],
+  };
+}
+
+export function getOrderItemEntity(item: Item): OrderItem {
+  return {
+    taxAmount: 0,
+    includedTaxAmount: 0,
+    totalTaxAmount: 0,
+    id: item.id,
+    price: item.price,
+    quantity: 1,
+    variant: 0,
+    amount: item.price,
+    taxes: [],
   };
 }
 

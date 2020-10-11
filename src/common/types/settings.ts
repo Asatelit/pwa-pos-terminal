@@ -1,33 +1,34 @@
+import { WeekStartDays, CurrencyPosition } from 'common/enums';
+
 export type Settings = {
+  currency: string;
+  currencyPosition: CurrencyPosition;
+  weekStartsOn: WeekStartDays;
+  isDeniedPrintingGuestChecks: boolean;
+  lang: 'default' | string;
   logo: string;
   logoUrl: string;
   name: string;
-  useTables: boolean;
-  useKitchen: boolean;
-  usePromotions: boolean;
-  useFiscalization: boolean;
-  isAllowPrintCheck: boolean;
-  useFastPay: boolean;
-  wifiName: string;
-  wifiPass: string;
-  tipAmount: number;
+  paymentMethods: PaymentMethod[];
   predictions: string[];
-  printReceiptNumber: boolean;
   printAddress: boolean;
   printPrediction: boolean;
-  printReceiptDuplicate: boolean;
-  printCheckDuplicate: boolean;
-  printSumWeightOnReceipt: boolean;
   printReceipt: boolean;
   printReceiptByDefault: boolean;
-  printWifi: boolean;
   printReceiptComment: boolean;
-  lang: string;
+  printReceiptDuplicate: boolean;
+  printReceiptNumber: boolean;
+  printSumWeightOnReceipt: boolean;
+  printWifi: boolean;
   timezone: string;
-  currencyCodeIso: string;
-  currency: string;
-  currencySymbol: string;
-  paymentMethods: PaymentMethod[];
+  tipAmount: number;
+  useFastPay: boolean;
+  useFiscalization: boolean;
+  useKitchen: boolean;
+  usePromotions: boolean;
+  useTables: boolean;
+  wifiName: string;
+  wifiPass: string;
 };
 
 export type PaymentMethod = {

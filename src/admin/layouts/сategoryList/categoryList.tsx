@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
-import { getTextIdentifier } from 'common/utils';
-import { Routes, Entities } from 'common/const';
+import { getTextIdentifier, setDocumentTitle } from 'common/utils';
+import { Routes, Entities } from 'common/enums';
 import { Breadcrumbs } from 'common/components';
-import { APP_NAME } from 'config';
+import { CommonLayout } from '../index';
 import styles from './categoryList.module.css';
 
 type CreateItemFormProps = {
@@ -14,14 +15,16 @@ type CreateItemFormProps = {
 };
 
 const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) => {
-  useEffect(() => {
-    document.title = `${APP_NAME} | Admin | Category List`;
-  }, []);
-
   const [redirect, setRedirect] = useState('');
+  const { id } = useParams<{ id: string }>();
+  const [t] = useTranslation();
+
+  useEffect(() => {
+    const title = [t('admin.title'), t('admin.categories.title')];
+    setDocumentTitle(title);
+  }, [t]);
 
   // handle route params
-  const { id } = useParams<{id: string}>();
   const selectedCategoryId = id || Entities.RootCategoryId;
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   };
 
   const visibleCategories = categories.filter(
-    entity => !entity.isDeleted && !entity.isHidden && entity.parentId === selectedCategoryId,
+    (entity) => !entity.isDeleted && !entity.isHidden && entity.parentId === selectedCategoryId,
   );
 
   const renderPresenter = (category: Category) => {
@@ -68,43 +71,46 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   const renderCategory = (item: Category) => (
     <div key={`${item.id}`} className={styles.item} onClick={() => handleOnClickOnCategoryListItem(item.id)}>
       {renderPresenter(item)}
-      <div className={styles.name}>{item.name}</div>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
+      <div className={styles.name}>{item.name.replace('Home Screen', t('common.homeScreen'))}</div>
+      <button className="btn btn-link" onClick={(evt) => handleOnClickOnCategoryListItemEdit(evt, item.id)}>
         <EditSquareOutlineTwoTone />
       </button>
-      <button className={styles.iconBtn} onClick={evt => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
+      <button className="btn btn-link" onClick={(evt) => handleOnClickOnCategoryListItemDelete(evt, item.id)}>
         <TrashCanOutlineTwoTone />
       </button>
     </div>
   );
 
-  // render component
-  return (
-    <div className={styles.root}>
-      <div className={styles.head}>
-        <div className={styles.itemInfo}>
-          <span className={styles.itemName}>Category</span>
-        </div>
-        <Link className={styles.primaryBtn} to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}>
-          <PlusTwoTone />
-          <span>New Category</span>
-        </Link>
-      </div>
-      <div className={styles.body}>
-        <Breadcrumbs
-          className={styles.breadcrumbs}
-          categories={categories}
-          currentCategoryId={selectedCategoryId}
-          onChange={handleOnChangeBreadCrumbs}
-        />
-        {visibleCategories.length ? (
-          visibleCategories.map(item => renderCategory(item))
-        ) : (
-          <div className={styles.empty}>There are no items here.</div>
-        )}
-      </div>
-    </div>
+  const renderHead = (
+    <Fragment>
+      <div className={styles.title}>{t('admin.categories.title')}</div>
+      <Link
+        className="btn btn-primary"
+        to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
+      >
+        <PlusTwoTone />
+        <span>{t('admin.categories.addCategoryLabel')}</span>
+      </Link>
+    </Fragment>
   );
+
+  const renderBody = (
+    <Fragment>
+      <Breadcrumbs
+        className={styles.breadcrumbs}
+        categories={categories}
+        currentCategoryId={selectedCategoryId}
+        onChange={handleOnChangeBreadCrumbs}
+      />
+      {visibleCategories.length ? (
+        visibleCategories.map((item) => renderCategory(item))
+      ) : (
+        <div className={styles.empty}>{t('admin.categories.emptyListMessage')}</div>
+      )}
+    </Fragment>
+  );
+
+  return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
 export default CategoryList;

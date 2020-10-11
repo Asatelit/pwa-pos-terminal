@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { SvgIcon, SvgIconProps } from 'common/components';
 
-export default function ChevronLeftTwoTone(props: SvgIconProps) {
+export default function FolderTwoTone(props: SvgIconProps) {
   return (
     <SvgIcon {...props}>
       <Fragment>

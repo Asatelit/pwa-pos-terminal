@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeftTwoTone } from 'common/icons';
@@ -7,6 +7,7 @@ import { Routes } from 'common/enums';
 import { encodeImage, setDocumentTitle } from 'common/utils';
 import { getCategoryEntity, getCategoryById } from 'common/assets';
 import CategoryPicker from '../../components/categoryPicker/categoryPicker';
+import { CommonLayout } from '../index';
 import styles from './categoryEditor.module.css';
 
 type CategoryEditorProps = {
@@ -62,102 +63,105 @@ const CategoryEditor: React.FC<CategoryEditorProps> = ({ categories, actions, cr
     closeEditor();
   };
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.head}>
-        <button className="btn btn-link" onClick={handleOnClickOnClose}>
-          <ArrowLeftTwoTone />
-        </button>
-        <div className={styles.title}>
-          {t(createMode ? 'admin.categoryEditor.addTitle' : 'admin.categoryEditor.editTitle')}
+  const renderHead = (
+    <Fragment>
+      <button className="btn btn-link" onClick={handleOnClickOnClose}>
+        <ArrowLeftTwoTone />
+      </button>
+      <div className={styles.title}>
+        {t(createMode ? 'admin.categoryEditor.addTitle' : 'admin.categoryEditor.editTitle')}
+      </div>
+    </Fragment>
+  );
+
+  const renderBody = (
+    <form>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="CategoryEditorName">
+          {t('admin.categoryEditor.nameLabel')}
+        </label>
+        <input
+          id="CategoryEditorName"
+          type="text"
+          className="form-control"
+          value={data.name}
+          onChange={(evt) => updateData({ name: evt.target.value })}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="CategoryEditorCategory">
+          {t('admin.categoryEditor.categoryLabel')}
+        </label>
+        <div className={styles.controlGroup}>
+          <input
+            readOnly
+            type="text"
+            id="CategoryEditorCategory"
+            className={`form-control ${isPickerShown ? 'focus' : ''}`}
+            value={getParentCategory(data.parentId).name}
+            onClick={() => togglePicker(!isPickerShown)}
+          />
+          {isPickerShown && (
+            <CategoryPicker
+              removeMode={!createMode}
+              className={styles.picker}
+              categories={categories}
+              parent={data.parentId}
+              selected={data.id}
+              onChange={handleOnChangeCategoryPicker}
+              onClose={() => togglePicker(false)}
+            />
+          )}
         </div>
       </div>
-      <form className="container">
-        <div className="mb-4">
-          <label className="form-label" htmlFor="CategoryEditorName">
-            {t('admin.categoryEditor.nameLabel')}
-          </label>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="CategoryEditorColor">
+          {t('admin.categoryEditor.colorLabel')}
+        </label>
+        <select
+          id="CategoryEditorColor"
+          className="form-select w-auto"
+          value={data.color || 'transparent'}
+          onChange={(evt) => updateData({ color: evt.target.value })}
+        >
+          <optgroup label="Please specify the color">
+            <option value="transparent">Default</option>
+            <option value="salmon">Salmon</option>
+            <option value="red">Red</option>
+            <option value="coral">Coral</option>
+            <option value="tomato">Tomato</option>
+            <option value="gold">Gold</option>
+            <option value="orange">Orange</option>
+          </optgroup>
+        </select>
+      </div>
+      <div className="mb-4">
+        <label className="form-label" htmlFor="CategoryEditorPicture">
+          {t('admin.categoryEditor.imageLabel')}
+        </label>
+        {!data.picture && (
           <input
-            id="CategoryEditorName"
-            type="text"
+            id="CategoryEditorPicture"
+            type="file"
             className="form-control"
-            value={data.name}
-            onChange={(evt) => updateData({ name: evt.target.value })}
+            onChange={(evt) => encodeImage(evt, (picture) => updateData({ picture }))}
           />
-        </div>
-        <div className="mb-4">
-          <label className="form-label" htmlFor="CategoryEditorCategory">
-            {t('admin.categoryEditor.categoryLabel')}
-          </label>
-          <div className={styles.controlGroup}>
-            <input
-              readOnly
-              type="text"
-              id="CategoryEditorCategory"
-              className={`form-control ${isPickerShown ? 'focus' : ''}`}
-              value={getParentCategory(data.parentId).name}
-              onClick={() => togglePicker(!isPickerShown)}
-            />
-            {isPickerShown && (
-              <CategoryPicker
-                removeMode={!createMode}
-                className={styles.picker}
-                categories={categories}
-                parent={data.parentId}
-                selected={data.id}
-                onChange={handleOnChangeCategoryPicker}
-                onClose={() => togglePicker(false)}
-              />
-            )}
-          </div>
-        </div>
-        <div className="mb-4">
-          <label className="form-label" htmlFor="CategoryEditorColor">
-            {t('admin.categoryEditor.colorLabel')}
-          </label>
-          <select
-            id="CategoryEditorColor"
-            className="form-select w-auto"
-            value={data.color || 'transparent'}
-            onChange={(evt) => updateData({ color: evt.target.value })}
-          >
-            <optgroup label="Please specify the color">
-              <option value="transparent">Default</option>
-              <option value="salmon">Salmon</option>
-              <option value="red">Red</option>
-              <option value="coral">Coral</option>
-              <option value="tomato">Tomato</option>
-              <option value="gold">Gold</option>
-              <option value="orange">Orange</option>
-            </optgroup>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="form-label" htmlFor="CategoryEditorPicture">
-            {t('admin.categoryEditor.imageLabel')}
-          </label>
-          {!data.picture && (
-            <input
-              id="CategoryEditorPicture"
-              type="file"
-              className="form-control"
-              onChange={(evt) => encodeImage(evt, (picture) => updateData({ picture }))}
-            />
-          )}
-          {!!data.picture && (
-            <button className="btn btn-secondary" onClick={() => updateData({ picture: '' })}>
-              {t('common.remove')}
-            </button>
-          )}
-        </div>
-        <div className="mb-4">
-          <button className="btn btn-primary" disabled={hasInvalidData} onClick={handleOnClickOnPrimaryAction}>
-            {!createMode ? t('common.update') : t('common.add')}
+        )}
+        {!!data.picture && (
+          <button className="btn btn-secondary" onClick={() => updateData({ picture: '' })}>
+            {t('common.remove')}
           </button>
-        </div>
-      </form>
-    </div>
+        )}
+      </div>
+      <div className="mb-4">
+        <button className="btn btn-primary" disabled={hasInvalidData} onClick={handleOnClickOnPrimaryAction}>
+          {!createMode ? t('common.update') : t('common.add')}
+        </button>
+      </div>
+    </form>
   );
+
+  return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
 export default CategoryEditor;

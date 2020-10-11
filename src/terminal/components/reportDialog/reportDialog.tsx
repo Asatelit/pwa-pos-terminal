@@ -1,22 +1,22 @@
 import React, { Fragment, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { startOfToday, endOfToday, lightFormat, differenceInCalendarDays } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
 import { AppViews, AppTranslationHelper } from 'common/types';
+import { WeekStartDays } from 'common/enums';
 import { CloseTwoTone, CalendarRangeTwoTone } from 'common/icons';
 import { getStaticRanges, getInputRanges } from './predefinedDateRanges';
 import styles from './reportDialog.module.css';
 
 type ReportDialogProps = {
-  translation: AppTranslationHelper;
   onClose: () => void;
   onPrint: (report: JSX.Element) => void;
+  translation: AppTranslationHelper;
   views: AppViews;
+  weekStartDay: WeekStartDays;
 };
 
-const ReportDialog: React.FC<ReportDialogProps> = ({ translation, views, onClose, onPrint }) => {
-  const [t] = useTranslation();
-  const { formatFinancial, locale } = translation;
+const ReportDialog: React.FC<ReportDialogProps> = ({ translation, views, onClose, onPrint, weekStartDay }) => {
+  const { formatFinancial, locale, t } = translation;
   const [isReporting, setIsReporting] = useState(true);
   const [selectionRange, setSelectionRange] = useState({
     startDate: startOfToday(),
@@ -60,13 +60,14 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ translation, views, onClose
     <DateRangePicker
       className={styles.dateRange}
       direction="horizontal"
+      howSelectionPreview={false}
       inputRanges={getInputRanges(t)}
       locale={locale}
       months={2}
-      ranges={[selectionRange]}
-      showSelectionPreview={false}
-      staticRanges={getStaticRanges(t)}
       onChange={(e: any) => setSelectionRange(e.selection)}
+      ranges={[selectionRange]}
+      staticRanges={getStaticRanges(t)}
+      weekStartsOn={weekStartDay === WeekStartDays.Auto ? undefined : weekStartDay}
     />
   );
 

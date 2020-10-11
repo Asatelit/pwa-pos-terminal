@@ -43,7 +43,7 @@ const TaxList: React.FC<TaxListProps> = ({ taxes, actions }) => {
   const renderHead = (
     <Fragment>
       <div className={styles.title}>{t('admin.taxes.title')}</div>
-      <Link className="btn btn-primary ml-2 mr-4" to={Routes.AdminTaxCreate}>
+      <Link className="btn btn-primary" to={Routes.AdminTaxCreate}>
         <PlusTwoTone />
         <span>{t('admin.taxes.addItemLabel')}</span>
       </Link>

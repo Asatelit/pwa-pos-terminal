@@ -1,4 +1,4 @@
-import { Entities, CurrencyPosition, FirstDayOfTheWeek } from 'common/enums';
+import { Entities, CurrencyPosition, WeekStartDays } from 'common/enums';
 import {
   AppContext,
   AppContextResponseArray,
@@ -13,7 +13,7 @@ import {
 export const INIT_SETTINGS: Settings = {
   currency: '$',
   currencyPosition: CurrencyPosition.Right,
-  firstDayOfTheWeek: FirstDayOfTheWeek.Monday,
+  weekStartsOn: WeekStartDays.Auto,
   isDeniedPrintingGuestChecks: false,
   lang: 'default',
   logo: '',

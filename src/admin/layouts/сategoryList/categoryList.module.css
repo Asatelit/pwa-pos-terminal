@@ -1,13 +1,5 @@
 @value moduleHeight: 4rem;
 
-.head {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: moduleHeight;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
 .title {
   flex: 1 1 auto;
   display: flex;
@@ -15,7 +7,6 @@
   align-items: center;
   font-size: 1.5rem;
   font-weight: 600;
-  padding: 0 2rem;
   user-select: none;
 }
 

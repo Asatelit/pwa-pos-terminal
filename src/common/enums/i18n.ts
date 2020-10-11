@@ -3,8 +3,9 @@ export enum CurrencyPosition {
   Right = 'right',
 }
 
-export enum FirstDayOfTheWeek {
-  Sunday = 'sunday',
-  Monday = 'monday',
-  Saturday = 'saturday',
+export enum WeekStartDays {
+  Auto = -1,
+  Monday = 1,
+  Saturday = 6,
+  Sunday = 0,
 }

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Settings as AppSettings, AppActions } from 'common/types';
-import { CurrencyPosition } from 'common/enums';
+import { CurrencyPosition, WeekStartDays } from 'common/enums';
 import { setDocumentTitle, languageList } from 'common/utils';
 import { I18nContext } from 'common/contexts';
 import { APP_NAME } from 'config';
@@ -114,12 +114,13 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
       c: (
         <select
           className="form-select w-auto pr-5"
-          value={settings.lang}
-          onChange={(evt) => actions.settings.update({ currency: evt.target.value })}
+          value={settings.weekStartsOn}
+          onChange={(evt) => actions.settings.update({ weekStartsOn: parseInt(evt.target.value, 10) })}
         >
-          <option value="sunday">{t('common.weekdays.sunday')}</option>
-          <option value="monday">{t('common.weekdays.monday')}</option>
-          <option value="saturday">{t('common.weekdays.saturday')}</option>
+          <option value={WeekStartDays.Auto}>{t('common.browserDefault')}</option>
+          <option value={WeekStartDays.Sunday}>{t('common.weekdays.sunday')}</option>
+          <option value={WeekStartDays.Monday}>{t('common.weekdays.monday')}</option>
+          <option value={WeekStartDays.Saturday}>{t('common.weekdays.saturday')}</option>
         </select>
       ),
     },

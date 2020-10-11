@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from 'common/enums';
 import { getCategoryById } from 'common/assets';
+import { CommonLayout } from '../index';
 import { Category, Item, AppActions, AppTranslationHelper } from 'common/types';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
 import { getTextIdentifier, setDocumentTitle } from 'common/utils';
@@ -59,24 +60,27 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, actions, transla
 
   const itemList = items.filter((item) => !item.isDeleted);
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.head}>
-        <div className={styles.title}>{t('admin.items.title')}</div>
-        <Link className="btn btn-primary ml-2 mr-4" to={Routes.AdminItemCreate}>
-          <PlusTwoTone />
-          <span>{t('admin.items.addItemLabel')}</span>
-        </Link>
-      </div>
-      <div className={styles.body}>
-        {itemList.length ? (
-          itemList.map((item) => renderItem(item))
-        ) : (
-          <div className={styles.empty}>{t('admin.items.emptyListMessage')}</div>
-        )}
-      </div>
-    </div>
+  const renderHead = (
+    <Fragment>
+      <div className={styles.title}>{t('admin.items.title')}</div>
+      <Link className="btn btn-primary ml-2 mr-4" to={Routes.AdminItemCreate}>
+        <PlusTwoTone />
+        <span>{t('admin.items.addItemLabel')}</span>
+      </Link>
+    </Fragment>
   );
+
+  const renderBody = (
+    <Fragment>
+      {itemList.length ? (
+        itemList.map((item) => renderItem(item))
+      ) : (
+        <div className={styles.empty}>{t('admin.items.emptyListMessage')}</div>
+      )}
+    </Fragment>
+  );
+
+  return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
 export default ItemList;

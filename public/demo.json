@@ -391,11 +391,11 @@
     }
   ],
   "settings": {
-    "firstDayOfTheWeek": "sunday",
+    "weekStartsOn": -1,
     "currency": "$",
     "currencyPosition": "right",
     "isDeniedPrintingGuestChecks": false,
-    "lang": "",
+    "lang": "default",
     "logo": "",
     "logoUrl": "",
     "name": "Pesto Cafe",

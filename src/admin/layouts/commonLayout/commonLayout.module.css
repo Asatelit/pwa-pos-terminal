@@ -1,5 +1,8 @@
 .head {
+  position: sticky;
+  top: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--palette-background-paper);
 }
 
 .primary {

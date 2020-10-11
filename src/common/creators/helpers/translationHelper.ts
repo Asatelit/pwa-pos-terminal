@@ -30,7 +30,7 @@ export const createTranslationHelper: CreateTranslationHelper = (state, translat
     t,
 
     /** The locale code */
-    locale: dateDnsLocales,
+    locale,
 
     /** Formats a number using fixed-point notation. The result may vary by locale. */
     formatFinancial: (num = 0) => {

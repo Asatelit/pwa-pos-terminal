@@ -72,6 +72,7 @@ const Terminal: React.FC = () => {
       onClose={() => updateState({ isOpenReportDialog: false })}
       onPrint={printComponent}
       translation={translation}
+      weekStartDay={settings.weekStartsOn}
     />
   );
 

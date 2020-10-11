@@ -1,9 +1,9 @@
-import { FirstDayOfTheWeek, CurrencyPosition } from 'common/enums';
+import { WeekStartDays, CurrencyPosition } from 'common/enums';
 
 export type Settings = {
   currency: string;
   currencyPosition: CurrencyPosition;
-  firstDayOfTheWeek: FirstDayOfTheWeek;
+  weekStartsOn: WeekStartDays;
   isDeniedPrintingGuestChecks: boolean;
   lang: 'default' | string;
   logo: string;

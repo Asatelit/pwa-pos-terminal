@@ -7,7 +7,7 @@ import { LoadScreen } from 'common/components';
 import Terminal from './terminal/terminal';
 import Admin from './admin/admin';
 import * as serviceWorker from './serviceWorker';
-import './common/locales/i18n';
+import './i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';

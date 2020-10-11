@@ -48,7 +48,7 @@ const TaxEditor: React.FC<TaxEditorProps> = ({ taxes, actions }) => {
 
   const renderHead = (
     <Fragment>
-      <Link className="btn btn-link ml-2 mr-2" to={Routes.AdminTaxList}>
+      <Link className="btn btn-link" to={Routes.AdminTaxList}>
         <ArrowLeftTwoTone />
       </Link>
       <div className={styles.title}>

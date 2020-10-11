@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
@@ -6,6 +6,7 @@ import { Category, AppActions } from 'common/types';
 import { getTextIdentifier, setDocumentTitle } from 'common/utils';
 import { Routes, Entities } from 'common/enums';
 import { Breadcrumbs } from 'common/components';
+import { CommonLayout } from '../index';
 import styles from './categoryList.module.css';
 
 type CreateItemFormProps = {
@@ -80,34 +81,36 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
     </div>
   );
 
-  // render component
-  return (
-    <div className={styles.root}>
-      <div className={styles.head}>
-        <div className={styles.title}>{t('admin.categories.title')}</div>
-        <Link
-          className="btn btn-primary ml-2 mr-4"
-          to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
-        >
-          <PlusTwoTone />
-          <span>{t('admin.categories.addCategoryLabel')}</span>
-        </Link>
-      </div>
-      <div className={styles.body}>
-        <Breadcrumbs
-          className={styles.breadcrumbs}
-          categories={categories}
-          currentCategoryId={selectedCategoryId}
-          onChange={handleOnChangeBreadCrumbs}
-        />
-        {visibleCategories.length ? (
-          visibleCategories.map((item) => renderCategory(item))
-        ) : (
-          <div className={styles.empty}>{t('admin.categories.emptyListMessage')}</div>
-        )}
-      </div>
-    </div>
+  const renderHead = (
+    <Fragment>
+      <div className={styles.title}>{t('admin.categories.title')}</div>
+      <Link
+        className="btn btn-primary"
+        to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
+      >
+        <PlusTwoTone />
+        <span>{t('admin.categories.addCategoryLabel')}</span>
+      </Link>
+    </Fragment>
   );
+
+  const renderBody = (
+    <Fragment>
+      <Breadcrumbs
+        className={styles.breadcrumbs}
+        categories={categories}
+        currentCategoryId={selectedCategoryId}
+        onChange={handleOnChangeBreadCrumbs}
+      />
+      {visibleCategories.length ? (
+        visibleCategories.map((item) => renderCategory(item))
+      ) : (
+        <div className={styles.empty}>{t('admin.categories.emptyListMessage')}</div>
+      )}
+    </Fragment>
+  );
+
+  return <CommonLayout head={renderHead} body={renderBody} />;
 };
 
 export default CategoryList;

@@ -29,14 +29,14 @@
     "react-router-dom": "5.2.0"
   },
   "devDependencies": {
-    "@testing-library/dom": "^7.24.4",
+    "@testing-library/dom": "^7.24.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@testing-library/user-event": "^12.1.7",
     "@trust/webcrypto": "^0.9.2",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.5",
+    "@types/node": "^14.11.8",
     "@types/ramda": "types/npm-ramda#dist",
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",

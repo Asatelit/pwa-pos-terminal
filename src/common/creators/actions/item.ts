@@ -11,7 +11,12 @@ function updateItem(item: Item): Item {
 export const createItemActions: Action<ItemActions> = (state, updateState) => ({
   select: (itemId) => updateState({ currentItemId: itemId }),
 
-  add: (item) => updateState({ items: [...state.items, getItemEntity(item)] }),
+  add: (item) => {
+    console.info(state);
+    const createdItem = getItemEntity(item);
+    updateState({ items: [...state.items, createdItem] });
+    return createdItem;
+  },
 
   update: (item) => {
     const restItems = [...state.items.filter((entity) => entity.id !== item.id)];

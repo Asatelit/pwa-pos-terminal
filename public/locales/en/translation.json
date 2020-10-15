@@ -32,7 +32,16 @@
       "thisMonth": "This Month",
       "lastMonth": "Last Month",
       "daysUpToToday": "days up to today",
-      "daysStartingToday": "days starting today"
+      "daysStartingToday": "days starting today",
+      "7days": "Last 7 days",
+      "14days": "Last 14 days",
+      "28days": "Last 28 days",
+      "30days": "Last 30 days",
+      "60days": "Last 60 days",
+      "90days": "Last 90 days",
+      "12months": "Last 12 months",
+      "thisYear": "This year (january - today)",
+      "lastYear": "last year"
     },
     "default": "Default",
     "delete": "Delete",

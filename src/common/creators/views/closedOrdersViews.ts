@@ -1,27 +1,30 @@
-import {
-  pipe,
-  filter,
-  groupBy,
-  prop,
-  curry,
-  reduce,
-  chain,
-  merge,
-  sum,
-  pluck,
-  indexBy,
-  mapObjIndexed,
-  Merge,
-} from 'ramda';
-import { parseJSON, isWithinInterval } from 'date-fns';
+import { pipe, filter, groupBy, prop, curry, reduce, chain, merge, indexBy, mapObjIndexed, map, Merge } from 'ramda';
+import { parseJSON, startOfDay, endOfDay, isWithinInterval, eachDayOfInterval } from 'date-fns';
 import { View, ClosedOrder, ClosedOrderItem, Item } from 'common/types';
+import { medianByProp, sumByProp } from 'common/utils/ramda';
 
 type DateRange = { start: number | Date; end: number | Date };
+
 type ItemData = {
   quantity: number;
   amount: number;
   roundedAmount: number;
   taxAmount: number;
+};
+
+type CommonTotalResponse = {
+  receipts: number;
+  profit: number;
+  revenue: number;
+  median: number;
+};
+
+type CommonTotalResponseWithDate = CommonTotalResponse & {
+  date: Date;
+};
+
+export type TotalDataByDateRangeResponse = CommonTotalResponse & {
+  daily: CommonTotalResponseWithDate[];
 };
 
 export type ClosedOrderViews = {
@@ -31,12 +34,16 @@ export type ClosedOrderViews = {
     items: { [key: string]: ItemData };
     summary: ItemData;
   };
+  getTotalDataByDateRange: (dataRange: DateRange) => TotalDataByDateRangeResponse;
+  getDataByDateRange: (dataRange: DateRange) => ClosedOrder[];
+  getDailyTotal: (day: Date) => CommonTotalResponse;
 };
 
 // Helpers
 const groupByName = groupBy(prop('name'));
-const sumByProp = <T>(prop: string, list: T[]) => sum(pluck(prop, list));
+const getDayInterval = (day: Date) => ({ start: startOfDay(day), end: endOfDay(day) });
 const mapOrderItems = reduce((acc: ClosedOrderItem[], { items }) => acc.concat(items), []);
+
 const filterByDateRange = ({ start, end }: DateRange) =>
   filter<ClosedOrder>(({ dateClose }) => isWithinInterval(parseJSON(dateClose), { start, end }));
 
@@ -75,5 +82,41 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
     };
 
     return { summary, items: summaryItems };
+  },
+
+  getTotalDataByDateRange: (dateRange: DateRange) => {
+    const orders = filterByDateRange(dateRange)(state.closedOrders);
+    const getData = (day: Date) => {
+      const data = filterByDateRange(getDayInterval(day))(orders);
+      return {
+        date: day,
+        receipts: data.length,
+        profit: sumByProp('profit', data),
+        revenue: sumByProp('totalAmount', data),
+        median: medianByProp('totalAmount', data),
+      };
+    };
+
+    return {
+      receipts: orders.length,
+      profit: sumByProp('profit', orders),
+      revenue: sumByProp('totalAmount', orders),
+      median: medianByProp('totalAmount', orders),
+      daily: map(getData, eachDayOfInterval(dateRange)),
+    };
+  },
+
+  getDailyTotal: (day) => {
+    const data = filterByDateRange(getDayInterval(day))(state.closedOrders);
+    return {
+      receipts: data.length,
+      profit: sumByProp('profit', data),
+      revenue: sumByProp('totalAmount', data),
+      median: medianByProp('totalAmount', data),
+    };
+  },
+
+  getDataByDateRange: (dateRange: DateRange) => {
+    return filterByDateRange(dateRange)(state.closedOrders);
   },
 });

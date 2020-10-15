@@ -19,8 +19,17 @@ export function isExist(findIndex: number): boolean {
   return findIndex > -1;
 }
 
-export function getTimestamp(): number {
-  return new Date().valueOf();
+/** Getting a random integer between two values.
+ *  The maximum is inclusive and the minimum is inclusive.
+ *  */
+export function getRandomInt(min: number, max: number) {
+  const minValue = Math.ceil(min);
+  const maxValue = Math.floor(max);
+  return Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
+}
+
+export function getTimestamp(date: Date = new Date()): number {
+  return date.valueOf();
 }
 
 export function generateId(): string {

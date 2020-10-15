@@ -9,7 +9,7 @@ import { Dashboard, Settings, CategoryEditor, CategoryList, ItemList, ItemEditor
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
-  const { state: context, actions, helpers } = useContext(appContext);
+  const { state: context, actions, helpers, views } = useContext(appContext);
   const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
   const { translation } = helpers;
   const { t } = translation;
@@ -23,7 +23,7 @@ const Admin: React.FC = () => {
 
   // prettier-ignore
   const routes = [
-    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} translation={translation} /> },
+    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} translation={translation} views={views} /> },
     { path: R.AdminCategoryList, c: <CategoryList categories={categories} actions={actions} /> },
     { path: R.AdminCategoryEdit, c: <CategoryEditor categories={categories} actions={actions} /> },
     { path: R.AdminCategoryCreate, c: <CategoryEditor createMode categories={categories} actions={actions} /> },

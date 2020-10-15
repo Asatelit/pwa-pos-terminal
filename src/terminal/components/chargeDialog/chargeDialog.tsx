@@ -41,6 +41,7 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({
   const [ref, setRef] = useState<string>('');
   const [state, setState] = useState({ cardPaymentAmount: '0', cashPaymentAmount: '0' });
   const [redirect, setRedirect] = useState('');
+  const [closingReason, setClosingReason] = useState(OrderClosingReasons.Default);
   const { formatFinancial } = translation;
 
   // handle redirect
@@ -61,48 +62,42 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({
   const changeAmount = totalPaymentAmount - order.totalAmount;
   const hasChange = changeAmount > 0;
 
-  const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
-    const costPrice = items.find((item) => item.id === entity.id)?.costPrice || 0;
-    const amount = entity.quantity * entity.price;
-    const item: ClosedOrderItem = {
-      ...entity,
-      costPrice,
-      amount,
-      profit: amount - entity.quantity * costPrice,
-      roundedAmount: round(entity.quantity * entity.price),
-      isWeighing: false,
-      isNonDiscounted: false,
-    };
-    return item;
-  });
-
-  const closedOrder: ClosedOrder = {
-    ...order,
-    cardPaymentAmount,
-    cashPaymentAmount,
-    totalPaymentAmount,
-    isDiscounted: false,
-    customerId: 0,
-    status: OrderStatuses.Closed,
-    closingReason: OrderClosingReasons.Default,
-    cashChange: changeAmount,
-    totalRoundedAmount: calcSum(closedOrderItems, 'roundedAmount'),
-    profit: calcSum(closedOrderItems, 'profit'),
-    items: closedOrderItems,
-  };
-
   // handlers
 
   const closeDialog = () => setRedirect(Routes.Terminal);
 
   const handleChargeOrder = () => {
-    services.orders.charge({ ...closedOrder, cashChange: hasChange ? changeAmount : 0 }, order.id);
+    services.orders.charge(
+      {
+        cardPaymentAmount,
+        cashPaymentAmount,
+        closingReason,
+        totalPaymentAmount,
+        isDiscounted: false,
+        customerId: 0,
+        status: OrderStatuses.Closed,
+        cashChange: hasChange ? changeAmount : 0,
+      },
+      order.id,
+    );
     if (settings.printReceipt) onPrintReceit(order.id);
     closeDialog();
   };
 
-  const handleCloseWithoutPayment = (closingReason: OrderClosingReasons) => {
-    services.orders.charge({ ...closedOrder, closingReason }, order.id);
+  const handleCloseWithoutPayment = () => {
+    services.orders.charge(
+      {
+        cardPaymentAmount,
+        cashPaymentAmount,
+        closingReason,
+        totalPaymentAmount,
+        isDiscounted: false,
+        customerId: 0,
+        status: OrderStatuses.Closed,
+        cashChange: hasChange ? changeAmount : 0,
+      },
+      order.id,
+    );
     closeDialog();
   };
 
@@ -169,7 +164,10 @@ const ChargeDialog: React.FC<ChargeDialogProps> = ({
                   <select
                     className={styles.btnSecondary}
                     value={OrderClosingReasons.Default}
-                    onChange={(evt) => handleCloseWithoutPayment(parseInt(evt.target.value, 10))}
+                    onChange={(evt) => {
+                      setClosingReason(parseInt(evt.target.value, 10));
+                      handleCloseWithoutPayment();
+                    }}
                   >
                     <optgroup label={t('common.closeWithoutPayment.hint')}>
                       <option hidden value={OrderClosingReasons.Default}>

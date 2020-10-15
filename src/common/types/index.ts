@@ -5,3 +5,5 @@ export * from './order';
 export * from './settings';
 export * from './taxes';
 export * from './common';
+export * from './misc';
+

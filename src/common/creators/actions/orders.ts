@@ -1,13 +1,49 @@
+import { sumByProp } from 'common/utils/ramda';
 import { getTaxes } from 'common/assets/tax';
 import { isExist, getTimestamp, calcSum, round } from 'common/utils';
-import { OrdersActions, Action, ClosedOrder, Order, OrderStatuses, AppState, OrderItem, TaxRecord } from 'common/types';
 import {
-  getOrderEntity,
-  getOrderItemEntity,
+  Action,
+  AppState,
+  ClosedOrder,
+  ClosedOrderItem,
+  Item,
+  Optional,
+  Order,
+  OrderItem,
+  OrderStatuses,
+  TaxRecord,
+} from 'common/types';
+import {
   createOrder,
+  getOrderEntity,
   getOrderIndexById,
+  getOrderItemEntity,
   getOrderItemIndexById,
 } from 'common/assets/order';
+
+export type OrderChargeAction = (
+  closedOrder: Pick<
+    Optional<ClosedOrder, 'dateClose'>,
+    | 'cardPaymentAmount'
+    | 'cashChange'
+    | 'cashPaymentAmount'
+    | 'closingReason'
+    | 'customerId'
+    | 'dateClose'
+    | 'isDiscounted'
+    | 'status'
+    | 'totalPaymentAmount'
+  >,
+  orderId: string,
+) => ClosedOrder;
+
+export type OrdersActions = {
+  add: () => Order;
+  addItem: (product: Item, orderId?: string) => void;
+  charge: OrderChargeAction;
+  select: (orderId: string) => void;
+  updateSelected: (order: Order) => void;
+};
 
 function update(order: Order, state: AppState): Order {
   const updOrder = { ...order };
@@ -64,9 +100,9 @@ function update(order: Order, state: AppState): Order {
 
 export const createOrdersActions: Action<OrdersActions> = (state, updateState) => ({
   // Adds the selected item to the current order
-  addItem: (orderItem) => {
+  addItem: (orderItem, orderId = undefined) => {
     const updOrders = [...state.orders];
-    let orderIndex = getOrderIndexById(updOrders, state.currentOrderId);
+    let orderIndex = getOrderIndexById(updOrders, orderId || state.currentOrderId);
 
     // If the order does not exist create a new one
     if (!isExist(orderIndex)) {
@@ -93,14 +129,40 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
   },
 
   // Order Closing
-  charge: (order, orderId) => {
-    const closedOrder: ClosedOrder = { ...order, dateUpdated: getTimestamp(), dateClose: getTimestamp() };
-    const currentOrder = state.orders.find((order) => order.id === orderId);
-    if (!currentOrder) throw new Error('The specified order does not exist');
+  charge: (data, orderId) => {
+    const order = state.orders.find((order) => order.id === orderId);
+
+    if (!order) throw new Error('The specified order does not exist');
+
+    const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
+      const costPrice = state.items.find((item) => item.id === entity.id)?.costPrice || 0;
+      const amount = entity.quantity * entity.price;
+      const item: ClosedOrderItem = {
+        ...entity,
+        costPrice,
+        amount,
+        profit: amount - entity.quantity * costPrice,
+        roundedAmount: round(entity.quantity * entity.price),
+        isWeighing: false,
+        isNonDiscounted: false,
+      };
+      return item;
+    });
+
+    const closedOrder: ClosedOrder = {
+      ...order,
+      ...data,
+      items: closedOrderItems,
+      dateUpdated: getTimestamp(),
+      dateClose: data.dateClose || getTimestamp(),
+      profit: sumByProp('profit', closedOrderItems),
+      totalRoundedAmount: sumByProp('roundedAmount', closedOrderItems),
+    };
+
     const updOrders = [
       ...state.orders.filter((order) => order.id !== orderId),
       {
-        ...currentOrder,
+        ...order,
         status: OrderStatuses.Closed,
         dateClose: getTimestamp(),
         dateUpdated: getTimestamp(),
@@ -108,6 +170,7 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
     ];
     const updClosedOrders: ClosedOrder[] = [closedOrder, ...state.closedOrders];
     updateState({ orders: updOrders, closedOrders: updClosedOrders, currentItemId: null, currentOrderId: null });
+    return closedOrder;
   },
 
   // Updates current order data
@@ -127,6 +190,7 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
   add: () => {
     const [updOrders, updOrder] = createOrder(state);
     updateState({ orders: updOrders, currentOrderId: updOrder.id });
+    return updOrder;
   },
 
   select: (orderId: string | null) => updateState({ currentOrderId: orderId }),

@@ -41,7 +41,9 @@
       "90days": "Last 90 days",
       "12months": "Last 12 months",
       "thisYear": "This year (january - today)",
-      "lastYear": "last year"
+      "lastYear": "last year",
+      "currentPeriod": "Current Period",
+      "previousPeriod": "Previous Period"
     },
     "default": "Default",
     "delete": "Delete",

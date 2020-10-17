@@ -1,5 +1,15 @@
 import { pipe, filter, groupBy, prop, curry, reduce, chain, merge, indexBy, mapObjIndexed, map, Merge } from 'ramda';
-import { parseJSON, startOfDay, endOfDay, isWithinInterval, eachDayOfInterval } from 'date-fns';
+import {
+  eachDayOfInterval,
+  eachHourOfInterval,
+  endOfDay,
+  format,
+  getDay,
+  getHours,
+  isWithinInterval,
+  parseJSON,
+  startOfDay,
+} from 'date-fns';
 import { View, ClosedOrder, ClosedOrderItem, Item } from 'common/types';
 import { medianByProp, sumByProp } from 'common/utils/ramda';
 
@@ -19,12 +29,14 @@ type CommonTotalResponse = {
   median: number;
 };
 
-type CommonTotalResponseWithDate = CommonTotalResponse & {
-  date: Date;
-};
+type CommonTotalResponseWithDate = CommonTotalResponse & { date: Date };
+type CommonTotalResponseWithHour = CommonTotalResponse & { date: string };
+type CommonTotalResponseWithWeekday = CommonTotalResponse & { weekday: number };
 
 export type TotalDataByDateRangeResponse = CommonTotalResponse & {
-  daily: CommonTotalResponseWithDate[];
+  groupedByDay: CommonTotalResponseWithDate[];
+  groupedByHour: CommonTotalResponseWithHour[];
+  groupedByWeekday: CommonTotalResponseWithWeekday[];
 };
 
 export type ClosedOrderViews = {
@@ -47,6 +59,12 @@ const mapOrderItems = reduce((acc: ClosedOrderItem[], { items }) => acc.concat(i
 const filterByDateRange = ({ start, end }: DateRange) =>
   filter<ClosedOrder>(({ dateClose }) => isWithinInterval(parseJSON(dateClose), { start, end }));
 
+const filterByHour = (date: Date) =>
+  filter<ClosedOrder>(({ dateClose }) => getHours(parseJSON(dateClose)) === getHours(date));
+
+const filterByWeekday = (weekday: number) =>
+  filter<ClosedOrder>(({ dateClose }) => getDay(parseJSON(dateClose)) === weekday);
+
 const joinInnerById = (target: Item[]) =>
   curry((source: ClosedOrderItem[]): Merge<ClosedOrderItem, Item>[] => {
     const byId = prop('id');
@@ -59,7 +77,7 @@ const joinInnerById = (target: Item[]) =>
 
 // Main
 export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
-  getItemsByDateRange: (dateRange: DateRange) => {
+  getItemsByDateRange: (dateRange) => {
     const getItemSummary = mapObjIndexed((num: number, key: string, obj: any) => {
       const data = obj[key];
       return {
@@ -84,16 +102,38 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
     return { summary, items: summaryItems };
   },
 
-  getTotalDataByDateRange: (dateRange: DateRange) => {
+  getTotalDataByDateRange: (dateRange) => {
+    const weekdays = [0, 1, 2, 3, 4, 5, 6]; // the day of week, 0 represents Sunday
     const orders = filterByDateRange(dateRange)(state.closedOrders);
-    const getData = (day: Date) => {
+
+    const getCommonData = (data: ClosedOrder[]): CommonTotalResponse => ({
+      receipts: data.length,
+      profit: sumByProp('profit', data),
+      revenue: sumByProp('totalAmount', data),
+      median: medianByProp('totalAmount', data),
+    });
+
+    const groupByDay = (day: Date) => {
       const data = filterByDateRange(getDayInterval(day))(orders);
       return {
         date: day,
-        receipts: data.length,
-        profit: sumByProp('profit', data),
-        revenue: sumByProp('totalAmount', data),
-        median: medianByProp('totalAmount', data),
+        ...getCommonData(data),
+      };
+    };
+
+    const groupByHour = (date: Date) => {
+      const data = filterByHour(date)(orders);
+      return {
+        date: format(date, 'HH:mm'),
+        ...getCommonData(data),
+      };
+    };
+
+    const groupByWeekday = (weekday: number) => {
+      const data = filterByWeekday(weekday)(orders);
+      return {
+        weekday,
+        ...getCommonData(data),
       };
     };
 
@@ -102,7 +142,9 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
       profit: sumByProp('profit', orders),
       revenue: sumByProp('totalAmount', orders),
       median: medianByProp('totalAmount', orders),
-      daily: map(getData, eachDayOfInterval(dateRange)),
+      groupedByDay: map(groupByDay, eachDayOfInterval(dateRange)),
+      groupedByHour: map(groupByHour, eachHourOfInterval(getDayInterval(new Date()))),
+      groupedByWeekday: map(groupByWeekday, weekdays),
     };
   },
 
@@ -116,7 +158,7 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
     };
   },
 
-  getDataByDateRange: (dateRange: DateRange) => {
+  getDataByDateRange: (dateRange) => {
     return filterByDateRange(dateRange)(state.closedOrders);
   },
 });

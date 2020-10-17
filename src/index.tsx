@@ -8,10 +8,10 @@ import Terminal from './terminal/terminal';
 import Admin from './admin/admin';
 import * as serviceWorker from './serviceWorker';
 import './i18n';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './bootstrap.scss';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import './colors.css';
+import './colors.scss';
 import './index.css';
 
 const NoMatch = () => (

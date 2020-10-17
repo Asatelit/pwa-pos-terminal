@@ -1,4 +1,4 @@
-import { format, startOfWeek, endOfWeek, startOfYear, endOfYear, Locale } from 'date-fns';
+import { format, startOfWeek, endOfWeek, Locale } from 'date-fns';
 import { i18n, TFunction } from 'i18next';
 import { AppState, Locales, SupportedLocales } from 'common/types';
 import { CurrencyPosition, WeekStartDays } from 'common/enums';

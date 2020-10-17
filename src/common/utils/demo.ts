@@ -1,4 +1,4 @@
-import { subDays, eachDayOfInterval } from 'date-fns';
+import { subDays, eachDayOfInterval, addHours } from 'date-fns';
 import { Entities } from 'common/enums';
 import { INIT_STATE } from 'common/assets';
 import { getRandomInt, sumByProp, getTimestamp } from 'common/utils';
@@ -128,20 +128,20 @@ export function getDemoData(): AppState {
     },
   ];
 
+itemsList.forEach((entity) => items().add(entity));
+
   const dateRange = { start: subDays(new Date(), 180), end: new Date() };
   const rangeDays = eachDayOfInterval(dateRange);
-
-  itemsList.forEach((entity) => items().add(entity));
 
   rangeDays.forEach((day) => {
     const itemsList = state().items;
     const itemsCount = itemsList.length - 1;
-    const itemIdx = Array.from({ length: getRandomInt(1, itemsCount) }, () => getRandomInt(0, itemsCount));
+    const itemIds = Array.from({ length: getRandomInt(1, itemsCount) }, () => getRandomInt(0, itemsCount));
 
     for (let i = 1; i < getRandomInt(1, 30); i += 1) {
       const order = orders().add();
 
-      itemIdx.forEach((itemId) => orders().addItem(itemsList[itemId], order.id));
+      itemIds.forEach((itemId) => orders().addItem(itemsList[itemId], order.id));
 
       const paymentAmount = sumByProp('amount', order.items);
 
@@ -155,7 +155,7 @@ export function getDemoData(): AppState {
           isDiscounted: false,
           status: OrderStatuses.Closed,
           totalPaymentAmount: paymentAmount,
-          dateClose: getTimestamp(day),
+          dateClose: getTimestamp(addHours(day, getRandomInt(0, 23))),
         },
         order.id,
       );

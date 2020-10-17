@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 import {
   AppActions,
   AppTranslationHelper,
-  ClosedOrder,
-  ClosedOrderItem,
   Item,
   Order,
   OrderClosingReasons,
@@ -13,7 +11,6 @@ import {
   Settings,
 } from 'common/types';
 import { ArrowLeftTwoTone } from 'common/icons';
-import { round, calcSum } from 'common/utils';
 import { getOrderById } from 'common/assets';
 import { Routes } from 'common/enums';
 import { Numpad } from '../index';
@@ -31,7 +28,6 @@ type ChargeDialogProps = {
 const ChargeDialog: React.FC<ChargeDialogProps> = ({
   translation,
   orders,
-  items,
   services,
   onPrintReceit,
   settings,

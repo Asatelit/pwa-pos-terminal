@@ -81,8 +81,21 @@
     "yes": "Да",
     "weekdays": {
       "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
       "saturday": "Суббота",
-      "sunday": "Воскресенье"
+      "sunday": "Воскресенье",
+      "short": {
+        "monday": "Пн.",
+        "tuesday": "Вт.",
+        "wednesday": "Ср.",
+        "thursday": "Чт.",
+        "friday": "Пт.",
+        "saturday": "Сб.",
+        "sunday": "Вс."
+      }
     }
   },
   "terminal": {
@@ -114,11 +127,13 @@
     "dashboard": {
       "title": "Статистика продаж",
       "salesWidget": {
-        "today": "Сегодня,",
-        "revenue": "выручка",
-        "profit": "прибыль",
-        "receipts": "чеки",
-        "average": "средний чек"
+        "averageSaleLabel": "Средний чек",
+        "grossSalesLabel": "Выручка",
+        "heatmapTitle": "по дням недели и часам",
+        "netSalesLabel": "Прибыль",
+        "salesLabel": "Чеки",
+        "salesSummaryOverviewTitle": "Сводный отчёт о продажах",
+        "todayLabel": "Сегодня,"
       }
     },
     "categories": {

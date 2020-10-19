@@ -2,6 +2,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.2.4-alpha (2020-10-18)
+
+v0.2.4-alpha is a minor release that adds new features, including an updated dashboard with a set of charts to display detailed sales information for the period. It also includes a fix for some issues with displaying the application in Safari browser for IOS as well as other bug fixes.
+
+#### :rocket: New Feature
+- Add sales performance chart.
+
 ## 0.2.3-alpha (2020-10-11)
 
 v0.2.3-alpha is a minor release that adds new feature along with documentation updates.

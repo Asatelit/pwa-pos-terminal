@@ -23,20 +23,50 @@ type ItemData = {
 };
 
 type CommonTotalResponse = {
-  receipts: number;
-  profit: number;
-  revenue: number;
-  median: number;
+  sales: number;
+  grossSales: number;
+  netSales: number;
+  averageSale: number;
+};
+
+// prettier-ignore
+type HeatmapByWeekdayAndHour = {
+  weekday: string;
+  hour_00_averageSale: number; hour_00_grossSales: number; hour_00_netSales: number; hour_00_sales: number;
+  hour_01_averageSale: number; hour_01_grossSales: number; hour_01_netSales: number; hour_01_sales: number;
+  hour_02_averageSale: number; hour_02_grossSales: number; hour_02_netSales: number; hour_02_sales: number;
+  hour_03_averageSale: number; hour_03_grossSales: number; hour_03_netSales: number; hour_03_sales: number;
+  hour_04_averageSale: number; hour_04_grossSales: number; hour_04_netSales: number; hour_04_sales: number;
+  hour_05_averageSale: number; hour_05_grossSales: number; hour_05_netSales: number; hour_05_sales: number;
+  hour_06_averageSale: number; hour_06_grossSales: number; hour_06_netSales: number; hour_06_sales: number;
+  hour_07_averageSale: number; hour_07_grossSales: number; hour_07_netSales: number; hour_07_sales: number;
+  hour_08_averageSale: number; hour_08_grossSales: number; hour_08_netSales: number; hour_08_sales: number;
+  hour_09_averageSale: number; hour_09_grossSales: number; hour_09_netSales: number; hour_09_sales: number;
+  hour_10_averageSale: number; hour_10_grossSales: number; hour_10_netSales: number; hour_10_sales: number;
+  hour_11_averageSale: number; hour_11_grossSales: number; hour_11_netSales: number; hour_11_sales: number;
+  hour_12_averageSale: number; hour_12_grossSales: number; hour_12_netSales: number; hour_12_sales: number;
+  hour_13_averageSale: number; hour_13_grossSales: number; hour_13_netSales: number; hour_13_sales: number;
+  hour_14_averageSale: number; hour_14_grossSales: number; hour_14_netSales: number; hour_14_sales: number;
+  hour_15_averageSale: number; hour_15_grossSales: number; hour_15_netSales: number; hour_15_sales: number;
+  hour_16_averageSale: number; hour_16_grossSales: number; hour_16_netSales: number; hour_16_sales: number;
+  hour_17_averageSale: number; hour_17_grossSales: number; hour_17_netSales: number; hour_17_sales: number;
+  hour_18_averageSale: number; hour_18_grossSales: number; hour_18_netSales: number; hour_18_sales: number;
+  hour_19_averageSale: number; hour_19_grossSales: number; hour_19_netSales: number; hour_19_sales: number;
+  hour_20_averageSale: number; hour_20_grossSales: number; hour_20_netSales: number; hour_20_sales: number;
+  hour_21_averageSale: number; hour_21_grossSales: number; hour_21_netSales: number; hour_21_sales: number;
+  hour_22_averageSale: number; hour_22_grossSales: number; hour_22_netSales: number; hour_22_sales: number;
+  hour_23_averageSale: number; hour_23_grossSales: number; hour_23_netSales: number; hour_23_sales: number;
 };
 
 type CommonTotalResponseWithDate = CommonTotalResponse & { date: Date };
-type CommonTotalResponseWithHour = CommonTotalResponse & { date: string };
-type CommonTotalResponseWithWeekday = CommonTotalResponse & { weekday: number };
+type CommonTotalResponseWithHour = CommonTotalResponse & { hour: string };
+type CommonTotalResponseWithWeekday = CommonTotalResponse & { weekday: string };
 
 export type TotalDataByDateRangeResponse = CommonTotalResponse & {
   groupedByDay: CommonTotalResponseWithDate[];
   groupedByHour: CommonTotalResponseWithHour[];
   groupedByWeekday: CommonTotalResponseWithWeekday[];
+  heatmapByWeekdayAndHour: HeatmapByWeekdayAndHour[];
 };
 
 export type ClosedOrderViews = {
@@ -103,14 +133,16 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
   },
 
   getTotalDataByDateRange: (dateRange) => {
-    const weekdays = [0, 1, 2, 3, 4, 5, 6]; // the day of week, 0 represents Sunday
+    const weekdays = [0, 1, 2, 3, 4, 5, 6]; // the day of week
     const orders = filterByDateRange(dateRange)(state.closedOrders);
 
+    const getIntervalOfEachHour = eachHourOfInterval(getDayInterval(new Date()));
+
     const getCommonData = (data: ClosedOrder[]): CommonTotalResponse => ({
-      receipts: data.length,
-      profit: sumByProp('profit', data),
-      revenue: sumByProp('totalAmount', data),
-      median: medianByProp('totalAmount', data),
+      sales: data.length,
+      grossSales: sumByProp('totalAmount', data),
+      netSales: sumByProp('profit', data),
+      averageSale: medianByProp('totalAmount', data),
     });
 
     const groupByDay = (day: Date) => {
@@ -121,10 +153,10 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
       };
     };
 
-    const groupByHour = (date: Date) => {
-      const data = filterByHour(date)(orders);
+    const groupByHour = ({ date, sales = orders }: { date: Date; sales?: ClosedOrder[] }) => {
+      const data = filterByHour(date)(sales);
       return {
-        date: format(date, 'HH:mm'),
+        hour: format(date, 'H'),
         ...getCommonData(data),
       };
     };
@@ -132,29 +164,50 @@ export const createClosedOrdersViews: View<ClosedOrderViews> = (state) => ({
     const groupByWeekday = (weekday: number) => {
       const data = filterByWeekday(weekday)(orders);
       return {
-        weekday,
+        weekday: weekday.toString(10),
         ...getCommonData(data),
       };
     };
 
+    const groupByWeekdayAndHour = (weekday: number): HeatmapByWeekdayAndHour => {
+      const data = {};
+      const weekdaySales = filterByWeekday(weekday)(orders);
+      const hoursSales = map(
+        groupByHour,
+        getIntervalOfEachHour.map((date) => ({ date, sales: weekdaySales })),
+      );
+      hoursSales.forEach((item) => {
+        Object.keys(item).forEach((key) => {
+          if (key !== 'hour') {
+            Object.assign(data, { ...data, [`hour_${item.hour}_${key}`]: item[key] });
+          }
+        });
+      });
+      return { ...data, weekday: weekday.toString(10)} as any;
+    };
+
     return {
-      receipts: orders.length,
-      profit: sumByProp('profit', orders),
-      revenue: sumByProp('totalAmount', orders),
-      median: medianByProp('totalAmount', orders),
+      sales: orders.length,
+      grossSales: sumByProp('profit', orders),
+      netSales: sumByProp('totalAmount', orders),
+      averageSale: medianByProp('totalAmount', orders),
       groupedByDay: map(groupByDay, eachDayOfInterval(dateRange)),
-      groupedByHour: map(groupByHour, eachHourOfInterval(getDayInterval(new Date()))),
+      groupedByHour: map(
+        groupByHour,
+        getIntervalOfEachHour.map((date) => ({ date })),
+      ),
       groupedByWeekday: map(groupByWeekday, weekdays),
+      heatmapByWeekdayAndHour: map(groupByWeekdayAndHour, weekdays),
     };
   },
 
   getDailyTotal: (day) => {
     const data = filterByDateRange(getDayInterval(day))(state.closedOrders);
     return {
-      receipts: data.length,
-      profit: sumByProp('profit', data),
-      revenue: sumByProp('totalAmount', data),
-      median: medianByProp('totalAmount', data),
+      sales: data.length,
+      grossSales: sumByProp('profit', data),
+      netSales: sumByProp('totalAmount', data),
+      averageSale: medianByProp('totalAmount', data),
     };
   },
 

@@ -1,20 +1,14 @@
-import { startOfDay, subDays, addDays, getDaysInYear, startOfYear, endOfYear, differenceInDays, format } from 'date-fns';
+import { startOfDay, subDays, addDays, differenceInDays } from 'date-fns';
 import { AppTranslationHelper, DateRange } from 'common/types';
 import { Serie } from '@nivo/line';
 
-export type DashboardChartType = 'revenue' | 'profit' | 'receipts' | 'median';
+export type DashboardChartType = 'netSales' | 'grossSales' | 'sales' | 'averageSale';
 
-export type DashboardRangeType =
-  | 'currentWeek'
-  | 'lastWeek'
-  | 'd7'
-  | 'd14'
-  | 'd28'
-  | 'd30'
-  | 'd90'
-  | 'm12'
-  | 'lastYear'
-  | 'currentYear';
+export type DashboardRangeType = 'currentWeek' | 'lastWeek' | 'd7' | 'd14' | 'd28' | 'd30';
+//  | 'd90'
+//  | 'm12'
+//  | 'lastYear'
+//  | 'currentYear'
 
 export type RangesData = (
   translation: AppTranslationHelper,
@@ -22,10 +16,18 @@ export type RangesData = (
   [key in DashboardRangeType]: { label: string; currentPeriodRange: DateRange; previousPeriodRange: DateRange };
 };
 
+type PeriodData = {
+  date: Date;
+  sales: number;
+  grossSales: number;
+  netSales: number;
+  averageSale: number;
+};
+
 export type SeriesData = (
   translation: AppTranslationHelper,
-  currentPeriodData: { date: Date; median: number; receipts: number; revenue: number; profit: number }[],
-  previousPeriodData?: { date: Date; median: number; receipts: number; revenue: number; profit: number }[],
+  currentPeriodData: PeriodData[],
+  previousPeriodData?: PeriodData[],
 ) => {
   [key in DashboardChartType]: Serie[];
 };
@@ -39,7 +41,10 @@ export const getRangesList: RangesData = ({ t, startOfWeek }) => {
     currentWeek: {
       label: t('common.dateRanges.thisWeek'),
       currentPeriodRange: { start: startOfDay(startOfWeek(today)), end: today },
-      previousPeriodRange: { start: startOfDay(startOfPreviosWeek(today)), end: addDays(startOfPreviosWeek(today), differenceInDays(today, startOfWeek(today))) },
+      previousPeriodRange: {
+        start: startOfDay(startOfPreviosWeek(today)),
+        end: addDays(startOfPreviosWeek(today), differenceInDays(today, startOfWeek(today))),
+      },
     },
     lastWeek: {
       label: t('common.dateRanges.lastWeek'),
@@ -66,45 +71,41 @@ export const getRangesList: RangesData = ({ t, startOfWeek }) => {
       currentPeriodRange: { start: startOfDay(subDays(today, 29)), end: today },
       previousPeriodRange: { start: startOfDay(subDays(today, 60)), end: subDays(today, 31) },
     },
-    d90: {
-      label: t('common.dateRanges.90days'),
-      currentPeriodRange: { start: startOfDay(subDays(today, 89)), end: today },
-      previousPeriodRange: { start: startOfDay(subDays(today, 180)), end: subDays(today, 91) },
-    },
-    m12: {
-      label: t('common.dateRanges.12months'),
-      currentPeriodRange: { start: startOfDay(subDays(today, getDaysInYear(today))), end: today },
-      previousPeriodRange: { start: startOfDay(subDays(today, getDaysInYear(today) * 2)), end: subDays(today, getDaysInYear(today)) },
-    },
-    lastYear: {
-      label: t('common.dateRanges.thisYear'),
-      currentPeriodRange: { start: startOfDay(startOfYear(today)), end: endOfYear(today) },
-      previousPeriodRange: { start: startOfDay(subDays(startOfYear(today), getDaysInYear(today))), end: subDays(endOfYear(today), getDaysInYear(today)) },
-    },
-    currentYear: {
-      label: t('common.dateRanges.lastYear'),
-      currentPeriodRange: { start: startOfDay(startOfYear(today)), end: today },
-      previousPeriodRange: { start: startOfDay(subDays(startOfYear(today), getDaysInYear(today))), end: subDays(today, getDaysInYear(today)) },
-    },
+    // d90: {
+    //   label: t('common.dateRanges.90days'),
+    //   currentPeriodRange: { start: startOfDay(subDays(today, 89)), end: today },
+    //   previousPeriodRange: { start: startOfDay(subDays(today, 180)), end: subDays(today, 91) },
+    // },
+    // m12: {
+    //   label: t('common.dateRanges.12months'),
+    //   currentPeriodRange: { start: startOfDay(subDays(today, getDaysInYear(today))), end: today },
+    //   previousPeriodRange: { start: startOfDay(subDays(today, getDaysInYear(today) * 2)), end: subDays(today, getDaysInYear(today)) },
+    // },
+    // lastYear: {
+    //   label: t('common.dateRanges.thisYear'),
+    //   currentPeriodRange: { start: startOfDay(startOfYear(today)), end: endOfYear(today) },
+    //   previousPeriodRange: { start: startOfDay(subDays(startOfYear(today), getDaysInYear(today))), end: subDays(endOfYear(today), getDaysInYear(today)) },
+    // },
+    // currentYear: {
+    //   label: t('common.dateRanges.lastYear'),
+    //   currentPeriodRange: { start: startOfDay(startOfYear(today)), end: today },
+    //   previousPeriodRange: { start: startOfDay(subDays(startOfYear(today), getDaysInYear(today))), end: subDays(today, getDaysInYear(today)) },
+    // },
   };
 };
 
-export const getSeriesData: SeriesData = (
-  { t, formatFinancial },
-  currentPeriodData,
-  previousPeriodData = [],
-) => {
+export const getSeriesData: SeriesData = ({ t, formatFinancial }, currentPeriodData, previousPeriodData = []) => {
   const currentPeriodLabel = t('common.dateRanges.currentPeriod');
   const previosPeriodLabel = t('common.dateRanges.previousPeriod');
 
   return {
-    profit: [
+    grossSales: [
       {
         key: 'current',
         id: currentPeriodLabel,
         data: currentPeriodData.map((order) => ({
           x: order.date,
-          y: formatFinancial(order.profit),
+          y: formatFinancial(order.grossSales),
         })),
       },
       {
@@ -112,17 +113,17 @@ export const getSeriesData: SeriesData = (
         id: previosPeriodLabel,
         data: previousPeriodData.map((order, index) => ({
           x: currentPeriodData[index].date,
-          y: formatFinancial(order.profit),
+          y: formatFinancial(order.grossSales),
         })),
       },
     ],
-    revenue: [
+    netSales: [
       {
         key: 'current',
         id: currentPeriodLabel,
         data: currentPeriodData.map((order) => ({
           x: order.date,
-          y: formatFinancial(order.revenue),
+          y: formatFinancial(order.netSales),
         })),
       },
       {
@@ -130,17 +131,17 @@ export const getSeriesData: SeriesData = (
         id: previosPeriodLabel,
         data: previousPeriodData.map((order, index) => ({
           x: currentPeriodData[index].date,
-          y: formatFinancial(order.revenue),
+          y: formatFinancial(order.netSales),
         })),
       },
     ],
-    median: [
+    averageSale: [
       {
         key: 'current',
         id: currentPeriodLabel,
         data: currentPeriodData.map((order) => ({
           x: order.date,
-          y: formatFinancial(order.median),
+          y: formatFinancial(order.averageSale),
         })),
       },
       {
@@ -148,17 +149,17 @@ export const getSeriesData: SeriesData = (
         id: previosPeriodLabel,
         data: previousPeriodData.map((order, index) => ({
           x: currentPeriodData[index].date,
-          y: formatFinancial(order.median),
+          y: formatFinancial(order.averageSale),
         })),
       },
     ],
-    receipts: [
+    sales: [
       {
         key: 'current',
         id: currentPeriodLabel,
         data: currentPeriodData.map((order) => ({
           x: order.date,
-          y: order.receipts,
+          y: order.sales,
         })),
       },
       {
@@ -166,7 +167,7 @@ export const getSeriesData: SeriesData = (
         id: previosPeriodLabel,
         data: previousPeriodData.map((order, index) => ({
           x: currentPeriodData[index].date,
-          y: formatFinancial(order.receipts),
+          y: formatFinancial(order.sales),
         })),
       },
     ],

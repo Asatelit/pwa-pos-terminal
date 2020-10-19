@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from 'react';
 import { Locales, SupportedLocales } from 'common/types';
 import { I18N_PATH } from 'config';
 
-
 export type I18nContextType = {
   supportedLocales: SupportedLocales;
   dateDnsLocales: Locales;

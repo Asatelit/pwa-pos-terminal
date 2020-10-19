@@ -46,7 +46,7 @@ export const AppContextProvider: React.FC = ({ children }) => {
       // Load data to display the application in demo mode
       if (IS_DEMO_MODE) demoData = getDemoData();
       // Rehydrate the app state
-      const state = await readContextFromLocalStorage(INIT_CONTEXT[0]);
+      const state = await readContextFromLocalStorage(INIT_STATE);
       // Setting up user preference settings
       if (state.settings.lang !== 'default') i18n.changeLanguage(state.settings.lang);
       // Update the app state

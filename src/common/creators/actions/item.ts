@@ -12,7 +12,6 @@ export const createItemActions: Action<ItemActions> = (state, updateState) => ({
   select: (itemId) => updateState({ currentItemId: itemId }),
 
   add: (item) => {
-    console.info(state);
     const createdItem = getItemEntity(item);
     updateState({ items: [...state.items, createdItem] });
     return createdItem;

@@ -1,7 +1,7 @@
 .root {
   display: inline-flex;
   flex-direction: column;
-  width: 150px;
+  width: 120px;
   margin-bottom: .5rem;
   margin-right: .5rem;
   position: relative;
@@ -9,7 +9,8 @@
   cursor: pointer;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.18);
   border-radius: .25rem;
-  background-color: white;
+  background-color: var(--palette-background-paper);
+  overflow: hidden;
   user-select: none;
 }
 
@@ -22,7 +23,7 @@
   font-size: 3rem;
   text-transform: uppercase;
   letter-spacing: .015em;
-  height: 150px;
+  height: 120px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

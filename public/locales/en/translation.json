@@ -81,8 +81,21 @@
     "yes": "Yes",
     "weekdays": {
       "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
       "saturday": "Saturday",
-      "sunday": "Sunday"
+      "sunday": "Sunday",
+      "short": {
+        "monday": "Mon.",
+        "tuesday": "Tue.",
+        "wednesday": "Wed.",
+        "thursday": "Thu.",
+        "friday": "Fri.",
+        "saturday": "Sat.",
+        "sunday": "Sun."
+      }
     }
   },
   "terminal": {
@@ -114,11 +127,13 @@
     "dashboard": {
       "title": "Dashboard",
       "salesWidget": {
-        "today": "Today,",
-        "revenue": "revenue",
-        "profit": "profit",
-        "receipts": "receipts",
-        "average": "average"
+        "averageSaleLabel": "Average Sale",
+        "grossSalesLabel": "Gross Sales",
+        "heatmapTitle": "by Day Of Week & Hour Of Day",
+        "netSalesLabel": "Net Sales",
+        "salesLabel": "Sales",
+        "salesSummaryOverviewTitle": "Sales Summary: Overview",
+        "todayLabel": "Today,"
       }
     },
     "categories": {

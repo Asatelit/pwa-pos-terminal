@@ -32,9 +32,12 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
     setDocumentTitle(title);
   }, [t]);
 
+  console.info(settings);
+
   const handleOnChangeOfLanguagePreference = (isoCode: string) => {
     const lng = isoCode === 'default' ? '' : isoCode;
-    i18n.changeLanguage(lng).then(() => {
+    i18n.changeLanguage(lng).then((e) => {
+      console.info(i18n);
       actions.settings.update({ lang: isoCode });
     });
   };

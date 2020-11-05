@@ -134,8 +134,6 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
 
     if (!order) throw new Error('The specified order does not exist');
 
-    console.info(data);
-
     const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
       const costPrice = state.items.find((item) => item.id === entity.id)?.costPrice || 0;
       const amount = entity.quantity * entity.price;

@@ -66,7 +66,6 @@ export const AppContextProvider: React.FC = ({ children }) => {
         },
       };
       // Update the app state
-      console.info(demoData, process.env);
       setState({ ...state, ...demoData, isLoading: false });
     })();
   }, [i18n]);

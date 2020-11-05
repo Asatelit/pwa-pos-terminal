@@ -2,7 +2,7 @@ import { subDays, eachDayOfInterval, addHours } from 'date-fns';
 import { Entities } from 'common/enums';
 import { INIT_STATE } from 'common/assets';
 import { getRandomInt, sumByProp, getTimestamp } from 'common/utils';
-import { AppState, Item, OrderStatuses, OrderClosingReasons } from 'common/types';
+import { AppState, Item, OrderClosingReasons } from 'common/types';
 import { createItemActions, createCategoryActions, createTaxActions, createOrdersActions } from 'common/creators';
 import * as I from './images';
 

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import { unformat, formatMoney } from 'accounting';
 import { useTranslation } from 'react-i18next';
-import { AppActions, AppTranslationHelper, Item, Order, OrderClosingReasons, Settings } from 'common/types';
+import { AppActions, Item, Order, OrderClosingReasons, Settings } from 'common/types';
 import { ArrowLeftTwoTone } from 'common/icons';
 import { Routes } from 'common/enums';
 import { Numpad } from '../index';

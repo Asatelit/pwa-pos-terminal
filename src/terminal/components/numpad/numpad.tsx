@@ -23,12 +23,16 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
 
   const suggestion = expected === 0 ? [] : denominations.filter((item) => item.amount >= expected);
 
+  const onKeyPress = (e: KeyboardEvent) => {
+    if (allowedKeys.includes(e.key)) handleChangeValue(e.key);
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', onKeyPress, false);
     return () => {
       document.removeEventListener('keydown', onKeyPress, false);
     };
-  }, [value]);
+  }, [value, onKeyPress]);
 
   const handleChangeValue = (key: string) => {
     let result;
@@ -51,10 +55,6 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
     const tenths = amount.substring(amount.length - 2);
 
     onChange(`${integers}.${tenths}`);
-  };
-
-  const onKeyPress = (e: KeyboardEvent) => {
-    if (allowedKeys.includes(e.key)) handleChangeValue(e.key);
   };
 
   return (

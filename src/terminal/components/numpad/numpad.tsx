@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { formatMoney, toFixed } from 'accounting';
 import { BackspaceOutlineTwoTone } from 'common/icons/index';
 import styles from './numpad.module.css';
@@ -22,7 +22,7 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
 
   const suggestion = expected === 0 ? [] : denominations.filter((item) => item.amount >= expected);
 
-  const handleChangeValue = (key: string) => {
+  const handleChangeValue = useCallback((key: string) => {
     let result;
     const pure = value.split('.').join('');
 
@@ -36,7 +36,7 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
     const tenths = result.substring(result.length - 2);
 
     onChange(`${integers}.${tenths}`);
-  };
+  }, [onChange, value]);
 
   useEffect(() => {
     const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace'];

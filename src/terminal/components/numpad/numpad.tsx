@@ -10,7 +10,6 @@ type NumpadProps = {
 };
 
 const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 }) => {
-  const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace'];
   const denominations = [
     { amount: 1, value: '100' },
     { amount: 2, value: '200' },
@@ -22,18 +21,6 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
   ];
 
   const suggestion = expected === 0 ? [] : denominations.filter((item) => item.amount >= expected);
-
-  useEffect(() => {
-    const onKeyPress = (e: KeyboardEvent) => {
-      if (allowedKeys.includes(e.key)) handleChangeValue(e.key);
-    };
-
-    document.addEventListener('keydown', onKeyPress, false);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyPress, false);
-    };
-  }, [value]);
 
   const handleChangeValue = (key: string) => {
     let result;
@@ -50,6 +37,19 @@ const Numpad: React.FC<NumpadProps> = ({ onChange, value = '0.00', expected = 0 
 
     onChange(`${integers}.${tenths}`);
   };
+
+  useEffect(() => {
+    const allowedKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace'];
+    const onKeyPress = (e: KeyboardEvent) => {
+      if (allowedKeys.includes(e.key)) handleChangeValue(e.key);
+    };
+
+    document.addEventListener('keydown', onKeyPress, false);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyPress, false);
+    };
+  }, [value, handleChangeValue]);
 
   const onClickOnSuggestion = (amount: string) => {
     const integers = amount.slice(0, -2);

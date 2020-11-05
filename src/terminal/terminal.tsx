@@ -15,7 +15,7 @@ type TerminalState = {
 };
 
 const Terminal: React.FC = () => {
-  const [context, services, views, helpers] = useContext(appContext);
+  const [context, actions, views, helpers] = useContext(appContext);
   const [state, setState] = useState<TerminalState>({
     isOpenReceiptsDialog: false,
     isOpenReportDialog: false,
@@ -49,7 +49,7 @@ const Terminal: React.FC = () => {
       order={currentOrder}
       orderItemId={currentItemId}
       products={items}
-      services={services}
+      services={actions}
       translation={translation}
     />
   );
@@ -59,7 +59,7 @@ const Terminal: React.FC = () => {
     <ReceiptsDialog
       orders={orders}
       orderId={currentOrderId}
-      services={services}
+      services={actions}
       tranaslation={translation}
       onClose={() => updateState({ isOpenReceiptsDialog: false })}
     />
@@ -85,9 +85,8 @@ const Terminal: React.FC = () => {
           <ChargeDialog
             items={items}
             orders={orders}
-            services={services}
+            actions={actions}
             onPrintReceit={handlePrintReceipt}
-            translation={translation}
             settings={settings}
           />
         </Route>
@@ -104,7 +103,7 @@ const Terminal: React.FC = () => {
               onShowReceipts={() => updateState({ isOpenReceiptsDialog: true })}
               order={currentOrder}
               orderId={currentOrderId}
-              services={services}
+              services={actions}
               isPrintable={!settings.isDeniedPrintingGuestChecks}
             />
             <div className={styles.items}>
@@ -117,7 +116,7 @@ const Terminal: React.FC = () => {
                 currentCategoryId={currentCategoryId}
                 translation={translation}
                 items={items}
-                services={services}
+                services={actions}
               />
             </div>
           </div>

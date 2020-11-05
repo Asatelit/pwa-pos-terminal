@@ -63,12 +63,6 @@ export function createOrder(state: AppState): [Order[], Order, number] {
   return [updOrders, updOrder, orderIndex];
 }
 
-export function getOrderById(orders: Order[], orderId: string | null): Order {
-  const order = orders.find((entity) => orderId === entity.id);
-  if (!order) throw new Error('The specified order does not exist');
-  return order;
-}
-
 export function getOrderIndexById(orders: Order[], orderId: string | null): number {
   return orders.findIndex((order) => orderId === order.id);
 }

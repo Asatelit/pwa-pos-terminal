@@ -1,9 +1,11 @@
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   font-size: .875rem;
   min-width: 368px;
+  box-shadow: var(--palette-shadow-3);
 }
 @media screen and (min-width: 1366px) {
   .root { min-width: 394px; }
@@ -100,12 +102,6 @@
   white-space: nowrap;
 }
 
-.charge {
-  composes: buttonPrimary from '../../../common/styles/button.module.css';
-  text-decoration: none;
-  width: 100%;
-}
-
 .receiptsBtn {
   composes: buttonTransparent from '../../../common/styles/button.module.css';
   font-size: 1rem;
@@ -119,23 +115,6 @@
 }
 
 .receiptsIcon {
-  opacity: .5;
-}
-
-.secondaryBtn {
-  composes: buttonTransparent from '../../../common/styles/button.module.css';
-  border: 1px solid lightgrey;
-  font-size: 1rem;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  opacity: .8;
-  margin-right: .25rem;
-}
-.secondaryBtn:not([disabled]):hover {
-  opacity: 1;
-}
-.secondaryBtn[disabled] {
   opacity: .5;
 }
 

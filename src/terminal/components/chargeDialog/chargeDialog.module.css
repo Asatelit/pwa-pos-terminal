@@ -47,8 +47,6 @@
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.25rem;
   outline: 0;
   overflow: hidden;
 }
@@ -79,14 +77,14 @@
   margin-left: 6px;
 }
 
-.itemInfo {
+.title {
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .body {
@@ -123,11 +121,12 @@
   height: 3rem;
   padding: 0 0.75rem;
   margin-bottom: 1rem;
-  border: 1px solid #aaaaaa;
+  border: 1px solid var(--palette-grey-100);
   border-radius: 2px;
 }
 
-.control:focus-within {
+.control:focus-within,
+.control.focused {
   color: #495057;
   background-color: #fff;
   border-color: #80bdff;
@@ -136,46 +135,29 @@
 }
 
 .controlLabel {
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
   white-space: nowrap;
   font-size: 1.25rem;
   user-select: none;
+  color: var(--palette-text-secondary);
 }
 
 .controlInput {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex: 0 0 auto;
   font-size: 1.5rem;
   text-align: right;
   border: none;
   outline: none;
 }
 
-.btnPrimary {
-  composes: buttonPrimary from '../../../common/styles/button.module.css';
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-radius: 0.3rem;
-}
-
-.btnSecondary {
-  composes: buttonLink from '../../../common/styles/button.module.css';
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-radius: 0.3rem;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-
-.btnSecondary optgroup {
-  font-size: 1.142rem;
-}
-
 .orderFoot {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1rem;
@@ -186,13 +168,11 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  background-color: #dae0e5;
+  background-color: var(--palette-grey-100);
   min-width: 350px;
   max-width: 500px;
 }
 
 .numpad {
-  flex: 1 1 auto;
-  max-height: 400px;
   padding: 2rem;
 }

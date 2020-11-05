@@ -8,14 +8,22 @@
   user-select: none;
 }
 
+.chart {
+  margin: 0 0 1.5rem;
+  background-color: var(--palette-background-paper);
+  border: 1px solid var(--palette-grey-300);
+  border-top: none;
+}
+
 .widget {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
   min-height: 5rem;
-  background-color: #edf8ff;
-  border-radius: .25rem;
+  background-color: var(--palette-background-paper);
+  border: 1px solid var(--palette-grey-300);
+  border-radius: 0.25rem;
   padding: 0 2rem;
   font-size: 0.8125rem;
 }

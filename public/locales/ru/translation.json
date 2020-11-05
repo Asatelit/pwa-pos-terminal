@@ -32,7 +32,18 @@
       "thisMonth": "Текущий месяц",
       "lastMonth": "Предыдущий месяц",
       "daysUpToToday": "дней до текущей даты",
-      "daysStartingToday": "дней от текущей даты"
+      "daysStartingToday": "дней от текущей даты",
+      "7days": "За последние 7 дней",
+      "14days": "За последние 14 дней",
+      "28days": "За последние 28 дней",
+      "30days": "За последние 30 дней",
+      "60days": "За последние 60 дней",
+      "90days": "За последние 90 дней",
+      "12months": "За последние 12 месяцев",
+      "thisYear": "Этот год (январь - сегодня)",
+      "lastYear": "Прошлый год",
+      "currentPeriod": "Текущий период",
+      "previousPeriod": "Предыдущий период"
     },
     "default": "По умолчанию",
     "delete": "Удалить",
@@ -41,6 +52,9 @@
     "each": "за 1 ед.",
     "edit": "Редактировать",
     "enabled": "Включённый",
+    "errors": {
+      "orderNotFound": "Запрашиваемый заказ не найден."
+    },
     "homeScreen": "Главный экран",
     "item": "Товар",
     "new": "Новый",
@@ -70,8 +84,21 @@
     "yes": "Да",
     "weekdays": {
       "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
       "saturday": "Суббота",
-      "sunday": "Воскресенье"
+      "sunday": "Воскресенье",
+      "short": {
+        "monday": "Пн.",
+        "tuesday": "Вт.",
+        "wednesday": "Ср.",
+        "thursday": "Чт.",
+        "friday": "Пт.",
+        "saturday": "Сб.",
+        "sunday": "Вс."
+      }
     }
   },
   "terminal": {
@@ -103,11 +130,13 @@
     "dashboard": {
       "title": "Статистика продаж",
       "salesWidget": {
-        "today": "Сегодня,",
-        "revenue": "выручка",
-        "profit": "прибыль",
-        "receipts": "чеки",
-        "average": "средний чек"
+        "averageSaleLabel": "Средний чек",
+        "grossSalesLabel": "Выручка",
+        "heatmapTitle": "по дням недели и часам",
+        "netSalesLabel": "Прибыль",
+        "salesLabel": "Чеки",
+        "salesSummaryOverviewTitle": "Сводный отчёт о продажах",
+        "todayLabel": "Сегодня,"
       }
     },
     "categories": {

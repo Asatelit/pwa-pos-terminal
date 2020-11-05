@@ -1,10 +1,9 @@
 .root {
   display: flex;
   flex-direction: column;
-  background: var(--palette-background-paper);
-  box-shadow: var(--palette-shadow-3);
-  position: relative;
+  background: #424242;
   height: 100%;
+  color: white;
   right: 0;
   z-index: 100;
 }
@@ -33,12 +32,13 @@
 }
 
 .menuItem:hover {
-  background-color: var(--palette-action-hover);
+  background-color: rgba(255, 255, 255, .08);
+  color: white;
 }
 
 .menuItem.menuItemActive,
 .menuItem.menuItemActive:hover {
-  background-color: var(--palette-action-selected);
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .menuIcon {

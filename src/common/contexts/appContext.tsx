@@ -1,7 +1,7 @@
+import accounting from 'accounting';
 import localForage from 'localforage';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getTimestamp } from 'common/utils';
 import {
   AppContext,
   AppState,
@@ -13,10 +13,11 @@ import {
 } from 'common/types';
 import { INIT_CONTEXT, INIT_STATE } from 'common/assets';
 import { I18nContext } from 'common/contexts';
-import { DEMO_DATA_PATH } from 'config';
+import { IS_DEMO_MODE } from 'config';
 import * as A from '../creators/actions';
 import { createClosedOrdersViews, createTranslationHelper } from '../creators';
-
+import { getDemoData } from 'common/utils/demo';
+import { CurrencyPosition } from 'common/enums';
 
 const store = localForage.createInstance({
   driver: localForage.INDEXEDDB,
@@ -45,18 +46,25 @@ export const AppContextProvider: React.FC = ({ children }) => {
     (async function updateState() {
       let demoData: Partial<AppState> = {};
       // Load data to display the application in demo mode
-      if (DEMO_DATA_PATH) {
-        demoData = await fetch(DEMO_DATA_PATH)
-          .then((response) => response.json())
-          .then((data) => data || {})
-          .catch(() => {});
-      }
-      // Demo mode data parsing
-      demoData = JSON.parse(JSON.stringify(demoData).replaceAll('"@{currentdate}"', `${getTimestamp()}`));
+      if (IS_DEMO_MODE) demoData = getDemoData();
       // Rehydrate the app state
-      const state = await readContextFromLocalStorage(INIT_CONTEXT[0]);
+      const state = await readContextFromLocalStorage(INIT_STATE);
       // Setting up user preference settings
       if (state.settings.lang !== 'default') i18n.changeLanguage(state.settings.lang);
+      accounting.settings = {
+        currency: {
+          symbol: state.settings.currency, // default currency symbol is '$'
+          format: state.settings.currencyPosition === CurrencyPosition.Left ? '%s %v' : '%v %s', // controls output: %s = symbol, %v = value/number
+          decimal: '.', // decimal point separator
+          thousand: ',', // thousands separator
+          precision: 2, // decimal places
+        },
+        number: {
+          precision: 2,
+          thousand: ',',
+          decimal: '.',
+        },
+      };
       // Update the app state
       setState({ ...state, ...demoData, isLoading: false });
     })();

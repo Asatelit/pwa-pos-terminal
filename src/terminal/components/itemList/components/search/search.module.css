@@ -26,11 +26,3 @@
 .cancel:hover {
   opacity: 1;
 }
-
-.button {
-  composes: button from '../../../../../common/styles/button.module.css';
-}
-
-.input {
-  composes: input from '../../../../../common/styles/button.module.css';
-}

@@ -4,7 +4,11 @@ import { getCategoryEntity } from 'common/assets';
 
 export const createCategoryActions: Action<CategoryActions> = (state, updateState) => ({
   // add a category
-  add: (category) => updateState({ categories: [...state.categories, getCategoryEntity(category)] }),
+  add: (category) => {
+    const newCategory = getCategoryEntity(category);
+    updateState({ categories: [...state.categories, newCategory] });
+    return newCategory;
+  },
 
   // remove the selected category recursively
   remove: (categoryId) => {

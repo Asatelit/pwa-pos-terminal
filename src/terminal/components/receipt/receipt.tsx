@@ -63,6 +63,7 @@ const Receipt: React.FC<ReceiptProps> = ({
   };
 
   const chargeText = `${t('terminal.charge')} ${order && order.totalAmount ? formatFinancial(order.totalAmount) : ''}`;
+  const isDisabledCharge = !order || !order.totalAmount;
 
   return (
     <div className={styles.root}>
@@ -78,7 +79,7 @@ const Receipt: React.FC<ReceiptProps> = ({
       <div className={styles.foot}>
         {isPrintable && (
           <button
-            className={styles.secondaryBtn}
+            className="btn btn-light mr-2"
             title={t('common.printTheReceipt')}
             disabled={!order?.items.length}
             onClick={() => handlePrint()}
@@ -87,7 +88,10 @@ const Receipt: React.FC<ReceiptProps> = ({
           </button>
         )}
         <Link
-          className={`${styles.charge} ${!order || !order.totalAmount ? 'disabled' : ''}`}
+          role="button"
+          className={`btn btn-primary w-100 ${isDisabledCharge ? 'disabled' : ''}`}
+          aria-disabled={isDisabledCharge}
+          tabIndex={isDisabledCharge ? -1 : 0}
           to={Routes.TerminalOrderCharge.replace(':id', `${orderId}`)}
         >
           {chargeText}

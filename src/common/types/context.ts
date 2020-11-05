@@ -1,4 +1,5 @@
 import { Category, Item, Order, ClosedOrder, Settings, Tax } from 'common/types';
+import { OrdersActions } from '../creators/actions';
 import { ClosedOrderViews } from '../creators/views';
 import { TranslationHelper } from '../creators/helpers/translationHelper';
 
@@ -33,21 +34,14 @@ export type AppHelpers = {
   translation: TranslationHelper;
 };
 
+export type AppOrdersActions = OrdersActions;
 export type AppTranslationHelper = TranslationHelper;
 
 export type CategoryActions = {
-  add: (category?: Partial<Category>) => void;
+  add: (category?: Partial<Category>) => Category;
   remove: (categoryId: string) => void;
   select: (categoryId: string) => void;
   update: (category: Category) => void;
-};
-
-export type OrdersActions = {
-  add: () => void;
-  addItem: (product: Item) => void;
-  charge: (closedOrder: ClosedOrder, orderId: string) => void;
-  select: (orderId: string) => void;
-  updateSelected: (order: Order) => void;
 };
 
 export type ItemActions = {

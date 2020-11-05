@@ -32,7 +32,18 @@
       "thisMonth": "This Month",
       "lastMonth": "Last Month",
       "daysUpToToday": "days up to today",
-      "daysStartingToday": "days starting today"
+      "daysStartingToday": "days starting today",
+      "7days": "Last 7 days",
+      "14days": "Last 14 days",
+      "28days": "Last 28 days",
+      "30days": "Last 30 days",
+      "60days": "Last 60 days",
+      "90days": "Last 90 days",
+      "12months": "Last 12 months",
+      "thisYear": "This year (january - today)",
+      "lastYear": "last year",
+      "currentPeriod": "Current Period",
+      "previousPeriod": "Previous Period"
     },
     "default": "Default",
     "delete": "Delete",
@@ -41,6 +52,9 @@
     "each": "ea.",
     "edit": "Edit",
     "enabled": "Enabled",
+    "errors": {
+      "orderNotFound": "The requested order does not exist."
+    },
     "homeScreen": "Home Screen",
     "item": "Item",
     "new": "New",
@@ -70,8 +84,21 @@
     "yes": "Yes",
     "weekdays": {
       "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
       "saturday": "Saturday",
-      "sunday": "Sunday"
+      "sunday": "Sunday",
+      "short": {
+        "monday": "Mon.",
+        "tuesday": "Tue.",
+        "wednesday": "Wed.",
+        "thursday": "Thu.",
+        "friday": "Fri.",
+        "saturday": "Sat.",
+        "sunday": "Sun."
+      }
     }
   },
   "terminal": {
@@ -103,11 +130,13 @@
     "dashboard": {
       "title": "Dashboard",
       "salesWidget": {
-        "today": "Today,",
-        "revenue": "revenue",
-        "profit": "profit",
-        "receipts": "receipts",
-        "average": "average"
+        "averageSaleLabel": "Average Sale",
+        "grossSalesLabel": "Gross Sales",
+        "heatmapTitle": "by Day Of Week & Hour Of Day",
+        "netSalesLabel": "Net Sales",
+        "salesLabel": "Sales",
+        "salesSummaryOverviewTitle": "Sales Summary: Overview",
+        "todayLabel": "Today,"
       }
     },
     "categories": {

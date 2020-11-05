@@ -9,8 +9,8 @@ import { Dashboard, Settings, CategoryEditor, CategoryList, ItemList, ItemEditor
 import styles from './admin.module.css';
 
 const Admin: React.FC = () => {
-  const { state: context, actions, helpers } = useContext(appContext);
-  const { isLoading, categories, settings, items: products, closedOrders, taxes } = context;
+  const { state: context, actions, helpers, views } = useContext(appContext);
+  const { isLoading, categories, settings, items, taxes } = context;
   const { translation } = helpers;
   const { t } = translation;
 
@@ -23,13 +23,13 @@ const Admin: React.FC = () => {
 
   // prettier-ignore
   const routes = [
-    { path: R.AdminDashboard, c: <Dashboard closedOrders={closedOrders} translation={translation} /> },
+    { path: R.AdminDashboard, c: <Dashboard translation={translation} views={views} /> },
     { path: R.AdminCategoryList, c: <CategoryList categories={categories} actions={actions} /> },
     { path: R.AdminCategoryEdit, c: <CategoryEditor categories={categories} actions={actions} /> },
     { path: R.AdminCategoryCreate, c: <CategoryEditor createMode categories={categories} actions={actions} /> },
-    { path: R.AdminItemList, c: <ItemList categories={categories} items={products} actions={actions} translation={translation} /> },
-    { path: R.AdminItemEdit, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
-    { path: R.AdminItemCreate, c: <ItemEditor items={products} categories={categories} taxes={taxes} actions={actions} /> },
+    { path: R.AdminItemList, c: <ItemList categories={categories} items={items} actions={actions} translation={translation} /> },
+    { path: R.AdminItemEdit, c: <ItemEditor items={items} categories={categories} taxes={taxes} actions={actions} /> },
+    { path: R.AdminItemCreate, c: <ItemEditor items={items} categories={categories} taxes={taxes} actions={actions} /> },
     { path: R.AdminSettings, c: <Settings settings={settings} actions={actions} /> },
     { path: R.AdminTaxList, c: <TaxList taxes={taxes} actions={actions} /> },
     { path: R.AdminTaxEdit, c: <TaxEditor taxes={taxes} actions={actions} /> },

@@ -34,7 +34,7 @@ const Search: React.FC<SearchProps> = ({ onChange }) => {
   };
 
   const renderCollapsed = (
-    <button className={styles.button} onClick={expandSearch}>
+    <button className="btn btn-light" onClick={expandSearch}>
       {t('common.search')}
     </button>
   );
@@ -44,7 +44,7 @@ const Search: React.FC<SearchProps> = ({ onChange }) => {
       <button className={styles.cancel} onClick={clearSearchTerm}>
         <CloseTwoTone />
       </button>
-      <input type="text" autoFocus className={styles.input} value={searchTerm} onChange={updateSearchTerm} />
+      <input type="text" autoFocus className="form-control" value={searchTerm} onChange={updateSearchTerm} />
     </Fragment>
   );
 

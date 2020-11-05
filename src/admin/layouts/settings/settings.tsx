@@ -34,7 +34,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
 
   const handleOnChangeOfLanguagePreference = (isoCode: string) => {
     const lng = isoCode === 'default' ? '' : isoCode;
-    i18n.changeLanguage(lng).then(() => {
+    i18n.changeLanguage(lng).then((e) => {
       actions.settings.update({ lang: isoCode });
     });
   };
@@ -62,8 +62,8 @@ const Settings: React.FC<SettingsProps> = ({ settings, actions }) => {
             className="form-check-input"
             type="checkbox"
             id="SettingsPrintReceiptSwitch"
-            checked={settings.printReceipt}
-            onChange={(evt) => actions.settings.update({ printReceipt: evt.target.checked })}
+            checked={settings.printReceiptByDefault}
+            onChange={(evt) => actions.settings.update({ printReceiptByDefault: evt.target.checked })}
           />
           <label className="form-check-label" htmlFor="SettingsPrintReceiptSwitch">
             <small>{t('admin.settings.printReceiptDescription')}</small>

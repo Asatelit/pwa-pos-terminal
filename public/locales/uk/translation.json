@@ -27,12 +27,23 @@
     "dateRanges": {
       "today": "Сьогодні",
       "yesterday": "Вчора",
-      "thisWeek": "Текущая неделя",
+      "thisWeek": "Минулий тиждень",
       "lastWeek": "Поточний тиждень",
       "thisMonth": "Поточний місяць",
       "lastMonth": "Попередній місяць",
       "daysUpToToday": "днів до поточної дати",
-      "daysStartingToday": "днів від поточної дати"
+      "daysStartingToday": "днів від поточної дати",
+      "7days": "За останні 7 днів",
+      "14days": "За останні 14 днів",
+      "28days": "За останні 28 днів",
+      "30days": "За останні 30 днів",
+      "60days": "За останні 60 днів",
+      "90days": "За останні 90 днів",
+      "12months": "За останні 12 місяців",
+      "thisYear": "Цей рік (січень - сьогодні)",
+      "lastYear": "Минулий рік",
+      "currentPeriod": "Поточний період",
+      "previousPeriod": "Попередній період"
     },
     "default": "За замовчуванням",
     "delete": "Видалити",
@@ -41,6 +52,9 @@
     "each": "за одну од.",
     "edit": "Редагувати",
     "enabled": "Включений",
+    "errors": {
+      "orderNotFound": "Замовлення, що запитується не знайдено."
+    },
     "homeScreen": "Головний екран",
     "item": "Товар",
     "new": "Новий",
@@ -49,7 +63,8 @@
     "open": "Відкрити",
     "previous": "Назад",
     "print": "Друк",
-    "printTheReceipt": "Час роздрукування",
+    "printTheReceipt": "Друк чека",
+    "printedAt": "Роздруковано в",
     "purchaseSubtotal": "Проміжний підсумок",
     "qty": "Кіл-сть",
     "receipt#": "Чек №{{val}}",
@@ -69,8 +84,21 @@
     "yes": "Так",
     "weekdays": {
       "monday": "Понеділок",
+      "tuesday": "Вівторок",
+      "wednesday": "Середа",
+      "thursday": "Четвер",
+      "friday": "П'ятниця",
       "saturday": "Субота",
-      "sunday": "Неділя"
+      "sunday": "Неділя",
+      "short": {
+        "monday": "Пн.",
+        "tuesday": "Вт.",
+        "wednesday": "Ср.",
+        "thursday": "Чт.",
+        "friday": "Пт.",
+        "saturday": "Сб.",
+        "sunday": "Нд."
+      }
     }
   },
   "terminal": {
@@ -102,11 +130,13 @@
     "dashboard": {
       "title": "Статистика продажів",
       "salesWidget": {
-        "today": "Сьогодні,",
-        "revenue": "виручка",
-        "profit": "прибуток",
-        "receipts": "чеки",
-        "average": "середній чек"
+        "averageSaleLabel": "Середній чек",
+        "grossSalesLabel": "Виручка",
+        "heatmapTitle": "за днями тижня і годинами",
+        "netSalesLabel": "Прибуток",
+        "salesLabel": "Чеки",
+        "salesSummaryOverviewTitle": "Зведений звіт із продажу",
+        "todayLabel": "Сьогодні,"
       }
     },
     "categories": {

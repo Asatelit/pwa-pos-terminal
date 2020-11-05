@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import React, { Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { AppContextProvider, I18nContextProvider } from 'common/contexts';
 import { Routes } from 'common/enums';
@@ -8,10 +9,11 @@ import Terminal from './terminal/terminal';
 import Admin from './admin/admin';
 import * as serviceWorker from './serviceWorker';
 import './i18n';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './bootstrap.scss';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import './colors.css';
+import 'react-toastify/dist/ReactToastify.css';
+import './colors.scss';
 import './index.css';
 
 const NoMatch = () => (
@@ -25,6 +27,7 @@ ReactDOM.render(
   <Suspense fallback={<LoadScreen />}>
     <I18nContextProvider>
       <AppContextProvider>
+        <ToastContainer position="bottom-left" limit={3} />
         <HashRouter>
           <Switch>
             <Route path={Routes.Terminal}>

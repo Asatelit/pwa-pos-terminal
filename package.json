@@ -16,6 +16,8 @@
     "@nivo/bar": "^0.62.0",
     "@nivo/heatmap": "^0.62.0",
     "@nivo/line": "^0.62.0",
+    "@types/accounting": "^0.4.1",
+    "accounting": "^0.4.1",
     "bootstrap": "5.0.0-alpha1",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
@@ -30,7 +32,8 @@
     "react-dom": "16.13.1",
     "react-i18next": "11.7.3",
     "react-print-tool": "3.0.0",
-    "react-router-dom": "5.2.0"
+    "react-router-dom": "5.2.0",
+    "react-toastify": "^6.0.9"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.24.5",

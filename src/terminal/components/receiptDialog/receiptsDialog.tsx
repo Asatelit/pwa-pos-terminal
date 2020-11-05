@@ -46,16 +46,16 @@ const ReceiptsDialog: React.FC<ReceiptsDialogProps> = ({ orderId, orders, servic
         <div className={styles.dialog}>
           <div className={styles.content}>
             <div className={styles.head}>
-              <button className={styles.closeBtn} onClick={closeDialog}>
+              <button className="btn btn-text d-inline-flex align-items-center" onClick={closeDialog}>
                 <ArrowLeftTwoTone />
-                <span>{t('common.back')}</span>
+                <span className="ml-1">{t('common.back')}</span>
               </button>
               <div className={styles.itemInfo}>
                 <span className={styles.itemName}>{t('common.receipts')}</span>
               </div>
-              <button className={styles.createPrimaryBtn} onClick={createOrder}>
+              <button className="d-inline-flex btn btn-primary d-inline-flex align-items-center" onClick={createOrder}>
                 <PlusTwoTone />
-                <span>{t('terminal.createNewReceipt')}</span>
+                <span className="ml-1">{t('terminal.createNewReceipt')}</span>
               </button>
             </div>
             <div className={styles.body}>

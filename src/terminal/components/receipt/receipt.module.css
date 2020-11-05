@@ -1,9 +1,11 @@
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   font-size: .875rem;
   min-width: 368px;
+  box-shadow: var(--palette-shadow-3);
 }
 @media screen and (min-width: 1366px) {
   .root { min-width: 394px; }

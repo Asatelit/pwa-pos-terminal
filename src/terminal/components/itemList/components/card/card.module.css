@@ -7,7 +7,7 @@
   position: relative;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.18);
+  box-shadow: var(--palette-shadow-1);
   border-radius: .25rem;
   background-color: var(--palette-background-paper);
   overflow: hidden;
@@ -48,11 +48,8 @@
 }
 
 .price {
-  color: #aaaaaa;
   font-size: .6875em;
   font-weight: bold;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  padding-left: 3px;
+  color: var(--palette-text-secondary);
 }

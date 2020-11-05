@@ -31,3 +31,29 @@ dt {
 #root {
   height: 100%;
 }
+
+.btn-icon {
+  flex: 0 0 auto;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 12px;
+  overflow: visible;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 50%;
+  line-height: 0;
+}
+
+.btn-icon:hover {
+  background-color: var(--palette-action-hover);
+}
+
+.btn-text {
+  color: inherit;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.btn-text:hover {
+  background-color: var(--palette-action-hover);;
+}

@@ -31,7 +31,6 @@ export type OrderChargeAction = (
     | 'customerId'
     | 'dateClose'
     | 'isDiscounted'
-    | 'status'
     | 'totalPaymentAmount'
   >,
   orderId: string,
@@ -43,6 +42,7 @@ export type OrdersActions = {
   charge: OrderChargeAction;
   select: (orderId: string) => void;
   updateSelected: (order: Order) => void;
+  findById: (orderId: string) => Order | null;
 };
 
 function update(order: Order, state: AppState): Order {
@@ -134,6 +134,8 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
 
     if (!order) throw new Error('The specified order does not exist');
 
+    console.info(data);
+
     const closedOrderItems: ClosedOrderItem[] = order.items.map((entity) => {
       const costPrice = state.items.find((item) => item.id === entity.id)?.costPrice || 0;
       const amount = entity.quantity * entity.price;
@@ -194,4 +196,10 @@ export const createOrdersActions: Action<OrdersActions> = (state, updateState) =
   },
 
   select: (orderId: string | null) => updateState({ currentOrderId: orderId }),
+
+  findById(orderId: string): Order | null {
+    const order = state.orders.find((entity) => orderId === entity.id);
+    if (!order) return null; // The specified order does not exist
+    return order;
+  }
 });

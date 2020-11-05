@@ -57,6 +57,16 @@ export function getDemoData(): AppState {
 
   const itemsList: Partial<Item>[] = [
     {
+      name: 'Lemon lime Water',
+      barcode: '',
+      color: null,
+      parentId: Entities.RootCategoryId,
+      picture: null,
+      price: 0.75,
+      costPrice: 0.5,
+      taxes: taxList,
+    },
+    {
       name: 'Espresso',
       barcode: '',
       color: null,
@@ -128,7 +138,7 @@ export function getDemoData(): AppState {
     },
   ];
 
-itemsList.forEach((entity) => items().add(entity));
+  itemsList.forEach((entity) => items().add(entity));
 
   const dateRange = { start: subDays(new Date(), 180), end: new Date() };
   const rangeDays = eachDayOfInterval(dateRange);
@@ -153,7 +163,6 @@ itemsList.forEach((entity) => items().add(entity));
           closingReason: OrderClosingReasons.Default,
           customerId: 0,
           isDiscounted: false,
-          status: OrderStatuses.Closed,
           totalPaymentAmount: paymentAmount,
           dateClose: getTimestamp(addHours(day, getRandomInt(0, 23))),
         },

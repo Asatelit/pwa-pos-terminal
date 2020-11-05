@@ -52,6 +52,9 @@
     "each": "ea.",
     "edit": "Edit",
     "enabled": "Enabled",
+    "errors": {
+      "orderNotFound": "The requested order does not exist."
+    },
     "homeScreen": "Home Screen",
     "item": "Item",
     "new": "New",

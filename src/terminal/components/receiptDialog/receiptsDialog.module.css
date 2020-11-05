@@ -58,28 +58,10 @@
 .head {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   height: moduleHeight;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.closeBtn {
-  composes: buttonTransparent from '../../../common/styles/button.module.css';
-  color: inherit;
-  height: moduleHeight;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-  opacity: .85;
-}
-.closeBtn:hover {
-  opacity: 1;
-}
-
-.closeBtn span {
-  margin-left: 6px;
+  padding: 0 1rem;
 }
 
 .itemInfo {
@@ -146,15 +128,4 @@
   align-items: center;
   color: inherit;
   outline: none;
-}
-
-.createPrimaryBtn {
-  composes: buttonPrimary from '../../../common/styles/button.module.css';
-  border-radius: 0;
-  align-items: center;
-  display: flex;
-}
-
-.createPrimaryBtn span {
-  margin-left: 6px;
 }

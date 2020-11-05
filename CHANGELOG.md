@@ -8,6 +8,12 @@ v0.2.4-alpha is a minor release that adds new features, including an updated das
 
 #### :rocket: New Feature
 - Add sales performance chart.
+- Add heatmap by hour and weekday.
+- Improve UI of the payment form.
+
+#### :bug: Fixed
+- Fix issues with displaying the application in Safari browser for IOS and other minor bug fixes.
+
 
 ## 0.2.3-alpha (2020-10-11)
 

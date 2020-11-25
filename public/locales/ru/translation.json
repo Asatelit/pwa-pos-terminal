@@ -55,6 +55,7 @@
     "errors": {
       "orderNotFound": "Запрашиваемый заказ не найден."
     },
+    "exportToJSON": "Экспорт в JSON",
     "homeScreen": "Главный экран",
     "item": "Товар",
     "new": "Новый",

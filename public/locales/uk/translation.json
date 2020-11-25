@@ -55,6 +55,7 @@
     "errors": {
       "orderNotFound": "Замовлення, що запитується не знайдено."
     },
+    "exportToJSON": "Експорт в JSON",
     "homeScreen": "Головний екран",
     "item": "Товар",
     "new": "Новий",

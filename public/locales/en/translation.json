@@ -55,6 +55,7 @@
     "errors": {
       "orderNotFound": "The requested order does not exist."
     },
+    "exportToJSON": "Export to JSON",
     "homeScreen": "Home Screen",
     "item": "Item",
     "new": "New",

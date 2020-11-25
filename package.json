@@ -1,7 +1,7 @@
 {
   "name": "pwa-pos-terminal",
   "description": "Asatelit Point of Sale (POS) Terminal is progressive web application (PWA) that designed to help small business owners efficiently manage the day's sales and inventory turns.",
-  "version": "0.2.3-alpha",
+  "version": "0.2.5-alpha",
   "private": true,
   "license": "Apache-2.0",
   "repository": {

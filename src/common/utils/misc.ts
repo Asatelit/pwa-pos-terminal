@@ -101,3 +101,16 @@ export function encodeImage(event: ChangeEvent<HTMLInputElement>, cb: (base64: s
   };
   reader.readAsDataURL(file);
 }
+
+export function exportToJsonFile(jsonData: any) {
+  const dataStr = JSON.stringify(jsonData);
+  const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
+
+  const exportFileDefaultName = 'items.json';
+
+  const linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+  linkElement.remove();
+}

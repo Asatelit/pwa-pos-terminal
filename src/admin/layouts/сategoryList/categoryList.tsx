@@ -3,7 +3,7 @@ import { Link, Redirect, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlusTwoTone, TrashCanOutlineTwoTone, EditSquareOutlineTwoTone } from 'common/icons';
 import { Category, AppActions } from 'common/types';
-import { getTextIdentifier, setDocumentTitle } from 'common/utils';
+import { getTextIdentifier, setDocumentTitle, exportToJsonFile } from 'common/utils';
 import { Routes, Entities } from 'common/enums';
 import { Breadcrumbs } from 'common/components';
 import { CommonLayout } from '../index';
@@ -84,13 +84,13 @@ const CategoryList: React.FC<CreateItemFormProps> = ({ categories, actions }) =>
   const renderHead = (
     <Fragment>
       <div className={styles.title}>{t('admin.categories.title')}</div>
-      <Link
-        className="btn btn-primary"
-        to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}
-      >
+      <Link className="btn btn-primary" to={Routes.AdminCategoryCreate.replace(':id', selectedCategoryId || 'root')}>
         <PlusTwoTone />
         <span>{t('admin.categories.addCategoryLabel')}</span>
       </Link>
+      <button className="btn btn-outline-primary ml-2 mr-4" onClick={() => exportToJsonFile(categories)}>
+        {t('common.exportToJSON')}
+      </button>
     </Fragment>
   );
 

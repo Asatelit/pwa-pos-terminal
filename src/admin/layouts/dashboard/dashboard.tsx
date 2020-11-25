@@ -167,8 +167,8 @@ const Dashboard: React.FC<DashboardProps> = ({ translation, views }) => {
       serie: 'sales',
       isActive: serieId === 'sales',
       label: t('admin.dashboard.salesWidget.salesLabel'),
-      currentVal: currentPeriodData.netSales,
-      currentFormattedVal: formatFinancial(currentPeriodData.sales),
+      currentVal: currentPeriodData.sales,
+      currentFormattedVal: currentPeriodData.sales,
       previousVal: previousPeriodData.sales,
     },
     {

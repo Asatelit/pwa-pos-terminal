@@ -5,7 +5,7 @@ import { getCategoryById } from 'common/assets';
 import { CommonLayout } from '../index';
 import { Category, Item, AppActions, AppTranslationHelper } from 'common/types';
 import { PlusTwoTone, TrashCanOutlineTwoTone } from 'common/icons';
-import { getTextIdentifier, setDocumentTitle } from 'common/utils';
+import { getTextIdentifier, setDocumentTitle, exportToJsonFile } from 'common/utils';
 
 import styles from './itemList.module.css';
 
@@ -63,10 +63,13 @@ const ItemList: React.FC<ItemListProps> = ({ categories, items, actions, transla
   const renderHead = (
     <Fragment>
       <div className={styles.title}>{t('admin.items.title')}</div>
-      <Link className="btn btn-primary ml-2 mr-4" to={Routes.AdminItemCreate}>
+      <Link className="btn btn-primary ml-2" to={Routes.AdminItemCreate}>
         <PlusTwoTone />
         <span>{t('admin.items.addItemLabel')}</span>
       </Link>
+      <button className="btn btn-outline-primary ml-2 mr-4" onClick={() => exportToJsonFile(items)}>
+        {t('common.exportToJSON')}
+      </button>
     </Fragment>
   );
 

@@ -4,7 +4,7 @@
 
 Asatelit Point of Sale (POS) Terminal is a simple browser-based progressive web application (PWA) that designed to help small business owners efficiently manage the day's sales and inventory turns. The app built using common web technologies including HTML, CSS and TypeScript on top of Facebook's [React][react] library and doesn't involve a server, all data is stored in IndexedDB.
 
-See live demo here: [https://pos-terminal.herokuapp.com](https://pos-terminal.herokuapp.com)
+See live demo here: [https://pos.asatelit.com](https://pos-terminal.herokuapp.com)
 
 ### Tech Stack
 

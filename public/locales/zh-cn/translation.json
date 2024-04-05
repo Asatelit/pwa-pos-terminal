@@ -1,0 +1,203 @@
+{
+  "common": {
+    "actions": "操作",
+    "add": "添加",
+    "amount": "金额",
+    "back": "返回",
+    "browserDefault": "使用浏览器设置",
+    "cancel": "取消",
+    "cash": "现金",
+    "change": "找零",
+    "changeOutOf": "从 {{amount}} 中找零 {{change}}",
+    "chooseAnOption": "选择一个选项",
+    "clear": "清除",
+    "close": "关闭",
+    "closeWithoutPayment": {
+      "label": "无需支付即可关闭",
+      "hint": "请指定原因",
+      "reasons": {
+        "customerIsGone": "顾客已离开",
+        "waitersMistake": "服务员的错误",
+        "onTheHouse": "免费"
+      }
+    },
+    "confirm": "确认",
+    "create": "创建",
+    "creditCard": "银行卡",
+    "dateRanges": {
+      "today": "今天",
+      "yesterday": "昨天",
+      "thisWeek": "本周",
+      "lastWeek": "上周",
+      "thisMonth": "本月",
+      "lastMonth": "上月",
+      "daysUpToToday": "直到今天的天数",
+      "daysStartingToday": "从今天开始的天数",
+      "7days": "过去7天",
+      "14days": "过去14天",
+      "28days": "过去28天",
+      "30days": "过去30天",
+      "60days": "过去60天",
+      "90days": "过去90天",
+      "12months": "过去12个月",
+      "thisYear": "今年（1月-至今）",
+      "lastYear": "去年",
+      "currentPeriod": "当前时期",
+      "previousPeriod": "上一时期"
+    },
+    "default": "默认",
+    "delete": "删除",
+    "deleteSelected": "删除选中",
+    "details": "详情",
+    "each": "每个",
+    "edit": "编辑",
+    "enabled": "已启用",
+    "errors": {
+      "orderNotFound": "请求的订单不存在。"
+    },
+    "exportToJSON": "导出为JSON",
+    "homeScreen": "主屏幕",
+    "item": "项目",
+    "new": "新建",
+    "next": "下一个",
+    "no": "否",
+    "open": "打开",
+    "previous": "上一个",
+    "print": "打印",
+    "printTheReceipt": "打印收据",
+    "printedAt": "打印于",
+    "purchaseSubtotal": "购买小计",
+    "qty": "数量",
+    "receipt#": "收据号 {{val}}",
+    "receipts": "收据",
+    "remove": "移除",
+    "restore": "恢复",
+    "search": "搜索",
+    "searchProperyLabel": "搜索属性",
+    "searchProperyPlaceholder": "在此处输入属性名称...",
+    "somethingWentWrong": "出错了。",
+    "tax": "税",
+    "total": "总计",
+    "unnamedCategory": "未命名分类",
+    "update": "更新",
+    "update&ContinueEditing": "更新并继续编辑",
+    "view": "查看",
+    "yes": "是",
+    "weekdays": {
+      "monday": "星期一",
+      "tuesday": "星期二",
+      "wednesday": "星期三",
+      "thursday": "星期四",
+      "friday": "星期五",
+      "saturday": "星期六",
+      "sunday": "星期日",
+      "short": {
+        "monday": "周一",
+        "tuesday": "周二",
+        "wednesday": "周三",
+        "thursday": "周四",
+        "friday": "周五",
+        "saturday": "周六",
+        "sunday": "周日"
+      }
+    }
+  },
+  "terminal": {
+    "charge": "收费",
+    "createNewReceipt": "创建新的",
+    "dailyReport": {
+      "menuLabel": "日报表",
+      "openingTitle": "日报表",
+      "editingTitle": "选择时期",
+      "emptyText": "指定时期内没有销售。",
+      "reportTitle": "销售报告",
+      "daysIncluded": "包含天数",
+      "businessDate": "营业日期",
+      "total": "总计"
+    },
+    "title": "终端"
+  },
+  "admin": {
+    "title": "管理员",
+    "menuLabel": "管理员",
+    "menu": {
+      "dashboardLabel": "仪表盘",
+      "categoriesLabel": "分类",
+      "itemsLabel": "项目",
+      "taxesLabel": "税收",
+      "settingsLabel": "设置",
+      "exitLabel": "返回终端"
+    },
+    "dashboard": {
+      "title": "仪表盘",
+      "salesWidget": {
+        "averageSaleLabel": "平均销售额",
+        "grossSalesLabel": "总销售额",
+        "heatmapTitle": "按星期几及小时",
+        "netSalesLabel": "净销售额",
+        "salesLabel": "销售",
+        "salesSummaryOverviewTitle": "销售概要：概览",
+        "todayLabel": "今天,"
+      }
+    },
+    "categories": {
+      "title": "类别",
+      "addCategoryLabel": "新建类别",
+      "emptyListMessage": "这里没有项目。"
+    },
+    "categoryEditor": {
+      "addTitle": "添加类别",
+      "editTitle": "编辑类别",
+      "nameLabel": "名称",
+      "categoryLabel": "父类别",
+      "colorLabel": "颜色",
+      "imageLabel": "图片"
+    },
+    "items": {
+      "title": "项目",
+      "addItemLabel": "新建项目",
+      "emptyListMessage": "这里没有项目。"
+    },
+    "itemEditor": {
+      "addItemTitle": "添加项目",
+      "editItemTitle": "编辑项目",
+      "nameLabel": "名称",
+      "categoryLabel": "分类",
+      "priceLabel": "价格",
+      "costPriceLabel": "成本价",
+      "colorLabel": "颜色",
+      "imageLabel": "图片",
+      "taxesLabel": "税收"
+    },
+    "taxes": {
+      "title": "税收",
+      "addItemLabel": "新建税收",
+      "emptyListMessage": "这里没有项目。"
+    },
+    "taxEditor": {
+      "addItemTitle": "添加新税",
+      "editItemTitle": "编辑税收",
+      "nameLabel": "名称",
+      "precentageLabel": "百分比",
+      "itemPricingLabel": "商品定价",
+      "addTaxToItemPrice": "将税收加至商品价格",
+      "includeTaxInItemPrice": "商品价格包含税收",
+      "applyTaxToLabel": "适用税收于",
+      "applyToCustomAmounts": "自定义金额"
+    },
+    "settings": {
+      "title": "设置",
+      "businessNameLabel": "商业名称",
+      "businessNameDescription": "您的商业名称将显示在顾客的收据及信用卡声明上",
+      "currencyLabel": "货币显示为",
+      "currencyPositionLabel": "货币位置",
+      "firstDayOfTheWeekLabel": "一周的第一天",
+      "languagePreferenceLabel": "语言偏好",
+      "languagePreferenceDescription": "我偏好以 {{name}} 查看",
+      "printReceiptLabel": "购买后打印收据",
+      "printReceiptDescription": "支付后立即打印收据。",
+      "disablePrintingGuestChecksLabel": "允许打印宾客账单",
+      "disablePrintingGuestChecksDescription": "隐藏宾客账单打印按钮。"
+    }
+  }
+}
